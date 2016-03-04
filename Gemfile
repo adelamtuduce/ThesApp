@@ -8,9 +8,11 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
+gem 'omniauth'  
+gem 'omniauth-wsfed', '0.3.2.pre.beta'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.8'
+  gem 'sqlite3'
   gem 'rspec-rails', '2.13.1'
   # The following optional lines are part of the advanced setup.
   gem 'guard-rspec', '2.5.0'
@@ -24,7 +26,7 @@ group :test do
   gem 'capybara', '2.1.0'
   gem 'factory_girl_rails', '4.2.0'
   gem 'cucumber-rails', '1.3.0', :require => false
-  gem 'database_cleaner', github: 'bmabey/database_cleaner'
+  # gem 'database_cleaner', github: 'bmabey/database_cleaner'
 
   # Uncomment this line on OS X.
   gem 'growl', '1.0.3'
