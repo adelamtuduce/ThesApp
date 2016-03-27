@@ -1,16 +1,43 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  role_id                :integer
+#
+
 class UsersController < ApplicationController
-  before_action :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :following, :followers]
+  before_filter :authenticate_user!
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
+
   def index
     @users = User.paginate(page: params[:page])
+    @document = Document.new
   end
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    if @user.personal_information.nil?
+      @personal_information = PersonalInformation.new
+      @url =  personal_informations_path  
+    else
+      @personal_information = @user.personal_information
+      @url = update_personal_information_path
+    end
   end
 
   def new
@@ -63,7 +90,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password,
+      params.require(:user).permit(:email, :password,
                                    :password_confirmation)
     end
 

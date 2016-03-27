@@ -9,16 +9,26 @@ gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'omniauth'  
-gem 'omniauth-wsfed', '0.3.2.pre.beta'
-
+gem 'omniauth-wsfed'
+gem 'omniauth-azure-oauth2'
+gem 'annotate'
+gem "paperclip"
+gem "jquery-fileupload-rails"
+gem 'private_pub'
+gem 'thin'
+gem 'devise'
+gem 'better_errors'
+gem "binding_of_caller"
+gem "font-awesome-rails"
+gem "paperclip-dropbox"
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '2.13.1'
   # The following optional lines are part of the advanced setup.
-  gem 'guard-rspec', '2.5.0'
-  gem 'spork-rails', '4.0.0'
-  gem 'guard-spork', '1.5.0'
-  gem 'childprocess', '0.3.6'
+  gem 'guard-rails', '0.7.2', require: false
+  gem 'guard-rspec', '3.1.0', require: false
+  gem 'guard-rubocop', '1.2.0', require: false
+  gem 'guard-spork', '2.1.0', require: false
 end
 
 group :test do

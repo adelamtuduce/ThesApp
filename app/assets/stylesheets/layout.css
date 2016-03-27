@@ -1,0 +1,85 @@
+.modal-body {
+    position: relative;
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 30px;
+}
+
+.uploadBtn {
+	padding-top: 40px;
+	padding-bottom: 5px;
+}
+
+.navbar-fixed-top {
+	background-color: #daeeff;
+}
+
+.navbar-inverse .navbar-inner {
+	background-image: linear-gradient(to bottom, #daeeff, #daeeff);
+	border-color: #daeeff;
+}
+
+.navbar-inverse {
+	border-color: #daeeff;
+}
+
+body {
+	background-color: #957bbe;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.bs-example > .btn, .bs-example > .btn-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn-info, .btn-info:hover, .btn-info:focus {
+	background-color: #fae3c4;
+	color: black;
+}
+
+.welcome-panel, .hero-unit {
+	background-color: #fae3c4;
+	color: black;
+}
+
+.informationPanel {
+	background-color: #daeeff;
+}
+.addDocuments, .addDocuments:hover, .addDocuments:focus {
+	background-color: #957bbe;
+}
+
+h2 {
+	margin-bottom: 0px;
+}
+
+.customClearfix { 
+	height: 55px;
+}

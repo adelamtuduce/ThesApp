@@ -1,34 +1,53 @@
-<% if signed_in? %>
+<% if user_signed_in? %>
   <div class="row">
-    <aside class="span4">
-      <section>
-        <%= render 'shared/user_info' %>
-      </section>
-      <section>
-        <%= render 'shared/stats' %>
-      </section>
-      <section>
-        <%= render 'shared/micropost_form' %>
-      </section>
-    </aside>
-    <div class="span8">
-      <h3>Micropost Feed</h3>
-      <%= render 'shared/feed' %>
+    <div class="col-md-12">
+      <div class="col-md-3">
+         <%= image_tag current_user.personal_information.avatar.url, size: "180x90" %>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+        <div class="panel-heading">Current status</div>
+        <div class="panel-body welcome-panel">
+          You are currently enlisted to TODO - add mentor
+          <br/>
+          Your Diploma title is:
+          <br/>
+          Uploaded documents until now: <%= current_user.documents.count %>
+          <br/>
+          Next meeting:
+          <br/>
+          Received emails:
+          <br/>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+    <div class="col-md-8">
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix customClearfix">
+        Uploaded documents
+        <%= render "documents/upload_modal", locals: {document: @document} %>
+      </div>
+      <div class="panel-body welcome-panel">
+        <% if current_user.documents.any? %>
+          I have docs
+        <% else %>
+          You have no documents uploaded.<a class="startUpload">Click here<i class="fa fa-paperclip"></i></a> to upload.
+        <% end %>
+      </div>
     </div>
   </div>
 <% else %>
   <div class="center hero-unit">
-    <h1>Welcome to the Sample App</h1>
-
-    <h2>
-      This is the home page for the
-      <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-      sample application.
-    </h2>
-
-    <%= link_to "Sign up now!", signup_path,
-                                class: "btn btn-large btn-primary" %>
+    <h1>Thesis Manager App</h1>
+    <br/>
+    <%= link_to "Sign up now!",  new_user_registration_path ,
+                                class: "btn btn-large btn-primary addDocuments" %>
   </div>
-
-  <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
 <% end %>

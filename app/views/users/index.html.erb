@@ -3,8 +3,10 @@
 
 <%= will_paginate %>
 
-<ul class="users">
-  <%= render @users %>
-</ul>
-
+<table class="users span6">
+	<th style="text-align:left">Name</th>
+	<th>Actions</th>
+	<hr>
+  	<%= render @users %>
+</table>
 <%= will_paginate %>

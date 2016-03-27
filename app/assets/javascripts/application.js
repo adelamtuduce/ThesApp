@@ -13,5 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap
+//= require jquery-fileupload
+//= require chat
+//= require jquery.fileupload-jquery-ui
+//= require bootstrap.min
+//= require private_pub
 //= require_tree .

@@ -1,0 +1,9 @@
+
+<%= form_for @document, :html => { :multipart => true, :id => "uploadDoc", class: 'pull-right' }, url:  documents_path , remote: true do |f| %>
+    <div class="fileinput-button" id="avatar_container">
+      <%= f.file_field :file, :title => "Add New" %>
+      <button class="btn btn-default btn-sm addDocuments">Add new</button>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  </div>
+<% end %>
+      

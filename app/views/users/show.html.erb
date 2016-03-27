@@ -1,24 +1,59 @@
-<% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-    <section>
-      <%= render 'shared/stats' %>
-    </section>
-  </aside>
-  <div class="span8">
-    <%= render 'follow_form' if signed_in? %>
-    <% if @user.microposts.any? %>
-      <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts %>
+  <div class="col-md-12"></div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <%= image_tag @personal_information.avatar.url, size: "200x160" %>
+    <hr>
+    <%= form_for @personal_information, :html => { :multipart => true, :id => "fileupload"  }, url: @url, remote: true do |f| %>
+      <%= f.file_field :avatar %>
+      <br>
+      <%= f.submit 'Update avatar', :class => 'btn btn-info' %>
     <% end %>
+  </div>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        Personal Information
+      </div>
+      <div class="panel-body informationPanel">
+        <%= form_for @personal_information, url: @url, remote: true do |f| %>
+          <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name, class: 'form-control' %>
+          </div>
+           <div class="form-group">
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name, class: 'form-control' %>
+          </div>
+           <div class="form-group">
+            <%= f.label :age %>
+            <%= f.text_field :age, class: 'form-control' %>
+          </div>
+
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+
+          <div class="col-md-6">
+           <div class="form-group">
+            <%= f.label :code %>
+            <%= f.text_field :code, class: 'form-control' %>
+          </div>
+
+           <div class="form-group">
+            <%= f.label :faculty %>
+            <%= collection_select :faculty, :id, Faculty.all.order(:name), :id,:name, {:include_blank => 'Please Select'} %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :section %>
+            <%= f.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'} %>
+          </div>
+          <%= f.submit 'Save data', :class => 'btn btn-info addDocuments pull-right' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

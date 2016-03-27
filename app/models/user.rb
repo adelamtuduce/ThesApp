@@ -1,47 +1,29 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  role_id                :integer
+#
+
 class User < ActiveRecord::Base
-  has_many :microposts, dependent: :destroy
-  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
-  has_many :followed_users, through: :relationships, source: :followed
-  has_many :reverse_relationships, foreign_key: "followed_id",
-                                   class_name:  "Relationship",
-                                   dependent:   :destroy
-  has_many :followers, through: :reverse_relationships, source: :follower
-  before_save { self.email = email.downcase }
-  before_create :create_remember_token
-  validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
-  has_secure_password
-  validates :password, length: { minimum: 6 }
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
-  def User.new_remember_token
-    SecureRandom.urlsafe_base64
-  end
-
-  def User.digest(token)
-    Digest::SHA1.hexdigest(token.to_s)
-  end
-
-  def feed
-    Micropost.from_users_followed_by(self)
-  end
-
-  def following?(other_user)
-    relationships.find_by(followed_id: other_user.id)
-  end
-
-  def follow!(other_user)
-    relationships.create!(followed_id: other_user.id)
-  end
-
-  def unfollow!(other_user)
-    relationships.find_by(followed_id: other_user.id).destroy
-  end
-
-  private
-
-    def create_remember_token
-      self.remember_token = User.digest(User.new_remember_token)
-    end
+  has_one :personal_information
+  has_many :documents
 end
