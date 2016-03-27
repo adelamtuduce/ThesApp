@@ -20,9 +20,9 @@
 
 class PersonalInformation < ActiveRecord::Base
 	belongs_to :user
-	validates_presence_of :first_name, presence: true, length: { maximum: 50 }
-	validates_presence_of :last_name, presence: true, length: { maximum: 50 }
-	validates_presence_of :code, presence: true, length: { maximum: 10 }
+	# validates_presence_of :first_name, presence: true, length: { maximum: 50 }
+	# validates_presence_of :last_name, presence: true, length: { maximum: 50 }
+	# validates_presence_of :code, presence: true, length: { maximum: 10 }
 	has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "default_avatar.png"
   	validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 end
