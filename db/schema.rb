@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20160323171232) do
     t.string   "last_name"
     t.string   "code"
     t.integer  "age"
-    t.integer  "section_id",          limit: 255
+    t.integer  "section_id"
     t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"

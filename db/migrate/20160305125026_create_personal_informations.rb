@@ -5,7 +5,7 @@ class CreatePersonalInformations < ActiveRecord::Migration
       t.string :last_name
       t.string :code
       t.integer :age
-      t.string :faculty
+      t.integer :section_id
       t.integer :year
 
       t.timestamps

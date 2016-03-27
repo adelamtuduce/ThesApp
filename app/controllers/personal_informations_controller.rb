@@ -48,7 +48,7 @@ private
     	:last_name, 
     	:age,
     	:year,
-    	:faculty,
+    	:faculty_id,
     	:code,
       :avatar,
       :user_id)
