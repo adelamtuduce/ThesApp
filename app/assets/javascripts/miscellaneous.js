@@ -1,7 +1,7 @@
-function() {
-	var ready = function() {
+// function() {
+// 	var ready = function() {
 
-	};
+// 	};
 
-}
+// }
 

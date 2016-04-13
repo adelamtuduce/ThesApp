@@ -1,7 +1,7 @@
 <% unless current_user.id == user.id %>
 	<tr>
 		<td>
-	  		<%= user.personal_information.first_name %>
+	  		<%= user.personal_information.first_name if user.personal_information && user.personal_information.first_name %>
 	  	</td>
 	  	<td style="text-align:center">
 	    	<%= link_to "#", class: "start-conversation",

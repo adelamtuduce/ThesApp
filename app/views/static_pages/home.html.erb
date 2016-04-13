@@ -2,7 +2,11 @@
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-3">
+        <% if current_user.personal_information && current_user.personal_information.avatar %>
          <%= image_tag current_user.personal_information.avatar.url, size: "180x90" %>
+        <% else %>
+         <%= image_tag 'default_avatar.png', size: "180x90" %>
+        <% end %>
       </div>
       <div class="col-md-3"></div>
       <div class="col-md-6">
@@ -27,21 +31,37 @@
   <hr>
   <div class="row">
     <div class="col-md-12">
-    <div class="col-md-8">
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix customClearfix">
-        Uploaded documents
-        <%= render "documents/upload_modal", locals: {document: @document} %>
+    <!-- <div class="col-md-8">
+    </div> -->
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix customClearfix">
+          Uploaded documents
+          <form id="upload-form" action="/new_document_path" class="fileupload">
+          <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                    <input name="files[]" multiple="" type="file">
+                </span>
+        </form>
+        </div>
+        <div class="panel-body welcome-panel">
+          <% if current_user.documents.any? %>
+            I have docs
+          <% else %>            
+           <p class="uploadedFiles"> You have no documents uploaded.</p>
+           <%= image_tag 'file.png', size: "180x90", class: 'uploadImage hidden' %>
+           <p class>
+           <button type="submit" class="btn btn-primary start hidden startUpload">
+                <i class="glyphicon glyphicon-upload"></i>
+                <span>Start upload</span>
+            </button>
+          <% end %>
+        </div>
       </div>
-      <div class="panel-body welcome-panel">
-        <% if current_user.documents.any? %>
-          I have docs
-        <% else %>
-          You have no documents uploaded.<a class="startUpload">Click here<i class="fa fa-paperclip"></i></a> to upload.
-        <% end %>
-      </div>
     </div>
+  </div>
+  <div class="col-md-4">
   </div>
 <% else %>
   <div class="center hero-unit">
