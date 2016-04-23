@@ -13,6 +13,7 @@
     # Assets should be precompiled for production (so we don't need the gems loaded then)
     Bundler.require(*Rails.groups(assets: %w(development test)))
 
+
     module SampleApp
       class Application < Rails::Application
         # Settings in config/environments/* take precedence over those specified here.
@@ -29,6 +30,8 @@
         # I18n.enforce_available_locales = true
         I18n.enforce_available_locales = true
 
+        config.time_zone = 'Bucharest'
+        # config.active_record.default_timezone = 'Bucharest'
         config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
       end
     end

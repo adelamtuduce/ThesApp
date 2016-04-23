@@ -12,9 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require moment
 //= require turbolinks
 //= require jquery-fileupload/basic
 //= require chat
+//= require fullcalendar
 //= require bootstrap.min
 //= require private_pub
 //= require_tree .

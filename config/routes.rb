@@ -1,6 +1,6 @@
 SampleApp::Application.routes.draw do
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
 # devise_scope :user do
 #   get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
@@ -31,6 +31,11 @@ SampleApp::Application.routes.draw do
       post :update, to: 'personal_informations#update', as: 'update'
     end
   end
+
+  # app/config/routes.rb
+  devise_for :users, :controllers => {:registrations => "registrations"}
+
+  resources :events
 
   resources :documents
 

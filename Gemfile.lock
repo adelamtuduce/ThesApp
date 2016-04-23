@@ -127,6 +127,7 @@ GEM
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
     formatador (0.2.5)
+    fullcalendar-rails (2.0.2.0)
     gherkin (3.2.0)
     growl (1.0.3)
     guard (2.13.0)
@@ -180,6 +181,8 @@ GEM
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (4.7.5)
+    momentjs-rails (2.11.1)
+      railties (>= 3.1)
     multi_json (1.11.2)
     multi_test (0.1.2)
     multi_xml (0.5.5)
@@ -354,6 +357,7 @@ DEPENDENCIES
   factory_girl_rails (= 4.2.0)
   faker (= 1.1.2)
   font-awesome-rails
+  fullcalendar-rails
   growl (= 1.0.3)
   guard-rails (= 0.7.2)
   guard-rspec (= 3.1.0)
@@ -362,6 +366,7 @@ DEPENDENCIES
   jbuilder (= 1.0.2)
   jquery-fileupload-rails
   jquery-rails (= 3.0.4)
+  momentjs-rails
   omniauth
   omniauth-azure-oauth2
   omniauth-wsfed

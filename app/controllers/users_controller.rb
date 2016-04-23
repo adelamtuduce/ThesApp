@@ -46,9 +46,19 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+    puts user_params
+    puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+
+    puts params
+    puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+    @role = Role.find(params["role[id]"])
+    puts @role
     if @user.save
       personal_information = PersonalInformation.create
       @user.personal_information = personal_information
+      @user.student = Student.create if @role.student?
+      @user.teacher = Teacher.create if @role.teacher?
       @user.save
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
@@ -94,7 +104,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :role_id)
     end
 
     # Before filters

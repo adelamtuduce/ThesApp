@@ -33,36 +33,65 @@
     <div class="col-md-12">
     <!-- <div class="col-md-8">
     </div> -->
-    <div class="col-md-4">
+    <div class="col-md-5">
       <div class="panel panel-default">
-        <div class="panel-heading clearfix customClearfix">
-          Uploaded documents
-          <form id="upload-form" action="/new_document_path" class="fileupload">
-          <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>Add files...</span>
-                    <input name="files[]" multiple="" type="file">
-                </span>
-        </form>
-        </div>
-        <div class="panel-body welcome-panel">
-          <% if current_user.documents.any? %>
-            I have docs
-          <% else %>            
-           <p class="uploadedFiles"> You have no documents uploaded.</p>
-           <%= image_tag 'file.png', size: "180x90", class: 'uploadImage hidden' %>
-           <p class>
-           <button type="submit" class="btn btn-primary start hidden startUpload">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start upload</span>
-            </button>
+        <div class="panel-heading clearfix">
+          <%= form_for Document.new, :url => documents_path, html: { multipart: true, class: 'fileupload' } do |f| %>  
+            <span class="btn addDocuments fileinput-button pull-right ui-btn-inline">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <span>Adauga fisiere...</span>
+              <input name="document[file]" multiple="" type="file">
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+            </span>
+            </div>
+            <div class="panel-body welcome-panel">
+              <% if current_user.documents.any? %>
+               <table style="width:100%">
+                <th>Denumire</th> 
+                <th>Dimensiune</th>
+                <th>Actiuni</th> 
+                <% current_user.documents.each do |document| %>
+                    <tr>
+                      <td><%= document.file_file_name %></td>
+                      <td><%= document.file_file_size.to_f / 1000 %> kB</td>
+                      <td><%= link_to document.download_url do %>
+                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                        <% end %>
+                      </td>
+                  </tr>
+                <% end %>
+                </table>
+              <% else %>            
+               <p class="uploadedFiles"> Nu ai niciun document incarcat.</p>
+            <% end %>
+            <hr class="uploadHr hidden">
+            <br class="uploadHr hidden"/>
+            <%= image_tag 'file.png', size: "180x90", class: 'uploadImage hidden' %>
+            <hr class="uploadHr hidden">
+            <br class="uploadHr hidden"/>
+              <button type="submit" class="btn btn-primary start hidden startUpload">
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                <span>Start incarcare</span>
+              </button>
           <% end %>
         </div>
       </div>
     </div>
+    <div class="col-md-7">
+      <div class="panel panel-default">
+        <div class="panel-heading welcome-panel">
+        Calendar sedinte
+        </div>
+        <div class="panel-body calendar-panel">
+          <div class="hidden" id="student_id"><%= current_user.id %></div>
+          <div class="hidden" id="teacher_id"><%= current_user.id %></div>
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-md-4">
-  </div>
+  <!-- <div class="col-md-4">
+  </div> -->
 <% else %>
   <div class="center hero-unit">
     <h1>Thesis Manager App</h1>

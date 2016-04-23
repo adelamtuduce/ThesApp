@@ -12,6 +12,9 @@ class SessionsController < Devise::SessionsController
     else
       cookies.delete :remembered_email
     end
+    puts "JJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+    puts params
+    puts "JJJJJJJJJJJJJJJJJJJJJJJJJJJ"
     super
   end
 

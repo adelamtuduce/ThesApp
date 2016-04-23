@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323171232) do
+ActiveRecord::Schema.define(version: 20160417105503) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 20160323171232) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.string   "download_url"
+  end
+
+  create_table "events", force: true do |t|
+    t.string   "title"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.string   "allDay"
+    t.integer  "student_id"
+    t.integer  "teacher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "faculties", force: true do |t|
@@ -75,7 +87,7 @@ ActiveRecord::Schema.define(version: 20160323171232) do
   end
 
   create_table "roles", force: true do |t|
-    t.string   "role_name"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

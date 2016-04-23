@@ -10,6 +10,7 @@
 #  file_content_type :string(255)
 #  file_file_size    :integer
 #  file_updated_at   :datetime
+#  download_url      :string(255)
 #
 
 class DocumentsController < ApplicationController
@@ -20,6 +21,8 @@ class DocumentsController < ApplicationController
 	end
 	def create
 		@document = Document.new(document_params)
+  	@document.save
+  	@document.download_url = @document.file.url
   	@document.save
   	puts @document
 	end

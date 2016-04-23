@@ -8,3 +8,4 @@
 
 Faculty.create_faculties
 Section.create_sections
+Role.create_roles

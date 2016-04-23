@@ -22,9 +22,16 @@
 .navbar-inverse {
 	border-color: #daeeff;
 }
+.fa-3 {
+    font-size:3em;
+}
 
 body {
 	background-color: #957bbe;
+}
+
+.container {
+    width: 1290px;
 }
 
 .btn-default {
@@ -84,3 +91,11 @@ h2 {
 	height: 55px;
 }
 
+.header {
+    display: inline-block;
+    float: left;
+}
+
+.calendar-panel {
+    background-color: #f5f5f5;
+}

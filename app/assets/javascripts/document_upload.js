@@ -1,9 +1,7 @@
 $(document).ready(function() {
-  console.log("ADDDDDDDDDDDDDDDDDDDDD")
   $(".fileupload").fileupload({
     replaceFileInput: false,
       send: function(e, data) {
-        console.log("AAAAAAAAAAAAAAAAAa")
         var types = /(\.|\/)(csv)$/i;
         var uploading = true;
         var valid = true;

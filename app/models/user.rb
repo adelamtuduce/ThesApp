@@ -23,7 +23,18 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
+  has_one :role
 
   has_one :personal_information
   has_many :documents
+  belongs_to :student
+  belongs_to :teacher
+
+  def student?
+  	Student.find_by(user_id: id)
+  end
+
+  def teacher?
+  	Teacher.find_by(user_id: id)
+  end
 end

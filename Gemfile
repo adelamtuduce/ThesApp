@@ -21,6 +21,8 @@ gem 'better_errors'
 gem "binding_of_caller"
 gem "font-awesome-rails"
 gem "paperclip-dropbox"
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '2.13.1'
