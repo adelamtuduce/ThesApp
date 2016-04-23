@@ -3,6 +3,12 @@
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
+$grayDarker: #222;
+$grayDark: #333;
+$gray: #555;
+$grayLight:  #999;
+$grayLighter:  #eee;
+$blue: #2a00b3;
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -198,8 +204,6 @@ input {
 }
 
 .field_with_errors {
-  @extend .control-group;
-  @extend .error;
 }
 
 /* Users index */
