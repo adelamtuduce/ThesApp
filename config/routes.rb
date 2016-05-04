@@ -40,6 +40,7 @@ SampleApp::Application.routes.draw do
     member do
       get 'students', to: 'teachers#show_students', as: 'students'
       get 'projects', to: 'teachers#show_projects', as: 'projects'
+      get 'retrieve_projects', to: 'teachers#retrieve_projects', as: 'retrieve_projects'
     end
   end
 

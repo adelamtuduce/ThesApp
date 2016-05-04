@@ -7,10 +7,16 @@ class DiplomaProjectsController < ApplicationController
 	def create
 		@diploma_project = DiplomaProject.new(diploma_project_params)
 		if @diploma_project.save
-			render json: { status: 'success', message: 'Diploma project successfully added!'}
-		else
-			render json: {status: 'error', message: 'Errooooooor'}
+			respond_to do |format|
+  			format.js
+			end
 		end 
+	end
+
+	def destroy
+		@diploma_project = DiplomaProject.find(params[:id])
+		@diploma_project.destroy
+		render nothing: true
 	end
 
 	private

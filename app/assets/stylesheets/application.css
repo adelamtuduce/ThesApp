@@ -15,5 +15,6 @@
  *= require bootstrap.min
  *= require fullcalendar
  *= require_tree .
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  
  */

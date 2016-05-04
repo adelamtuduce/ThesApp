@@ -14,4 +14,17 @@
 class DiplomaProject < ActiveRecord::Base
 	belongs_to :student
 	belongs_to :teacher
+
+	def displayed_data
+		{
+			id: id,
+			name: name,
+			students: students,
+			duration: duration,
+			description: description,
+			actions: "<span class='deleteProject' id=#{id} style='cursor: pointer;'><i class='fa fa-times' aria-hidden='true'></i></span>"
+		}
+	end
 end
+
+

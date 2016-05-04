@@ -32,6 +32,8 @@
 
         config.time_zone = 'Bucharest'
         # config.active_record.default_timezone = 'Bucharest'
+        config.assets.paths << "#{Rails}/vendor/assets/fonts"
+
         config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
       end
     end
