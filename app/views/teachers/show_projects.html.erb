@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  	<div class="panel-heading clearfix">Your proposed projects
+  		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+			<i class="fa fa-plus" aria-hidden="true"></i> Add new project
+		</button>
+	</div>
+  	<div class="panel-body informationPanel">
+		<table class="table users">
+			<th style="text-align:left">Name</th>
+			<th>Actions</th>
+			<% @projects.each do |project| %>
+			  	<tr>
+					<td>
+				  		<%= project.name if project.name %>
+				  	</td>
+				  	<td>
+				    	<i class="fa fa-envelope"></i>
+				    </td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Diploma Project</h4>
+      </div>
+        <%= form_for DiplomaProject.new do |f| %>
+	      	<div class="modal-body">
+	        	<div class="form-group">
+	        		<%= f.label :name, class: 'control-label' %>
+	        		<%= f.text_field :name, class: 'form-control' %>
+	        	</div>
+
+	        	<div class="form-group">
+	        		<%= f.label :students, class: 'control-label' %>
+	        		<%= f.text_field :students, class: 'form-control' %>
+	        	</div>
+
+	        	<div class="form-group">
+	        		<%= f.label :duration, class: 'control-label' %>
+	        		<%= f.text_field :duration, class: 'form-control' %>
+	        	</div>
+
+	        	<div class="form-group">
+	        		<%= f.label :description, class: 'control-label' %>
+	        		<%= f.text_field :description, class: 'form-control' %>
+	        	</div>
+	        	<%= f.hidden_field :teacher_id, :value => @teacher.id %>
+		    </div>
+		    <div class="modal-footer">
+		        <div class="btn-group" role="group" aria-label="...">
+					<%= f.button "Save project", class: "btn btn-primary addDocuments" %>
+					<%= f.button "Clear inputs", :type => "reset", class: 'btn btn-info' %>
+					<button type="button" class="btn btn-default informationPanel" data-dismiss="modal">Close modal</button>
+				</div>
+		    </div>
+        <% end %>
+    </div>
+  </div>
+</div>

@@ -169,7 +169,7 @@ $(document).ready(function() {
       {
         url: '/events',
         backgroundColor: '#daeeff',   // an option!
-        textColor: 'black'
+        textColor: 'black',
         editable: true 
       }
     ],

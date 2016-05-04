@@ -1,33 +1,43 @@
-<div class="panel panel-default">
-  <div class="panel-heading clearfix">
-    <h2>Log in</h2>
+<br/>
+<br/>
+<div class='col-md-12'>
+  <div class='col-md-3'>
   </div>
-  <div class="panel-body informationPanel">
-
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="form-group">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true %>
+  <div class='col-md-6'>
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h2>Log in</h2>
       </div>
+      <div class="panel-body welcome-panel">
 
-      <div class="form-group">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "off" %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-group">
+            <%= f.label :email, class: 'label-control' %><br />
+            <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password, class: 'label-control' %><br />
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+          </div>
+
+          <% if devise_mapping.rememberable? -%>
+            <div class="form-group">
+              
+            </div>
+          <% end -%>
+
+          <div class="actions">
+            <%= f.submit "Log in", class: 'btn btn-info addDocuments' %>
+          </div>
+        <% end %>
       </div>
-
-      <% if devise_mapping.rememberable? -%>
-        <div class="form-group">
-          
-        </div>
-      <% end -%>
-
-      <div class="actions">
-        <%= f.submit "Log in", class: 'btn btn-info addDocuments' %>
+      <div class="panel-footer">
+        <%= render "devise/shared/links" %>
       </div>
-    <% end %>
+    </div>
   </div>
-  <div class="panel-footer">
-    <%= render "devise/shared/links" %>
+  <div class='col-md-3'>
   </div>
 </div>
 

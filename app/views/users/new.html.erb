@@ -1,26 +1,38 @@
 <% provide(:title, 'Sign up') %>
-<div class="panel panel-default">
-  <div class="panel-heading clearfix">
-    <h1>Sign up</h1>
+<div class='col-md-12'>
+  <div class='col-md-3'>
   </div>
-  <div class="panel-body informationPanel">
-    <div class="row">
-      <div class="span6 offset3">
-        <%= form_for(@user) do |f| %>
-          <%= render 'shared/error_messages', object: f.object %>
+  <div class='col-md-6'>
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h1>Sign up</h1>
+      </div>
+      <div class="panel-body informationPanel">
+        <div class="row">
+          <div class="span6 offset3">
+            <%= form_for(@user) do |f| %>
+              <%= render 'shared/error_messages', object: f.object %>
+              <div class="form-control">
+                <%= f.label :email %>
+                <%= f.text_field :email %>
+              </div>
 
-          <%= f.label :email %>
-          <%= f.text_field :email %>
+              <div class="form-control">
+                <%= f.label :password %>
+                <%= f.password_field :password %>
+              </div>
+              <div class="form-control">
+                <%= f.label :password_confirmation, "Confirmation" %>
+                <%= f.password_field :password_confirmation %>
+              </div>
 
-          <%= f.label :password %>
-          <%= f.password_field :password %>
-
-          <%= f.label :password_confirmation, "Confirmation" %>
-          <%= f.password_field :password_confirmation %>
-
-          <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
-        <% end %>
+              <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+  <div class='col-md-3'>
   </div>
 </div>

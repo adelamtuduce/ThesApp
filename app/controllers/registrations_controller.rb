@@ -21,7 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
       @user.save
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to edit_user_path(@user)
+      redirect_to @user
     else
       render 'new'
     end

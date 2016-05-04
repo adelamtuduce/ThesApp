@@ -37,4 +37,8 @@ class User < ActiveRecord::Base
   def teacher?
   	Teacher.find_by(user_id: id)
   end
+
+  def teacher
+    Teacher.find_by(user_id: id)
+  end
 end

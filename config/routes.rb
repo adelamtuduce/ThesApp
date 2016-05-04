@@ -36,8 +36,15 @@ SampleApp::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :events
+  resources :teachers do
+    member do
+      get 'students', to: 'teachers#show_students', as: 'students'
+      get 'projects', to: 'teachers#show_projects', as: 'projects'
+    end
+  end
 
   resources :documents
+  resources :diploma_projects
 
   resources :users do
     member do

@@ -1,11 +1,11 @@
 <% if user_signed_in? %>
   <div class="row">
     <div class="col-md-12">
-      <div class="col-md-3">
+      <div class="col-md-3" style="text-align:center;">
         <% if current_user.personal_information && current_user.personal_information.avatar %>
-         <%= image_tag current_user.personal_information.avatar.url, size: "180x90" %>
+         <%= image_tag current_user.personal_information.avatar.url, size: "200x160" %>
         <% else %>
-         <%= image_tag 'default_avatar.png', size: "180x90" %>
+         <%= image_tag @personal_information.avatar.url, size: "200x160" %>
         <% end %>
       </div>
       <div class="col-md-3"></div>
@@ -93,10 +93,12 @@
   <!-- <div class="col-md-4">
   </div> -->
 <% else %>
-  <div class="center hero-unit">
+  <div class="panel panel-default welcome-panel singUpPanel" style='text-align:center;'>
     <h1>Thesis Manager App</h1>
     <br/>
+    <br/>
+    <br/>
     <%= link_to "Sign up now!",  new_user_registration_path ,
-                                class: "btn btn-large btn-primary addDocuments" %>
+                                class: "btn btn-large btn-primary addDocuments singUp" %>
   </div>
 <% end %>

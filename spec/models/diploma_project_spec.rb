@@ -8,6 +8,7 @@
 #  duration   :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  teacher_id :integer
 #
 
 require 'spec_helper'

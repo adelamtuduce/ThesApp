@@ -11,4 +11,5 @@
 class Teacher < ActiveRecord::Base
 	has_many :diploma_projects
 	has_one :user
+	has_many :students
 end

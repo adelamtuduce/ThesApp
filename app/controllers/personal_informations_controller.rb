@@ -40,6 +40,9 @@ def update
 	end
 end
 
+def edit
+end
+
 private
 
   def personal_information_params

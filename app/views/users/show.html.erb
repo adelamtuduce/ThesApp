@@ -2,12 +2,14 @@
   <div class="col-md-12"></div>
 </div>
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-4" style='text-align: center;'>
+    <br/>
     <%= image_tag @personal_information.avatar.url, size: "200x160" %>
+    <br/>
     <hr>
     <%= form_for @personal_information, :html => { :multipart => true, :id => "fileupload"  }, url: @url, remote: true do |f| %>
       <%= f.file_field :avatar %>
-      <br>
+      <br/>
       <%= f.submit 'Update avatar', :class => 'btn btn-info' %>
     <% end %>
   </div>
@@ -20,35 +22,35 @@
         <%= form_for @personal_information, url: @url, remote: true do |f| %>
           <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :first_name %>
+            <%= f.label :first_name, class: 'control-label' %>
             <%= f.text_field :first_name, class: 'form-control' %>
           </div>
            <div class="form-group">
-            <%= f.label :last_name %>
+            <%= f.label :last_name, class: 'control-label' %>
             <%= f.text_field :last_name, class: 'form-control' %>
           </div>
            <div class="form-group">
-            <%= f.label :age %>
+            <%= f.label :age, class: 'control-label' %>
             <%= f.text_field :age, class: 'form-control' %>
           </div>
 
-          <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
           </div>
 
           <div class="col-md-6">
            <div class="form-group">
-            <%= f.label :code %>
+            <%= f.label :code, class: 'control-label' %>
             <%= f.text_field :code, class: 'form-control' %>
           </div>
 
            <div class="form-group">
-            <%= f.label :faculty %>
-            <%= collection_select :faculty, :id, Faculty.all.order(:name), :id,:name, {:include_blank => 'Please Select'} %>
+            <%= f.label :faculty, class: 'control-label' %>
+            <%= collection_select :faculty, :id, Faculty.all.order(:name), :id,:name, {:include_blank => 'Please Select'}, class: 'form-control' %>
           </div>
 
           <div class="form-group">
-            <%= f.label :section %>
-            <%= f.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'} %>
+            <%= f.label :section, class: 'control-label' %>
+            <%= f.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'}, class: 'form-control' %>
           </div>
           <%= f.submit 'Save data', :class => 'btn btn-info addDocuments pull-right' %>
           </div>

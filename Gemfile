@@ -23,6 +23,8 @@ gem "font-awesome-rails"
 gem "paperclip-dropbox"
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
+gem 'jquery-datatables-rails', '~> 3.3.0'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '2.13.1'

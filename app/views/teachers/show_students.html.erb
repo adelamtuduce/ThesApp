@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  	<div class="panel-heading">Students currently enroled</div>
+  	<div class="panel-body informationPanel">
+		<table class="table users">
+			<th style="text-align:left">Name</th>
+			<th>Actions</th>
+			<% @students.each do |student| %>
+			  	<tr>
+					<td>
+				  		<%= student.personal_information.first_name if student.personal_information && student.personal_information.first_name %>
+				  	</td>
+				  	<td style="text-align:center">
+				    	<%= link_to "#", class: "start-conversation",
+				    	"data-sid" => current_user.id, "data-rip" => student.user.id do %>
+				    		<i class="fa fa-weixin"></i>
+				    	<% end %>
+				    	<i class="fa fa-envelope"></i>
+				    </td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>
