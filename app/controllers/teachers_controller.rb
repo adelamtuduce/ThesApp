@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: teachers
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class TeachersController < ApplicationController
   before_filter :authenticate_user!
 

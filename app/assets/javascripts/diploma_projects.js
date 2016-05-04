@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function() {	
 	var teacher_id = $(".teacherProjects").data('teacher-id');
 	$('.diploma_projects').DataTable({
 	  ajax: $('.diploma_projects').data('source'),
@@ -15,6 +15,34 @@ $(document).ready(function() {
         { data: 'description' },
         { data: 'actions' }
     ]
+	});
+
+	var table = $(".allDiplomaProjects").DataTable({
+	  ajax: $('.allDiplomaProjects').data('source'),
+	  pagingType: 'full_numbers',
+	  processing: true,
+	  serverSide: true,
+	  pageLength: 8,
+	  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+	  columns: [
+        { data: 'name' },
+        { data: 'students' },
+        { data: 'duration' },
+        { data: 'description' },
+        { data: 'teacher' },
+        { data: 'actions' }
+    ]
+	});
+
+	var addTooltip = function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	}
+
+	setTimeout(addTooltip, 500);
+
+	$(document).on('click',".paginate_button a", function(){
+		console.log("AAAAAAAAAAAAAAAA")
+		setTimeout(addTooltip, 500);
 	});
 
 	$(document).on('click', ".deleteProject", function() {

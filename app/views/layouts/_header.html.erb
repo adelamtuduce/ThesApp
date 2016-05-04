@@ -10,8 +10,6 @@
     </div> 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"> 
       <ul class="nav navbar-nav pull-right"> 
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Help", help_path %></li>
         <% if user_signed_in? %>
           <% if current_user.teacher? %>
              <li><%= link_to "Your students", students_teacher_path(current_user.teacher) %></li>
@@ -25,12 +23,16 @@
               <li><%= link_to "Profile", current_user %></li>
               <li><%= link_to "Settings", edit_user_path(current_user) %></li>
               <li role="separator" class="divider"></li>
-              <%= link_to "Sign out",  destroy_user_session_path , method: "delete" %>
+              <li>
+                <%= link_to "Sign out",  destroy_user_session_path , method: "delete" %>
+              </li>
             </ul>
           </li>
         <% else %>
           <li><%= link_to "Sign in",  new_user_session_path  %></li>
         <% end %>
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Help", help_path %></li>
       </ul> 
     </div> 
   </div> 

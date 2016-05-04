@@ -6,13 +6,13 @@ SampleApp::Application.routes.draw do
 #   get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
 #   get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
 # end
-  root to: 'static_pages#home'
+  root to: 'dashboard#home'
   # match '/signup',  to: 'users#new',            via: 'get'
   # match '/signin',  to: 'sessions#new',         via: 'get'
   # match '/signout', to: 'sessions#destroy',     via: 'delete'
-  match '/help',    to: 'static_pages#help',    via: 'get'
-  match '/about',   to: 'static_pages#about',   via: 'get'
-  match '/contact', to: 'static_pages#contact', via: 'get'
+  match '/help',    to: 'dashboard#help',    via: 'get'
+  match '/about',   to: 'dashboard#about',   via: 'get'
+  match '/contact', to: 'dashboard#contact', via: 'get'
   match '/auth/wsfed/callback' => 'sessions#create', via: [:get, :post]  
   match '/auth/failure' => 'sessions#failure', via: [:get]
 

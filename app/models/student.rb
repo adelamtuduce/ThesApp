@@ -11,8 +11,8 @@
 #
 
 class Student < ActiveRecord::Base
-	has_one :user
-	has_one :diploma_project
+	belongs_to :user
+	belongs_to :diploma_project
 	belongs_to :teacher
 
 	def personal_information

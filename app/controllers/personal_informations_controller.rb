@@ -51,7 +51,7 @@ private
     	:last_name, 
     	:age,
     	:year,
-    	:faculty_id,
+    	:section_id,
     	:code,
       :avatar,
       :user_id)

@@ -25,4 +25,21 @@ class PersonalInformation < ActiveRecord::Base
 	# validates_presence_of :code, presence: true, length: { maximum: 10 }
 	has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "default_avatar.png"
   	validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+
+	def student_incomplete?
+		return true if first_name.blank?
+		return true if last_name.blank?
+		return true if age.blank?
+		return true if code.blank?
+		return true if section_id.blank?
+		return true if year.blank?
+		false
+	end
+
+	def teacher_incomplete?
+		return true if first_name.blank?
+		return true if last_name.blank?
+		return true if section_id.blank?
+		false
+	end
 end

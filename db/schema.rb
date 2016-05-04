@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504073403) do
+ActiveRecord::Schema.define(version: 20160504162236) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160504073403) do
 
   create_table "diploma_projects", force: true do |t|
     t.string   "name"
-    t.integer  "students"
+    t.integer  "max_students"
     t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"

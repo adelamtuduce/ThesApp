@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
 
   has_one :personal_information
   has_many :documents
-  belongs_to :student
-  belongs_to :teacher
+  has_one :student
+  has_one :teacher
 
   def student?
   	Student.find_by(user_id: id)
@@ -40,5 +40,14 @@ class User < ActiveRecord::Base
 
   def teacher
     Teacher.find_by(user_id: id)
+  end
+
+  def student
+    Student.find_by(user_id: id)
+  end
+
+  def incomplete_information?
+    return personal_information.student_incomplete? if student?
+    return personal_information.teacher_incomplete? if teacher?
   end
 end

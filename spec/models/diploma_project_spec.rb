@@ -2,13 +2,14 @@
 #
 # Table name: diploma_projects
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  students   :integer
-#  duration   :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  teacher_id :integer
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  max_students :integer
+#  duration     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  teacher_id   :integer
+#  description  :text
 #
 
 require 'spec_helper'

@@ -10,6 +10,16 @@
 
 class Teacher < ActiveRecord::Base
 	has_many :diploma_projects
-	has_one :user
-	has_many :students
+	belongs_to :user
+
+	def name
+		first_name = user.personal_information.first_name.blank? ? '' : user.personal_information.first_name
+		last_name = user.personal_information.last_name.blank? ? '' : user.personal_information.last_name
+
+		first_name + '' + last_name
+	end
+
+	def students
+		Student.where(diploma_project_id: diploma_projects.map(&:id))
+	end
 end

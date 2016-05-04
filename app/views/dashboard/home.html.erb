@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+  <% if current_user.student? %>
+    <% if current_user.student.diploma_project %>
+      <%= render 'overview' %>
+    <% else %>
+      <%= render 'projects' %>
+    <% end %>
+  <% end %>
+  <% if current_user.teacher? %>
+    <% if current_user.teacher.students.any? %>
+    <% else %>
+      <%= render 'teachers/current_projects' %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= render 'default' %>
+<% end %>
