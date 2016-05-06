@@ -1,0 +1,35 @@
+<html>
+	<head>
+	</head>
+	<body>
+		Hello <%= @teacher.name %>,
+		<br/>
+		<br/>
+		You have received a enrollment request from <b><i><%= @student.name %></i></b> for <b><%= @diploma.name %></b>.
+		<br/>
+		<br/>
+		More details about <%= @student.name %>:
+		<br/>
+		<br/>
+		<b>Full name:</b> <%= @student.name %>
+		<br/>
+		<b>Year of study:</b> <%= @student.personal_information.year %>
+		<br/>
+		<b>Faculty:</b> <%= Faculty.find_by(id: Section.find_by(id: @student.personal_information.section_id).faculty_id).name %>
+		<br/>
+		<b>Section:</b> <%= Section.find_by(id: @student.personal_information.section_id).name %>
+		<br/>
+		<br/>
+		<br/>
+
+		To confirm the acceptance of the enrollment request, go to Enrollment Requests and click Accept for this student.
+		<br/>
+		To refuse the enrollment request, go to Enrollment Requests and click Refuse for this student.
+		<br/>
+		<br/>
+
+		Have a great day,
+		<br/>
+		<b>Thesis Application Manager</b>
+	</body>
+</html>

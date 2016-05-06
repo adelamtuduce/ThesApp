@@ -28,6 +28,17 @@ class DiplomaProjectsController < ApplicationController
 	def new
 	end
 
+	def enroll_student
+		puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+		puts params
+		puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+		diploma_project = DiplomaProject.find(params[:diploma_project_id])
+		student = current_user.student
+		teacher = diploma_project.teacher
+		EnrollRequest.create(student: student, teacher: teacher, diploma_project: diploma_project)
+		EnrollMailer.enroll_student(student, teacher, diploma_project).deliver
+	end
+
 	def create
 		@diploma_project = DiplomaProject.new(diploma_project_params)
 		if @diploma_project.save
@@ -48,7 +59,7 @@ class DiplomaProjectsController < ApplicationController
 	def diploma_project_params
 		params.require(:diploma_project).permit(
     	:name, 
-    	:students, 
+    	:max_students, 
     	:duration,
     	:description,
     	:teacher_id)

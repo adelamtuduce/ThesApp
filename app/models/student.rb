@@ -18,4 +18,11 @@ class Student < ActiveRecord::Base
 	def personal_information
 		user.personal_information
 	end
+
+	def name
+		first_name = personal_information.first_name.blank? ? '' : personal_information.first_name
+		last_name = personal_information.last_name.blank? ? '' : personal_information.last_name
+
+		first_name + ' ' + last_name
+	end
 end

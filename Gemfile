@@ -24,6 +24,7 @@ gem "paperclip-dropbox"
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
+gem "letter_opener", :group => :development
 
 group :development, :test do
   gem 'sqlite3'

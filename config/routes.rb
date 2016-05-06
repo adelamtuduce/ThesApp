@@ -41,11 +41,18 @@ SampleApp::Application.routes.draw do
       get 'students', to: 'teachers#show_students', as: 'students'
       get 'projects', to: 'teachers#show_projects', as: 'projects'
       get 'retrieve_projects', to: 'teachers#retrieve_projects', as: 'retrieve_projects'
+      get 'enrolls', to: 'teachers#enrollment_requests', as: 'enrolls'
+      get 'show_enrollments', to: 'teachers#show_enrollments', as: 'show_enrollments'
+      get 'accepted_requests', to: 'teachers#accepted_requests', as: 'accepted_requests'
+      get 'accept_enrollment', to: 'teachers#accept_student_enrollment', as: 'accept_student_enrollment'
+      post 'decline_enrollment', to: 'teachers#decline_student_enrollment', as: 'decline_student_enrollment'
     end
   end
 
   resources :documents
-  resources :diploma_projects
+  resources :diploma_projects do
+    post 'enroll', to: 'diploma_projects#enroll_student', as: 'enroll'
+  end
 
   resources :users do
     member do

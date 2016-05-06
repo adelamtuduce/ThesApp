@@ -38,32 +38,51 @@
           </div>
 
           <div class="col-md-6">
-           <div class="form-group">
-            <%= f.label :code, class: 'control-label' %>
-            <%= f.text_field :code, class: 'form-control' %>
-          </div>
+            <div class="form-group">
+              <%= f.label :code, class: 'control-label' %>
+              <% if current_user.personal_information.code.blank? %>
+                <%= f.text_field :code, class: 'form-control' %>
+              <% else %>
+                <br/>
+                <%= current_user.personal_information.code %>
+              <% end %>
+            </div>
 
-           <div class="form-group">
-            <%= f.label :faculty, class: 'control-label' %>
-            <% if current_user.personal_information.section_id.blank? %>
-              <%= collection_select :faculty, :id, Faculty.all.order(:name), :id,:name, {:include_blank => 'Please Select'}, class: 'form-control' %>
-            <% else %>
-              <br />
-              <%= Faculty.find_by(id: Section.find_by(id: current_user.personal_information.section_id)).name %>
+            <% if current_user.student? %>
+              <div class="form-group">
+                <%= f.label :year, class: 'control-label' %>
+                <% if current_user.personal_information.year.blank? %>
+                  <%= f.select :year, options_for_select([['1',1],['2',2],['3',3],['4',4]]), {:prompt => 'Please Select'},  { class: 'form-control' } %>
+                <% else %>
+                  <br />
+                  <%= current_user.personal_information.year %>
+                <% end %>
+              </div>
             <% end %>
-          </div>
+             <div class="form-group">
+              <%= f.label :faculty, class: 'control-label' %>
+              <% if current_user.personal_information.section_id.blank? %>
+                <%= collection_select :faculty, :id, Faculty.all.order(:name), :id,:name, {:include_blank => 'Please Select'}, class: 'form-control' %>
+              <% else %>
+                <br />
+                <%= Faculty.find_by(id: Section.find_by(id: current_user.personal_information.section_id)).name %>
+              <% end %>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :section, class: 'control-label' %>
-            <% if current_user.personal_information.section_id.blank? %>
-              <%= f.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'}, class: 'form-control' %>
-            <% else %>
-              <br / >
-              <%= Section.find_by(id: current_user.personal_information.section_id).name %>
-            <% end %>
-            
+            <div class="form-group">
+              <%= f.label :section, class: 'control-label' %>
+              <% if current_user.personal_information.section_id.blank? %>
+                <%= f.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'}, class: 'form-control' %>
+              <% else %>
+                <br / >
+                <%= Section.find_by(id: current_user.personal_information.section_id).name %>
+              <% end %>
+              
+            </div>
           </div>
-          <%= f.submit 'Save data', :class => 'btn btn-info addDocuments pull-right' %>
+          <br />
+          <div style="text-align: center">
+          <%= f.submit 'Save data', :class => 'btn btn-info addDocuments' %>
           </div>
         <% end %>
       </div>

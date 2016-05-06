@@ -16,7 +16,7 @@ class Teacher < ActiveRecord::Base
 		first_name = user.personal_information.first_name.blank? ? '' : user.personal_information.first_name
 		last_name = user.personal_information.last_name.blank? ? '' : user.personal_information.last_name
 
-		first_name + '' + last_name
+		first_name + ' ' + last_name
 	end
 
 	def students

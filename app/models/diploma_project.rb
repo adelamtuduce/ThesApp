@@ -34,7 +34,7 @@ class DiplomaProject < ActiveRecord::Base
 			duration: duration,
 			description: description,
 			teacher: teacher.name,
-			actions: "<span class='enrollProject' data-project-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Request enroll' class='fa fa-envelope' aria-hidden='true'></i></i></span>
+			actions: "<span class='enrollProject' data-teacher-id=#{teacher.id} data-project-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Request enroll' class='fa fa-envelope' aria-hidden='true'></i></i></span>
 					  <span class='viewDetails' data-details-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='More Details' class='fa fa-cogs' aria-hidden='true'></i></span>"
 		}
 	end

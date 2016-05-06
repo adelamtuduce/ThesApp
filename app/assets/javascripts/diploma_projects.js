@@ -45,6 +45,20 @@ $(document).ready(function() {
 		setTimeout(addTooltip, 500);
 	});
 
+	$(document).on('click', '.enrollProject', function(){
+		var teacher_id = $(this).data('teacher-id');
+		var project_id = $(this).data('project-id');
+
+		$.ajax ({
+			type: 'POST',
+			url: '/diploma_projects/' + project_id + '/enroll',
+			data: { teacher_id: teacher_id, project_id: project_id },
+			success: function(data) {
+				setTimeout(addTooltip, 500);
+			}
+		});
+	});
+
 	$(document).on('click', ".deleteProject", function() {
 		console.log("AAAAAAAAAA")
 		var projectID = $(this).attr('id');
