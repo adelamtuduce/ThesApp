@@ -25,6 +25,7 @@ gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem "letter_opener", :group => :development
+gem 'jquery-ui-rails'
 
 group :development, :test do
   gem 'sqlite3'

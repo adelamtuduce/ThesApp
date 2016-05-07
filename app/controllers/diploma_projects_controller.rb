@@ -21,7 +21,18 @@ class DiplomaProjectsController < ApplicationController
 		response[:draw] = params[:draw].to_i
 		response[:recordsTotal] = @diploma_projects.count
 		response[:recordsFiltered] = @diploma_projects.count
-		response[:data] = @diploma_projects.offset(params[:start].to_i).limit(params[:length].to_i).map(&:student_displayed_data)
+		response[:data] = @diploma_projects.offset(params[:start].to_i).limit(params[:length].to_i).map { |project| project.student_displayed_data(current_user.student) }
+		render json: response
+	end
+
+	def student_enrolls
+		student = current_user.student
+		enrolls = student.enroll_requests.order(priority: :asc)
+		response = {}
+		response[:draw] = params[:draw].to_i
+		response[:recordsTotal] = enrolls.count
+		response[:recordsFiltered] = enrolls.count
+		response[:data] = enrolls.offset(params[:start].to_i).limit(params[:length].to_i).map(&:diploma_enrolls)
 		render json: response
 	end
 
@@ -29,15 +40,28 @@ class DiplomaProjectsController < ApplicationController
 	end
 
 	def enroll_student
-		puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
-		puts params
-		puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
 		diploma_project = DiplomaProject.find(params[:diploma_project_id])
 		student = current_user.student
 		teacher = diploma_project.teacher
-		EnrollRequest.create(student: student, teacher: teacher, diploma_project: diploma_project)
-		EnrollMailer.enroll_student(student, teacher, diploma_project).deliver
+		if student.enroll_requests.any?
+			priority = student.enroll_requests.count + 1
+		else
+			priority = 1
+		end
+		EnrollRequest.create(student: student, teacher: teacher, diploma_project: diploma_project, priority: priority)
+		# EnrollMailer.enroll_student(student, teacher, diploma_project).deliver
 	end
+
+	def update_priorities
+		params[:priorities].each do |key, priority_hash|
+			puts priority_hash
+			priority = priority_hash[:priority]
+			request = EnrollRequest.find(priority_hash[:request_id]).update_attributes(priority: priority)
+		end
+
+		render nothing: true
+	end
+
 
 	def create
 		@diploma_project = DiplomaProject.new(diploma_project_params)

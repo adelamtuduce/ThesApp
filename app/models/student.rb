@@ -14,6 +14,7 @@ class Student < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :diploma_project
 	belongs_to :teacher
+	has_many :enroll_requests
 
 	def personal_information
 		user.personal_information

@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require jquery-ui
  *= require jquery.fileupload
  *= require jquery.fileupload-ui
  *= require font-awesome
@@ -16,5 +17,6 @@
  *= require fullcalendar
  *= require_tree .
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require rowReorder.dataTables
  
  */

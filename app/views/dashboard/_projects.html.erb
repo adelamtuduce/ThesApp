@@ -1,18 +1,39 @@
- <div class="panel panel-default">
-  <div class="panel-heading clearfix">Available Diploma Projects</div>
-  <div class="panel-body informationPanel">
-    <table class="table allDiplomaProjects" class="display" data-source="<%= diploma_projects_path %>">
-      <thead>
-        <th style="text-align:left">Name</th>
-        <th>No. of students</th>
-        <th>Duration</th>
-        <th>Description</th>
-        <th>Teacher</th>
-        <th>Actions</th>
-      </thead>
-      <tbody>
-        
-      </tbody>
-    </table>
+<div class="col-md-12">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">Available Diploma Projects</div>
+      <div class="panel-body informationPanel">
+        <table class="table allDiplomaProjects" class="display" data-source="<%= diploma_projects_path %>">
+          <thead>
+            <th style="text-align:left">Name</th>
+            <th>Students</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th>Teacher</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">Projects to request enroll</div>
+      <div class="panel-body informationPanel">
+        <table class="table toRequestEnroll" class="display" data-source="<%= student_enrolls_diploma_projects_path %>">
+          <thead>
+            <th style="text-align:left">Name</th>
+            <th>Teacher</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

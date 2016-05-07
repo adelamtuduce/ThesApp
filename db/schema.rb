@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506083305) do
+ActiveRecord::Schema.define(version: 20160507104841) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160506083305) do
     t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "priority"
   end
 
   create_table "events", force: true do |t|

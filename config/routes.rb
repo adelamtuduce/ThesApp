@@ -51,6 +51,10 @@ SampleApp::Application.routes.draw do
 
   resources :documents
   resources :diploma_projects do
+    collection do
+      get 'student_enrolls', to: 'diploma_projects#student_enrolls', as: 'student_enrolls'
+      post 'update_priorities', to: 'diploma_projects#update_priorities', as: 'update_priorities'
+    end
     post 'enroll', to: 'diploma_projects#enroll_student', as: 'enroll'
   end
 

@@ -27,15 +27,27 @@ class DiplomaProject < ActiveRecord::Base
 		}
 	end
 
-	def student_displayed_data
+	def available_diploma?(student)
+		return false if max_students == students.count
+		return false if EnrollRequest.where(student: student, diploma_project: self).any?
+		true
+	end
+
+	def student_displayed_data(student)
+		if available_diploma?(student)
+			html = "<span class='enrollProject' data-teacher-id=#{teacher.id} data-project-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' class='fa fa-plus' title='Apply to project' style='color:green;' aria-hidden='true'></i></i></span>
+					  <span class='viewDetails' data-details-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='More Details' class='fa fa-cogs' aria-hidden='true'></i></span>"
+		else
+			html = "<span><i class='fa fa-star' data-toggle='tooltip' data-placement='top' title='You can not enroll to this project anymore!' style='color:blue;' aria-hidden='true'></i></span> <span class='viewDetails' data-details-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='More Details' class='fa fa-cogs' aria-hidden='true'></i></span>"
+
+		end
 		{
 			name: name,
 			students: max_students - students.count,
 			duration: duration,
 			description: description,
 			teacher: teacher.name,
-			actions: "<span class='enrollProject' data-teacher-id=#{teacher.id} data-project-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Request enroll' class='fa fa-envelope' aria-hidden='true'></i></i></span>
-					  <span class='viewDetails' data-details-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='More Details' class='fa fa-cogs' aria-hidden='true'></i></span>"
+			actions: html
 		}
 	end
 end

@@ -11,10 +11,12 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
-//= require dataTables/jquery.dataTables
+//= require jquery.dataTables.min
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require moment
+//= require rowReorder.min
 //= require turbolinks
 //= require jquery-fileupload/basic
 //= require chat

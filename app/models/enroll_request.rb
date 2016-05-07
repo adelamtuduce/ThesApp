@@ -24,4 +24,13 @@ class EnrollRequest < ActiveRecord::Base
 								<span class='declineRequest' data-student-id=#{student.id} data-diploma-id=#{diploma_project.id} style='cursor: pointer;'><i style='color:red;' data-toggle='tooltip' data-placement='top' title='Decline Request'  class='fa fa-times' aria-hidden='true'></i></span>"
 		}
 	end
+
+
+	def diploma_enrolls
+		{
+			name: diploma_project.name, 
+			teacher: teacher.name,
+			actions: "<span class='enrollProject' data-enroll-id=#{id} data-teacher-id=#{teacher.id} data-project-id=#{diploma_project.id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Cancel request' style='color:red;' class='fa fa-times' aria-hidden='true'></i></i></span>"
+		}
+	end
 end
