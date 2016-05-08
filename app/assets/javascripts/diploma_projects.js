@@ -18,7 +18,32 @@ $(document).ready(function() {
     ]
 	});
 
-	var table = $(".allDiplomaProjects").DataTable({
+	var table = $(".allDiplomaProjects").dataTable({
+		initComplete: function () {
+			console.log(this.api().columns());
+            this.api().columns().every( function () {
+            	console.log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+                var column = this;
+                console.log(column)
+                var container = $("<div class='col-md-2'></div").appendTo( $("#filters"));
+                var select = $('<select class="form-control"><option value=""></option></select>')
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+
+                select.appendTo(container);
+            } );
+        },
 	  ajax: $('.allDiplomaProjects').data('source'),
 	  pagingType: 'full_numbers',
 	  processing: true,
@@ -26,13 +51,17 @@ $(document).ready(function() {
 	  pageLength: 8,
 	  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
 	  columns: [
-        { data: 'name' },
+        { data: 'name', orderable: false, className: "noSort" },
         { data: 'students' },
         { data: 'duration' },
-        { data: 'description' },
-        { data: 'teacher' },
-        { data: 'actions' }
-    ]
+        { data: 'description', orderable: false, className: "noSort" },
+        { data: 'teacher', orderable: false, className: "noSort" },
+        { data: 'actions', orderable: false, className: "noSort" }
+    ],
+    "createdRow": function( row, data, dataIndex ) {
+     	$(row).attr('id', data.id);
+     	$(row).attr('class', 'diplomaProjects');
+  	}   
 	});
 
 	var studentEnrolls = $('.toRequestEnroll').DataTable({
@@ -96,6 +125,19 @@ $(document).ready(function() {
 				setTimeout(addTooltip, 500);
 			}
 		});
+	});
+
+	$(document).on('click', ".allDiplomaProjects tbody tr", function() {
+		var projectID = $(this).attr('id');
+		$.ajax ({
+			type: 'get',
+			url: '/diploma_projects/' + projectID + '/diploma_project_modal',
+			data: {diploma_project_id: projectID},
+			success: function(data){
+				console.log(data);
+        		$('#projectModal').html(data).modal({show: true});
+        	}
+		})
 	});
 
 	$(document).on('click', ".deleteProject", function() {

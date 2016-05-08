@@ -1,0 +1,36 @@
+<!-- Modal -->
+<div class="modal-dialog">
+    <div class="modal-content" style='text-align:center;'>
+        <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="projectName">Details for: <b><%= diploma_project.name %></b></h4>
+      	</div>
+      	<div class='modal-body'>
+	        <table class="table">
+			  	<thead>
+			  	</thead>
+			  	<tbody>
+			  		<tr>
+			  			<th style="border-top: none;">Name of project: </th>
+			  			<td style="border-top: none;"><%= diploma_project.name %></td>
+			  		</tr>
+			  		<tr>
+			  			<th>Maximum number of students: </th>
+			  			<td><%= diploma_project.max_students %></td>
+			  		</tr>
+			  		<tr>
+			  			<th>Duration of project: </th>
+			  			<td><%= diploma_project.duration %></td>
+			  		</tr>
+			  		<tr>
+			  			<th>Description of project: </th>
+			  			<td><%= diploma_project.description %></td>
+			  		</tr>
+				</tbody>
+	    	</table>
+	    </div>
+	    <div class='modal-footer'>
+	    	<button type="button" class="btn btn-default informationPanel" data-dismiss="modal">Close modal</button>
+	    </div>
+    </div>
+</div>

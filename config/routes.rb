@@ -55,6 +55,10 @@ SampleApp::Application.routes.draw do
       get 'student_enrolls', to: 'diploma_projects#student_enrolls', as: 'student_enrolls'
       post 'update_priorities', to: 'diploma_projects#update_priorities', as: 'update_priorities'
     end
+
+    member do
+      get 'diploma_project_modal', to: 'diploma_projects#diploma_project_modal', as: 'diploma_project_modal'
+    end
     post 'enroll', to: 'diploma_projects#enroll_student', as: 'enroll'
   end
 

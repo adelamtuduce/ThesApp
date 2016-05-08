@@ -21,7 +21,7 @@ class DiplomaProjectsController < ApplicationController
 		response[:draw] = params[:draw].to_i
 		response[:recordsTotal] = @diploma_projects.count
 		response[:recordsFiltered] = @diploma_projects.count
-		response[:data] = @diploma_projects.offset(params[:start].to_i).limit(params[:length].to_i).map { |project| project.student_displayed_data(current_user.student) }
+		response[:data] = @diploma_projects.order_projects(params).offset(params[:start].to_i).limit(params[:length].to_i).map { |project| project.student_displayed_data(current_user.student) }
 		render json: response
 	end
 
@@ -62,6 +62,12 @@ class DiplomaProjectsController < ApplicationController
 		render nothing: true
 	end
 
+	def diploma_project_modal
+		@diploma_project = DiplomaProject.find(params[:diploma_project_id])
+		respond_to do |format|
+      format.html { render partial: 'diploma_project_modal', locals: { diploma_project: @diploma_project }, layout: false }
+    end
+	end
 
 	def create
 		@diploma_project = DiplomaProject.new(diploma_project_params)

@@ -56,7 +56,6 @@ class UsersController < ApplicationController
       @user.save
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
-      puts 'NNNNNNDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'
       redirect_to edit_personal_information_path(personal_information)
     else
       render 'new'

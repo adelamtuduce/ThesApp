@@ -42,6 +42,7 @@ class DiplomaProject < ActiveRecord::Base
 
 		end
 		{
+			id: id,
 			name: name,
 			students: max_students - students.count,
 			duration: duration,
@@ -49,6 +50,21 @@ class DiplomaProject < ActiveRecord::Base
 			teacher: teacher.name,
 			actions: html
 		}
+	end
+
+	def self.order_projects(params)
+		order_hash = params['order']['0']
+		field_to_order_by = order_hash[:column]
+		direction = order_hash[:dir]
+		case field_to_order_by
+		when '1'
+			projects = all.order(max_students: direction.to_sym)
+		when '2'
+			projects = all.order(duration: direction.to_sym)
+		else
+			projects = all.order(created_at: :desc)
+		end
+		projects
 	end
 end
 

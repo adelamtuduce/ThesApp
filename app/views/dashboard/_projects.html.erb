@@ -5,6 +5,13 @@
       <div class="panel-body informationPanel">
         <table class="table allDiplomaProjects" class="display" data-source="<%= diploma_projects_path %>">
           <thead>
+            <div class="col-md-12" >
+                <div class="panel-body" id='filters'>
+                  <!-- <div class="row" id='filters'></div> -->
+                </div>
+              <div class="panel panel-default">
+              </div>
+            </div>
             <th style="text-align:left">Name</th>
             <th>Students</th>
             <th>Duration</th>
@@ -37,3 +44,4 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="myProjectModal"></div>
