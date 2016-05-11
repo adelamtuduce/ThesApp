@@ -20,6 +20,7 @@
 //= require turbolinks
 //= require jquery-fileupload/basic
 //= require chat
+//= require columnFilter
 //= require fullcalendar
 //= require bootstrap.min
 //= require private_pub

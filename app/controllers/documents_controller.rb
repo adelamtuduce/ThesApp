@@ -32,6 +32,7 @@ class DocumentsController < ApplicationController
   def document_params
     params.require(:document).permit(
       :file,
-      :user_id)
+      :user_id,
+      :enroll_request_id)
   end
 end

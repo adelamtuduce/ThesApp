@@ -42,4 +42,11 @@ class PersonalInformation < ActiveRecord::Base
 		return true if section_id.blank?
 		false
 	end
+
+	def name
+		puts self.to_yaml
+		first = first_name.blank? ? '' : first_name
+		last = last_name.blank? ? '' : last_name
+		first + ' ' + last
+	end
 end

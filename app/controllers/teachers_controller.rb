@@ -50,7 +50,7 @@ class TeachersController < ApplicationController
 		response[:draw] = params[:draw].to_i
 		response[:recordsTotal] = @accepted_enrollments.count
 		response[:recordsFiltered] = @accepted_enrollments.count
-		response[:data] = @accepted_enrollments.offset(params[:start].to_i).limit(params[:length].to_i).map(&:displayed_data)
+		response[:data] = @accepted_enrollments.offset(params[:start].to_i).limit(params[:length].to_i).map(&:accepted_displayed_data)
 		render json: response
 	end
 
@@ -60,8 +60,8 @@ class TeachersController < ApplicationController
 		teacher = diploma_project.teacher
 		student.diploma_project = diploma_project
 		student.save
-		EnrollRequest.find_by(student: student).destroy_all if student.diploma_project
 		enroll_request = EnrollRequest.find_by(student: student, teacher: teacher, diploma_project: diploma_project)
+		EnrollRequest.where.not(id: enroll_request.id).where(student: student).destroy_all if student.diploma_project
 		enroll_request.update_attributes(accepted: true)
 		# AcceptEnrollmentMailer.accept_request
 		render json: { success: true }

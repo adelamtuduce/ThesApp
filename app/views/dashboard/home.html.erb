@@ -2,7 +2,7 @@
   <% if current_user.student? %>
     <% if current_user.student.diploma_project %>
       <%= render 'overview' %>
-    <% else %>
+    <%else %>
       <%= render 'projects' %>
     <% end %>
   <% end %>

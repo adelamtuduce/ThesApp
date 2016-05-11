@@ -20,6 +20,10 @@ class Student < ActiveRecord::Base
 		user.personal_information
 	end
 
+	def uploaded_documents
+		user.documents
+	end
+
 	def name
 		first_name = personal_information.first_name.blank? ? '' : personal_information.first_name
 		last_name = personal_information.last_name.blank? ? '' : personal_information.last_name

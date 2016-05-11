@@ -48,7 +48,8 @@ class DiplomaProjectsController < ApplicationController
 		else
 			priority = 1
 		end
-		EnrollRequest.create(student: student, teacher: teacher, diploma_project: diploma_project, priority: priority)
+		request = EnrollRequest.where(student: student, teacher: teacher, diploma_project: diploma_project).first_or_create
+		request.update_attributes(priority: priority)
 		# EnrollMailer.enroll_student(student, teacher, diploma_project).deliver
 	end
 

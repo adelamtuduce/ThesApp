@@ -50,6 +50,12 @@ SampleApp::Application.routes.draw do
   end
 
   resources :documents
+  resources :enroll_requests do
+    member do
+      delete 'destroy', to: 'enroll_requests#destroy', as: 'destroy'
+      get 'overview', to: 'enroll_requests#overview', as: 'overview'
+    end
+  end
   resources :diploma_projects do
     collection do
       get 'student_enrolls', to: 'diploma_projects#student_enrolls', as: 'student_enrolls'

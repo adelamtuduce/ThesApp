@@ -19,6 +19,10 @@ class Teacher < ActiveRecord::Base
 		first_name + ' ' + last_name
 	end
 
+	def uploaded_documents
+		user.documents
+	end
+
 	def students
 		Student.where(diploma_project_id: diploma_projects.map(&:id))
 	end

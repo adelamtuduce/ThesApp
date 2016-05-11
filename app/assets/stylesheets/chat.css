@@ -7,9 +7,10 @@
 .chatbox {
     position: fixed;
     position: expression("absolute");
-    width: 280px;
+    width: 350px;
     display: none;
 }
+
 
 .chatboxhead {
     background: #666;
@@ -36,13 +37,13 @@
 .chatboxcontent {
     font-family: arial, sans-serif;
     height: 280px;
-    width: 280px;
+    width: 350px;
     overflow-y: auto;
     padding: 7px;
     border-left: 1px solid #cccccc;
     border-right: 1px solid #cccccc;
     border-bottom: 1px solid #eeeeee;
-    background: #e5e5e5;
+    background: #daeeff;
     line-height: 1.3em;
     list-style: none;
 }
@@ -129,7 +130,7 @@
 
 .chatboxinput {
     padding: 5px;
-    background-color: #ffffff;
+    background-color: #fae3c4;
     border-left: 1px solid #cccccc;
     border-right: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;

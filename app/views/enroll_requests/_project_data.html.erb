@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-12">
     <div class="col-md-3" style="text-align:center;">
-      <% if current_user.personal_information && current_user.personal_information.avatar %>
-       <%= image_tag current_user.personal_information.avatar.url, size: "200x160" %>
+      <% if @student.user.personal_information &&  @student.user.personal_information.avatar %>
+       <%= image_tag  @student.user.personal_information.avatar.url, size: "200x160" %>
       <% else %>
        <%= image_tag @personal_information.avatar.url, size: "200x160" %>
       <% end %>
@@ -12,11 +12,11 @@
       <div class="panel panel-default">
       <div class="panel-heading">Current status</div>
       <div class="panel-body welcome-panel">
-        You are currently enlisted to: <b><%= current_user.student.diploma_project.teacher.name %></b>
+        Student name: <b><%= @student.name %></b>
         <br/>
-        Your Diploma title is: <b><%= current_user.student.diploma_project.name %></b>
+        Project title: <b><%= @student.diploma_project.name %></b>
         <br/>
-        Uploaded documents until now: <%= current_user.documents.count %>
+        Uploaded documents until now: <%= @documents.count %>
         <br/>
         Next meeting:
         <br/>
@@ -41,15 +41,16 @@
             <span>Upload files...</span>
             <input name="document[file]" multiple="" type="file">
             <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.hidden_field :enroll_request_id, :value => @request.id %>
           </span>
           </div>
           <div class="panel-body welcome-panel">
-            <% if current_user.documents.any? %>
+            <% if @request.documents.any? %>
              <table style="width:100%">
               <th>Name</th> 
               <th>Size</th>
               <th>Actions</th> 
-              <% current_user.documents.each do |document| %>
+              <% @request.documents.each do |document| %>
                   <tr>
                     <td><%= document.file_file_name %></td>
                     <td><%= document.file_file_size.to_f / 1000 %> kB</td>
@@ -61,7 +62,7 @@
               <% end %>
               </table>
             <% else %>            
-             <p class="uploadedFiles"> You have 0 documents uploaded.</p>
+             <p class="uploadedFiles"> There are 0 documents uploaded for this project.</p>
           <% end %>
           <hr class="uploadHr hidden">
           <br class="uploadHr hidden"/>
@@ -82,8 +83,8 @@
       Calendar sedinte
       </div>
       <div class="panel-body calendar-panel">
-        <div class="hidden" id="student_id"><%= current_user.id %></div>
-        <div class="hidden" id="teacher_id"><%= current_user.id %></div>
+        <div class="hidden" id="student_id"><%= @student.id %></div>
+        <div class="hidden" id="teacher_id"><%= @teacher.id %></div>
         <div id="calendar"></div>
       </div>
     </div>

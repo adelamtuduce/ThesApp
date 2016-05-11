@@ -6,13 +6,12 @@ var ready = function () {
      * recipient_id
      */
 
-    $('.start-conversation').click(function (e) {
+    $(document).on('click', '.start-conversation', function(e){
         e.preventDefault();
 
         var sender_id = $(this).data('sid');
         var recipient_id = $(this).data('rip');
-
-        $.post("/conversations", { sender_id: sender_id, recipient_id: recipient_id }, function (data) {
+        $.post('/conversations', { sender_id: sender_id, recipient_id: recipient_id }, function (data) {
             chatBox.chatWith(data.conversation_id);
         });
     });
@@ -49,6 +48,12 @@ var ready = function () {
 
         var id = $(this).data('cid');
         chatBox.checkInputKey(event, $(this), id);
+    });
+
+    $(document).on('click', '.sendMessage', function (event) {
+
+        var id = $(this).parent().find('.chatboxtextarea').data('cid');
+        chatBox.checkInputKey(event, $(this).parent().find('.chatboxtextarea'), id);
     });
 
     /**

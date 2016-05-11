@@ -15,6 +15,7 @@
 
 class Document < ActiveRecord::Base
   belongs_to :user
+  belongs_to :enroll_request
   has_attached_file :file,
     :storage => :dropbox,
     :dropbox_credentials => Rails.root.join("config/dropbox.yml"),

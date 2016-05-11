@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507104841) do
+ActiveRecord::Schema.define(version: 20160511132120) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160507104841) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
     t.string   "download_url"
+    t.integer  "enroll_request_id"
   end
 
   create_table "enroll_requests", force: true do |t|

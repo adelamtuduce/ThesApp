@@ -12,7 +12,6 @@ var chatboxFocus = new Array();
 var chatBoxes = new Array();
 
 var ready = function () {
-
     chatBox = {
 
         /**
@@ -95,8 +94,7 @@ var ready = function () {
             }
 
             $("body").append('<div id="chatbox_' + conversation_id + '" class="chatbox"></div>')
-
-            $.get("conversations/" + conversation_id, function (data) {
+            $.get(BASE_URL + "/conversations/" + conversation_id, function (data) {
                 $('#chatbox_' + conversation_id).html(data);
                 $("#chatbox_" + conversation_id + " .chatboxcontent").scrollTop($("#chatbox_" + conversation_id + " .chatboxcontent")[0].scrollHeight);
             }, "html");
@@ -170,9 +168,8 @@ var ready = function () {
          */
 
         checkInputKey: function (event, chatboxtextarea, conversation_id) {
-            if (event.keyCode == 13 && event.shiftKey == 0) {
+            if (event.keyCode == 13 && event.shiftKey == 0 || (event.type === 'click' && $(event.toElement).hasClass('sendMessage'))) {
                 event.preventDefault();
-
                 message = chatboxtextarea.val();
                 message = message.replace(/^\s+|\s+$/g, "");
 
@@ -198,7 +195,6 @@ var ready = function () {
             }
 
         },
-
         /**
          * Responsible for handling minimize and maximize of the chatbox
          *
