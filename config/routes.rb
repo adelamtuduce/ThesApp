@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
 
+  # match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
   # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
 # devise_scope :user do
@@ -37,6 +38,9 @@ SampleApp::Application.routes.draw do
 
   resources :events
   resources :teachers do
+    collection do
+      get 'retrieve_teachers', to: 'teachers#retrieve_all_teachers', as: 'retrieve_teachers'
+    end
     member do
       get 'students', to: 'teachers#show_students', as: 'students'
       get 'projects', to: 'teachers#show_projects', as: 'projects'
@@ -46,6 +50,17 @@ SampleApp::Application.routes.draw do
       get 'accepted_requests', to: 'teachers#accepted_requests', as: 'accepted_requests'
       get 'accept_enrollment', to: 'teachers#accept_student_enrollment', as: 'accept_student_enrollment'
       post 'decline_enrollment', to: 'teachers#decline_student_enrollment', as: 'decline_student_enrollment'
+    end
+  end
+
+  resources :students do
+    collection do
+      get 'retrieve_students', to: 'students#retrieve_all_students', as: 'retrieve_students'
+    end
+
+    member do
+      get 'student_dasboard', to: 'students#student_dasboard', as: 'student_dasboard'
+      get 'projects_to_enroll', to: 'students#projects_to_enroll', as: 'projects_to_enroll'
     end
   end
 
@@ -69,6 +84,10 @@ SampleApp::Application.routes.draw do
   end
 
   resources :users do
+    collection do
+      get 'selection_options', to: 'users#settings', as: 'selection_options'
+      post 'toggle_selection', to: 'users#toggle_selection_mode', as: 'toggle_selection'
+    end
     member do
     end
   end

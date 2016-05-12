@@ -14,10 +14,10 @@ class Section < ActiveRecord::Base
 	belongs_to :faculty
 	
 	def self.create_sections
-		create(name: "CTI", faculty_id: 1)
-		create(name: "IS", faculty_id: 1)
-		create(name: "AR", faculty_id: 2)
-		create(name: "IA", faculty_id: 2)
-		create(name: "Random", faculty_id: 3)
+		create(name: "CTI", faculty: Faculty.first)
+		create(name: "IS", faculty: Faculty.first)
+		create(name: "AR", faculty: Faculty.first)
+		create(name: "IA", faculty: Faculty.first)
+		create(name: "Random", faculty: Faculty.first)
 	end
 end

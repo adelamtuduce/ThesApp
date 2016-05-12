@@ -4,12 +4,7 @@
 	  		<%= user.personal_information.first_name if user.personal_information && user.personal_information.first_name %>
 	  	</td>
 	  	<td style="text-align:center">
-	    	<%= link_to "#", class: "start-conversation",
-	    	"data-sid" => current_user.id, "data-rip" => user.id do %>
-	    		<i class="fa fa-weixin"></i>
-	    	<% end %>
-	    	<i class="fa fa-envelope"></i>
-	    	<a data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i></a>
+	  	
 	    </td>
 	</tr>
 <% end %>

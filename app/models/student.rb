@@ -24,10 +24,37 @@ class Student < ActiveRecord::Base
 		user.documents
 	end
 
+	def own_enrolls(params)
+		enrolls = enroll_requests.order(priority: :asc)
+		response = {}
+		response[:draw] = params[:draw].to_i
+		response[:recordsTotal] = enrolls.count
+		response[:recordsFiltered] = enrolls.count
+		response[:data] = enrolls.offset(params[:start].to_i).limit(params[:length].to_i).map(&:diploma_enrolls)
+		response
+	end
+
+	def self.retrieve_students(params)
+		response = {}
+		response[:draw] = params[:draw].to_i
+		response[:recordsTotal] = all.count
+		response[:recordsFiltered] = all.count
+		response[:data] = all.offset(params[:start].to_i).limit(params[:length].to_i).map(&:displayed_data)
+		response
+	end
+
 	def name
 		first_name = personal_information.first_name.blank? ? '' : personal_information.first_name
 		last_name = personal_information.last_name.blank? ? '' : personal_information.last_name
 
 		first_name + ' ' + last_name
+	end
+
+	def displayed_data
+		{
+			name: name,
+			diploma_project: diploma_project.nil? ? '-' : diploma_project.name,
+			actions: ''
+		}
 	end
 end

@@ -65,6 +65,17 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def settings
+    @selection_modes = DiplomaSelection.all
+  end
+
+  def toggle_selection_mode
+    selection = DiplomaSelection.find(params[:selection_id])
+    selection.update_attributes(active: !selection.active)
+    DiplomaSelection.where.not(id: selection.id).update_all(active: !selection.active)
+    # render json: { selections: DiplomaSelection.all }
+  end
+
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"

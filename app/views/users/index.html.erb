@@ -1,12 +1,39 @@
-<% provide(:title, 'All users') %>
-<h1>All users</h1>
+<div class="col-md-12">
+	<div class="col-md-6">
+		<div class="panel panel-default students">
+		  	<div class="panel-heading clearfix">Students
+			</div>
+		  	<div class="panel-body informationPanel">
+				<table class="table studentsTable" class="display" data-source="<%= retrieve_students_students_path %>">
+					<thead>
+						<th style="text-align:left">Name</th>
+						<th>Diploma Project</th>
+						<th>Actions</th>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
-<%= will_paginate %>
-
-<table class="users span6">
-	<th style="text-align:left">Name</th>
-	<th>Actions</th>
-	<hr>
-  	<%= render @users %>
-</table>
-<%= will_paginate %>
+	<div class="col-md-6">
+		<div class="panel panel-default teachers">
+		  	<div class="panel-heading clearfix">Teachers
+			</div>
+		  	<div class="panel-body informationPanel">
+				<table class="table teachersTable" class="display" data-source="<%= retrieve_teachers_teachers_path %>">
+					<thead>
+						<th style="text-align:left">Name</th>
+						<th>Projects count</th>
+						<th>Actions</th>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -32,9 +32,6 @@ def create
 end
 
 def update
-  puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
-  puts params
-  puts "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
 	if @personal_information.update(personal_information_params)
 		flash[:notice] = 'User saved'
     redirect_to user_path(params[:id])

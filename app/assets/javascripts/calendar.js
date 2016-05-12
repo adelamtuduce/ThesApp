@@ -7,17 +7,17 @@ $(document).ready(function() {
   $('#calendar').fullCalendar({
     editable: false,
     slotEventOverlap: false,
-    monthNames: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'],
-    monthNamesShort: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    dayNames: ['Duminica', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata'],
-    dayNamesShort: ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam'],
+    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     columnFormat: {
       month: 'dddd',
       week: 'ddd d',
       day: 'ddd'
     },
     buttonText: {
-      today: 'Azi',
+      today: 'Today',
       month: 'month',
       week: 'week',
       day: 'day'
@@ -33,6 +33,7 @@ $(document).ready(function() {
     //this section is triggered when the event cell it's clicked
     selectable: true,
     selectHelper: true,
+    disableResizing:true,
     select: function(start, end) {
       var student_id, teacher_id;
       student_id = $("#student_id").text();
@@ -41,7 +42,7 @@ $(document).ready(function() {
       //this validates that the user must insert a name in the input
       if (student_id && teacher_id) {
         eventData = {
-          title: "Rezervat",
+          title: "Reserved",
           start: start.format("YYYY-MM-DD h:mm:ss"),
           end: end.format("YYYY-MM-DD h:mm:ss"),
           student_id: student_id,
@@ -63,102 +64,75 @@ $(document).ready(function() {
             );
         });
         if (overlap.length){
-            alert("Exista o intalnire care se suprapune cu intervalul selectat. Alege un alt interval.");
+            alert("You already have a meeting in the selected time interval! Please select another time interval!");
             $("#calendar").fullCalendar("unselect");
           return
         }
         //here i validate that the user can't create an event before today
         if (eventData.start < moment(todayDate).format('YYYY-MM-DD')) {
-          alert("Nu poti selecta o data din trecut.");
+          alert("You can't select a past date!");
           $("#calendar").fullCalendar("unselect");
           return
         }
         //if everything it's ok, then the event is saved in database with ajax
         console.log(eventData)
         $.ajax({
-          url: "events",
+          url: "/events",
           type: "POST",
           data: eventData,
           dataType: 'json',
           success: function(json) {
             alert(json.msg);
-            $("#calendar").fullCalendar("renderEvent", eventData, true);
+            // $("#calendar").fullCalendar("renderEvent", eventData, true);
             $("#calendar").fullCalendar("refetchEvents");
           }
         });
       }
       $("#calendar").fullCalendar("unselect");
     },  
-    // eventClick: function( event, jsEvent, view ) {
-    //     console.log("AAAAAAAAAAAAAAAAAAAAAAAAA")
-    // var event_id = event.id;
-    // var delete_event = confirm("Esti sigur ca vrei sa stergi aceasta intalnire?");
-    // if(delete_event === true)
-    //     url = "events/" + event_id
-    //     $.ajax({
-    //       url: url,
-    //       type: "DELETE",
-    //       data: { id: event_id },
-    //       dataType: 'json',
-    //       success: function(data) {
-    //         $('#calendar').fullCalendar('removeEvents',event_id);
-    //         // $("#calendar").fullCalendar("refetchEvents");
-    //       }
-    //     });
-    // },
-    // eventDragStop: function( event, jsEvent, view ) {
-    //     var event_id = event.id;
-    //     var start, end;
-    //     console.log(event._start)
-    //     console.log(jsEvent)
-    //     console.log(view)
-    //     url = "events/" + event_id;
-    //     var data = {
-    //         start: event._start.format("YYYY-MM-DD h:mm:ss"),
-    //         end: event._end.format("YYYY-MM-DD h:mm:ss"),
-    //         id: event_id
-    //     }
-    //     $.ajax({
-    //       url: url,
-    //       type: "PUT",
-    //       data: data,
-    //       dataType: 'json',
-    //       success: function(data) {
-    //         // $('#calendar').fullCalendar('removeEvents',event_id);
-    //         // $("#calendar").fullCalendar("refetchEvents");
-    //       }
-    //     });
-    // },
+    eventClick: function(calEvent, jsEvent, view) {
+
+        alert('Event: ' + calEvent.title);
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        alert('View: ' + view.name);
+
+        // change the border color just for fun
+        $(this).css('border-color', 'red');
+
+    },
+    eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+        var event_id = event.id;
+        var start, end;
+        url = "/events/" + event_id;
+        var data = {
+            start: event._start.format("YYYY-MM-DD h:mm:ss"),
+            end: event._end.format("YYYY-MM-DD h:mm:ss"),
+            id: event_id
+        }
+        $.ajax({
+          url: url,
+          type: "PUT",
+          data: data,
+          dataType: 'json',
+          success: function(data) {
+            // $('#calendar').fullCalendar('removeEvents',event_id);
+            // $("#calendar").fullCalendar("refetchEvents");
+          }
+        });
+    },
     eventDragStop: function( event, jsEvent, ui, view, removeEvents ) {
     // This condition makes it easier to test if the event is over the trash can using Jquery
-    if($('#deleteEvent').is(':hover')){
-        // Confirmation popup
-        $.SmartMessageBox({
-            title : "Delete Event?",
-            content : 'Are you sure you want to remove this event from the calender?',
-            buttons : '[No][Yes]'
-        }, function(ButtonPressed) {
-            if (ButtonPressed === "Yes") {
-
-                // You can change the URL and other details to your liking.
-                // On success a small box notification will fire
-                $.ajax({
-                    url: '/events/' + event.id,
-                    type: 'DELETE',
-                    success: function(request) {
-                        $.smallBox({
-                            title : "Deleting Event",
-                            content : "Event Deleted",
-                            color : "#659265",
-                            iconSmall : "fa fa-check fa-2x fadeInRight animated",
-                            timeout : 4000
-                        });
-                        $('#calendar').fullCalendar('removeEvents', event.id);
-                      }
-                  });
-                }
-              });
-        }
+    $('.fc-toolbar').on('mouseover', '.deleteEvent', function(){
+      $('#calendar').fullCalendar('removeEvents', event.id);
+      $.ajax({
+          url: '/events/' + event.id,
+          type: 'DELETE',
+          data: {event_id: event.id},
+          success: function(data) {
+              $("#calendar").fullCalendar("refetchEvents");
+            }
+        });
+      })
     },
     defaultView: 'agendaWeek',
     allDaySlot: false,
@@ -176,5 +150,5 @@ $(document).ready(function() {
     timeFormat: 'h t',
     dragOpacity: "0.5"
   });
-  $("#calendar").find('.fc-toolbar').append('<i class="fa fa-trash fa-3 pull-right deleteEvent" aria-hidden="true"></i>')
+  $("#calendar").find('.fc-toolbar').append('<i class="fa fa-trash fa-2 pull-right deleteEvent" data-toggle="tooltip" data-placement="top" title="Drag Meeting over to delete" aria-hidden="true"></i>')
 });

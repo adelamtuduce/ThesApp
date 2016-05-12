@@ -1,0 +1,3 @@
+<% DiplomaSelection.all.each do |selection| %>
+	$(".settingsTable").find("#selection_<%= selection.id %>").find('.toggleStatus').prop("checked", <%= selection.active %>).attr('disabled', <%= selection.active %>);
+<% end %>

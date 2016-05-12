@@ -33,6 +33,8 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
+    puts params
+    @event.update_attributes(start_at: params['start'], end_at: params['end'])
     if @event.update_attributes(start_at: params['start'], end_at: params['end'])
       render json: {message: 'success'}
     else    
@@ -54,6 +56,8 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:event_id])
     @event.destroy
+
+    render nothing: true
   end
 
   def event_params

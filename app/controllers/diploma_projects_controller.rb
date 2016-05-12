@@ -15,24 +15,15 @@
 class DiplomaProjectsController < ApplicationController
 	before_filter :authenticate_user!
 
+
 	def index
-		@diploma_projects = DiplomaProject.all
-		response = {}
-		response[:draw] = params[:draw].to_i
-		response[:recordsTotal] = @diploma_projects.count
-		response[:recordsFiltered] = @diploma_projects.count
-		response[:data] = @diploma_projects.order_projects(params).offset(params[:start].to_i).limit(params[:length].to_i).map { |project| project.student_displayed_data(current_user.student) }
+		response = DiplomaProject.retrieve_all_projects(params, current_user.student)
 		render json: response
 	end
 
 	def student_enrolls
 		student = current_user.student
-		enrolls = student.enroll_requests.order(priority: :asc)
-		response = {}
-		response[:draw] = params[:draw].to_i
-		response[:recordsTotal] = enrolls.count
-		response[:recordsFiltered] = enrolls.count
-		response[:data] = enrolls.offset(params[:start].to_i).limit(params[:length].to_i).map(&:diploma_enrolls)
+		response = student.own_enrolls(params)
 		render json: response
 	end
 

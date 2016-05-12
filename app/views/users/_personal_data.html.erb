@@ -19,7 +19,7 @@
         Personal Information
       </div>
       <div class="panel-body informationPanel">
-        <%= form_for current_user.personal_information, url: @url, remote: true do |f| %>
+        <%= form_for current_user.personal_information, url: @url do |f| %>
           <div class="col-md-6">
           <div class="form-group">
             <%= f.label :first_name, class: 'control-label' %>
@@ -65,7 +65,7 @@
                 <%= collection_select :faculty, :id, Faculty.all.order(:name), :id,:name, {:include_blank => 'Please Select'}, class: 'form-control' %>
               <% else %>
                 <br />
-                <%= Faculty.find_by(id: Section.find_by(id: current_user.personal_information.section_id)).name %>
+                <%= Faculty.find_by(id: Section.find_by(id: current_user.personal_information.section_id).faculty_id).name %>
               <% end %>
             </div>
 

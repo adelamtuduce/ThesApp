@@ -23,34 +23,23 @@ class TeachersController < ApplicationController
 	def show_enrollments
 	end
 
+	def retrieve_all_teachers
+		response = Teacher.retrieve_all_teachers(params)
+		render json: response
+	end
+
 	def retrieve_projects
-		@projects = @teacher.diploma_projects
-		@project_data = @projects.map(&:displayed_data)
-		response = {}
-		response[:draw] = params[:draw].to_i
-		response[:recordsTotal] = @projects.count
-		response[:recordsFiltered] = @projects.count
-		response[:data] = @projects.offset(params[:start].to_i).limit(params[:length].to_i).map(&:displayed_data)
+		response = @teacher.own_projects(params)
 		render json: response
 	end
 
 	def enrollment_requests
-		@enrollments = EnrollRequest.where(teacher: @teacher, accepted: nil).uniq
-		response = {}
-		response[:draw] = params[:draw].to_i
-		response[:recordsTotal] = @enrollments.count
-		response[:recordsFiltered] = @enrollments.count
-		response[:data] = @enrollments.offset(params[:start].to_i).limit(params[:length].to_i).map(&:displayed_data)
+		response = @teacher.pending_enrollments(params)
 		render json: response
 	end
 
 	def accepted_requests
-		@accepted_enrollments = EnrollRequest.where(teacher: @teacher, accepted: true).uniq
-		response = {}
-		response[:draw] = params[:draw].to_i
-		response[:recordsTotal] = @accepted_enrollments.count
-		response[:recordsFiltered] = @accepted_enrollments.count
-		response[:data] = @accepted_enrollments.offset(params[:start].to_i).limit(params[:length].to_i).map(&:accepted_displayed_data)
+		response = @teacher.accepted_enrollments(params)
 		render json: response
 	end
 

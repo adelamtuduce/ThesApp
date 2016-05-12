@@ -46,6 +46,11 @@ class User < ActiveRecord::Base
     Student.find_by(user_id: id)
   end
 
+  def regular_user?
+    puts Role.find(role_id).name
+    %w(Student Profesor).include?(Role.find(role_id).name)
+  end
+
   def incomplete_information?
     return personal_information.student_incomplete? if student?
     return personal_information.teacher_incomplete? if teacher?

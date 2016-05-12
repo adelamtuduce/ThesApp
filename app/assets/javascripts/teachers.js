@@ -36,4 +36,31 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$('.studentsTable').DataTable({
+		  ajax: $('.studentsTable').data('source'),
+		  pagingType: 'full_numbers',
+		  processing: true,
+		  serverSide: true,
+		  pageLength: 8,
+		  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+		  columns: [
+	        { data: 'name' },
+	        { data: 'diploma_project' },
+	        { data: 'actions' }
+	        ]
+		});
+	$('.teachersTable').DataTable({
+		  ajax: $('.teachersTable').data('source'),
+		  pagingType: 'full_numbers',
+		  processing: true,
+		  serverSide: true,
+		  pageLength: 8,
+		  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+		  columns: [
+	        { data: 'name' },
+	        { data: 'diploma_project' },
+	        { data: 'actions' }
+	        ]
+		});
 });

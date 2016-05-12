@@ -14,8 +14,12 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <% if current_user.regular_user? %>
+                <li><%= link_to "Profile", current_user %></li>
+              <% else %>
+                <li><%= link_to "Settings", selection_options_users_path %></li>
+                <li><%= link_to "All Users", users_path %></li>
+              <% end %>
               <li role="separator" class="divider"></li>
               <li>
                 <%= link_to "Sign out",  destroy_user_session_path , method: "delete" %>

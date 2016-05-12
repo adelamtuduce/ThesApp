@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-md-12">
     <div class="col-md-3" style="text-align:center;">
-      <% if current_user.personal_information && current_user.personal_information.avatar %>
-       <%= image_tag current_user.personal_information.avatar.url, size: "200x160" %>
+      <% if @personal_information && @personal_information.avatar %>
+        <%= image_tag @personal_information.avatar.url, size: "200x160" %>
       <% else %>
-       <%= image_tag @personal_information.avatar.url, size: "200x160" %>
+       <%= image_tag 'default_avatar.png', size: "200x160" %>
       <% end %>
     </div>
     <div class="col-md-3"></div>
@@ -12,9 +12,9 @@
       <div class="panel panel-default">
       <div class="panel-heading">Current status</div>
       <div class="panel-body welcome-panel">
-        You are currently enlisted to: <b><%= current_user.student.diploma_project.teacher.name %></b>
+        You are currently enlisted to: <b><%= @student.diploma_project.teacher.name %></b>
         <br/>
-        Your Diploma title is: <b><%= current_user.student.diploma_project.name %></b>
+        Your Diploma title is: <b><%= @student.diploma_project.name %></b>
         <br/>
         Uploaded documents until now: <%= current_user.documents.count %>
         <br/>
@@ -82,8 +82,8 @@
       Calendar sedinte
       </div>
       <div class="panel-body calendar-panel">
-        <div class="hidden" id="student_id"><%= current_user.id %></div>
-        <div class="hidden" id="teacher_id"><%= current_user.id %></div>
+        <div class="hidden" id="student_id"><%= @student.user.id %></div>
+        <div class="hidden" id="teacher_id"><%= @enrolled_teacher.user.id %></div>
         <div id="calendar"></div>
       </div>
     </div>
