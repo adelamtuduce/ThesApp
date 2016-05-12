@@ -15,6 +15,7 @@
  *= require font-awesome
  *= require bootstrap.min
  *= require fullcalendar
+ *= require dhtmlxscheduler
  *= require_tree .
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require rowReorder.dataTables

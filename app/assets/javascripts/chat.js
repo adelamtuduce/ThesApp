@@ -6,8 +6,6 @@
  * http://anantgarg.com/2009/05/13/gmail-facebook-style-jquery-chat/
  *
  */
-
-
 var chatboxFocus = new Array();
 var chatBoxes = new Array();
 
@@ -20,9 +18,7 @@ var ready = function () {
          * 
          * @param conversation_id
          */
-
         chatWith: function (conversation_id) {
-
             chatBox.createChatBox(conversation_id);
             $("#chatbox_" + conversation_id + " .chatboxtextarea").focus();
         },
@@ -32,7 +28,6 @@ var ready = function () {
          * 
          * @param conversation_id
          */
-
         close: function (conversation_id) {
             $('#chatbox_' + conversation_id).css('display', 'none');
             chatBox.restructure();
@@ -41,7 +36,6 @@ var ready = function () {
         /**
          * Plays a notification sound when a new chat message arrives
          */
-
         notify: function () {
             var audioplayer = $('#chatAudio')[0];
             audioplayer.play();
@@ -82,7 +76,6 @@ var ready = function () {
          * @param conversation_id
          * @param minimizeChatBox
          */
-
         createChatBox: function (conversation_id, minimizeChatBox) {
             if ($("#chatbox_" + conversation_id).length > 0) {
                 if ($("#chatbox_" + conversation_id).css('display') == 'none') {

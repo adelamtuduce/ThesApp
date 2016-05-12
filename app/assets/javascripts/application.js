@@ -22,6 +22,8 @@
 //= require chat
 //= require columnFilter
 //= require fullcalendar
+//= require dhtmlxscheduler
+//= require dhtmlxscheduler_limit
 //= require bootstrap.min
 //= require private_pub
 //= require_tree .

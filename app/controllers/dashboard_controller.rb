@@ -13,6 +13,8 @@ class DashboardController < ApplicationController
           else
             redirect_to projects_to_enroll_student_path(current_user.student)
           end
+        when 'Profesor'
+          redirect_to projects_teacher_path(current_user.teacher)
         end
       else
         redirect_to users_path

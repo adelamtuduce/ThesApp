@@ -36,7 +36,11 @@ SampleApp::Application.routes.draw do
   # app/config/routes.rb
   devise_for :users, :controllers => {:registrations => "registrations"}
 
-  resources :events
+  resources :events do
+    collection do
+      get 'db_action', to: 'events#db_action', as: 'db_action'
+    end
+  end
   resources :teachers do
     collection do
       get 'retrieve_teachers', to: 'teachers#retrieve_all_teachers', as: 'retrieve_teachers'

@@ -31,6 +31,7 @@
         I18n.enforce_available_locales = true
 
         config.time_zone = 'Bucharest'
+        config.active_record.default_timezone = :local
         # config.active_record.default_timezone = 'Bucharest'
         config.assets.paths << "#{Rails}/vendor/assets/fonts"
 

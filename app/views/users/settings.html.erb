@@ -3,18 +3,22 @@
 	  	<div class="panel-heading clearfix">Diploma Project Selection 
 		</div>
 	  	<div class="panel-body informationPanel">
-			<table class="table settingsTable">
-				<th style="text-align:left">Name</th>
-				<th>Description</th>
-				<th style='text-align:center;'>Active</th>
-				<% @selection_modes.each do |mode| %>
-					<tr id="selection_<%=mode.id%>">
-						<td><%= mode.name.humanize %></td>
-						<td><%= mode.description %></td>
-						<td style='text-align:center;'><%= check_box "mode", "active", {checked: mode.active, disabled: mode.active, class: 'toggleStatus', id: mode.id }%></td>
-					</tr>
-				<% end %>
-			</table>
+	  		<% if EnrollRequest.count > 0 %>
+	  			You cannot change the selection mode for enrollment requests anymore!
+	  		<% else %>
+				<table class="table settingsTable">
+					<th style="text-align:left">Name</th>
+					<th>Description</th>
+					<th style='text-align:center;'>Active</th>
+					<% @selection_modes.each do |mode| %>
+						<tr id="selection_<%=mode.id%>">
+							<td><%= mode.name.humanize %></td>
+							<td><%= mode.description %></td>
+							<td style='text-align:center;'><%= check_box "mode", "active", {checked: mode.active, disabled: mode.active, class: 'toggleStatus', id: mode.id }%></td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
 		</div>
 	</div>
 </div>

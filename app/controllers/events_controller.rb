@@ -42,15 +42,52 @@ class EventsController < ApplicationController
     end
   end
 
-  def index
-    puts params
-    puts Event.between(params['start'], params['end']) if (params['start'] && params['end']) 
-    @events = Event.between(params['start'], params['end']) if (params['start'] && params['end']) 
+  def db_action
+    mode = params["!nativeeditor_status"]
+    id = params["id"]
+    start_at = params["start_date"]
+    end_at = params["end_date"]
+    text = params["text"]
 
-    respond_to do |format| 
-      format.html
-      format.json { render :json => @events } 
-    end
+   case mode
+     when "inserted"
+       event = Event.create(start_at: start_at, 
+                            end_at: end_at, 
+                            title: text,
+                            student_id: params['student_id'],
+                            teacher_id: params['teacher_id'])
+
+       tid = event.id
+
+     when "deleted"
+       Event.find(id).destroy
+       tid = id
+
+     when "updated"
+       event = Event.find(id)
+       event.start_at = start_at
+       event.end_at = end_at
+       event.title = text
+       event.save
+       tid = id
+   end
+
+   render :json => {
+              :type => mode,
+              :sid => id,
+              :tid => tid,
+          }
+ end
+
+  def index
+    events = Event.all.where(student_id: params['student_id'], teacher_id: params['teacher_id'])
+
+   render :json => events.map {|event| {
+              :id => event.id,
+              :start_date => event.start_at.strftime("%Y-%m-%d %T"),
+              :end_date => event.end_at.strftime("%Y-%m-%d %T"),
+              :text => event.title
+          }}
   end
 
   def destroy

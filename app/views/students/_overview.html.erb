@@ -1,91 +1,136 @@
+<style>
+  .grey {
+    background-color: gray;
+  }
+</style>
 <div class="row">
-  <div class="col-md-12">
-    <div class="col-md-3" style="text-align:center;">
-      <% if @personal_information && @personal_information.avatar %>
-        <%= image_tag @personal_information.avatar.url, size: "200x160" %>
-      <% else %>
-       <%= image_tag 'default_avatar.png', size: "200x160" %>
-      <% end %>
-    </div>
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-      <div class="panel panel-default">
-      <div class="panel-heading">Current status</div>
-      <div class="panel-body welcome-panel">
-        You are currently enlisted to: <b><%= @student.diploma_project.teacher.name %></b>
-        <br/>
-        Your Diploma title is: <b><%= @student.diploma_project.name %></b>
-        <br/>
-        Uploaded documents until now: <%= current_user.documents.count %>
-        <br/>
-        Next meeting:
-        <br/>
-        Received emails:
-        <br/>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
-<hr>
-<div class="row">
-  <div class="col-md-12">
-  <!-- <div class="col-md-8">
-  </div> -->
-  <div class="col-md-5">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">
-        <%= form_for Document.new, :url => documents_path, html: { multipart: true, class: 'fileupload' } do |f| %>  
-          <span class="btn addDocuments fileinput-button pull-right ui-btn-inline">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            <span>Upload files...</span>
-            <input name="document[file]" multiple="" type="file">
-            <%= f.hidden_field :user_id, :value => current_user.id %>
-          </span>
+    <div class="col-md-12">
+        <div class="col-md-5">
+           <div style="text-align:center;">
+                <% if @personal_information && @personal_information.avatar %>
+                    <%= image_tag @personal_information.avatar.url, size: "200x160" %>
+                <% else %>
+                    <%= image_tag 'default_avatar.png', size: "200x160" %>
+                <% end %>
+            </div>
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">Current status</div>
+                <div class="panel-body welcome-panel">
+                    You are currently enlisted to: <b><%= @student.diploma_project.teacher.name %></b>
+                    <br/>
+                    Your Diploma title is: <b><%= @student.diploma_project.name %></b>
+                    <br/>
+                    Uploaded documents until now: <%= current_user.documents.count %>
+                    <br/>
+                    Next meeting:
+                    <br/>
+                    Received emails:
+                    <br/>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <%= form_for Document.new, :url => documents_path, html: { multipart: true, class: 'fileupload' } do |f| %>  
+                    <div class="panel-heading clearfix">
+                        <span class="btn addDocuments fileinput-button pull-right ui-btn-inline">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            <span>Upload files...</span>
+                            <input name="document[file]" multiple="" type="file">
+                            <%= f.hidden_field :user_id, :value => current_user.id %>
+                        </span>
+                    </div>
+                    <div class="panel-body welcome-panel">
+                        <% if current_user.documents.any? %>
+                            <table style="width:100%">
+                                <th>Name</th> 
+                                <th>Size</th>
+                                <th>Actions</th> 
+                                <% current_user.documents.each do |document| %>
+                                    <tr>
+                                        <td><%= document.file_file_name %></td>
+                                        <td><%= document.file_file_size.to_f / 1000 %> kB</td>
+                                        <td><%= link_to document.download_url do %>
+                                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                          <% end %>
+                                        </td>
+                                    </tr>
+                                <% end %>
+                            </table>
+                        <% else %>            
+                            <p class="uploadedFiles"> You have 0 documents uploaded.</p>
+                        <% end %>
+                        <hr class="uploadHr hidden">
+                        <br class="uploadHr hidden"/>
+                        <%= image_tag 'file.png', size: "180x90", class: 'uploadImage hidden' %>
+                        <hr class="uploadHr hidden">
+                        <br class="uploadHr hidden"/>
+                        <button type="submit" class="btn btn-primary start hidden startUpload">
+                          <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                          <span>Start upload</span>
+                        </button>
+                <% end %>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading welcome-panel">
+          Create Appointments
           </div>
-          <div class="panel-body welcome-panel">
-            <% if current_user.documents.any? %>
-             <table style="width:100%">
-              <th>Name</th> 
-              <th>Size</th>
-              <th>Actions</th> 
-              <% current_user.documents.each do |document| %>
-                  <tr>
-                    <td><%= document.file_file_name %></td>
-                    <td><%= document.file_file_size.to_f / 1000 %> kB</td>
-                    <td><%= link_to document.download_url do %>
-                      <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                      <% end %>
-                    </td>
-                </tr>
-              <% end %>
-              </table>
-            <% else %>            
-             <p class="uploadedFiles"> You have 0 documents uploaded.</p>
-          <% end %>
-          <hr class="uploadHr hidden">
-          <br class="uploadHr hidden"/>
-          <%= image_tag 'file.png', size: "180x90", class: 'uploadImage hidden' %>
-          <hr class="uploadHr hidden">
-          <br class="uploadHr hidden"/>
-            <button type="submit" class="btn btn-primary start hidden startUpload">
-              <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-              <span>Start upload</span>
-            </button>
-        <% end %>
+          <div class="panel-body calendar-panel">
+            <div class="hidden" id="student_id"><%= @student.user.id %></div>
+            <div class="hidden" id="teacher_id"><%= @enrolled_teacher.user.id %></div>
+            <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:523px;'>
+             <div class="dhx_cal_navline">
+               <div class="dhx_cal_prev_button">&nbsp;</div>
+               <div class="dhx_cal_next_button">&nbsp;</div>
+               <div class="dhx_cal_today_button"></div>
+               <div class="dhx_cal_date"></div>
+               <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+               <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+               <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+             </div>
+             <div class="dhx_cal_header">
+             </div>
+             <div class="dhx_cal_data">
+             </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-7">
-    <div class="panel panel-default">
-      <div class="panel-heading welcome-panel">
-      Calendar sedinte
-      </div>
-      <div class="panel-body calendar-panel">
-        <div class="hidden" id="student_id"><%= @student.user.id %></div>
-        <div class="hidden" id="teacher_id"><%= @enrolled_teacher.user.id %></div>
-        <div id="calendar"></div>
-      </div>
-    </div>
-  </div>
 </div>
+<script>
+    scheduler.config.xml_date="%Y-%m-%d %H:%i";
+    scheduler.config.first_hour = 8;
+    scheduler.config.last_hour = 18;
+    var block_id = null;
+    scheduler.attachEvent("onBeforeViewChange", function(old_mode,old_date,mode,date){
+    if(block_id) 
+      scheduler.deleteMarkedTimespan(block_id);
+        
+    var from = scheduler.date[mode + "_start"](new Date(date));
+    var to = new Date(Math.min(+new Date(), +scheduler.date.add(from, 1, mode)));
+  
+    block_id = scheduler.addMarkedTimespan({
+      start_date: from, 
+      end_date:to, 
+      type:"dhx_time_block"
+    });
+      
+    return true;
+  });
+
+  // set allowed time - from the current date, and update each minute
+  scheduler.config.limit_start = new Date();
+  scheduler.config.limit_end = new Date(9999, 1,1);
+  setInterval(function(){
+     scheduler.config.limit_start = new Date();
+  }, 1000*60);
+
+    scheduler.init("scheduler_here");
+    scheduler.load("/events?student_id=<%= @student.id %>&teacher_id=<%=@enrolled_teacher.id%>", "json");
+    var dp = new dataProcessor("/events/db_action?student_id=<%= @student.id %>&teacher_id=<%=@enrolled_teacher.id%>");
+    dp.init(scheduler);
+    dp.setTransactionMode("GET", false);
+</script>
