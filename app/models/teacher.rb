@@ -44,7 +44,7 @@ class Teacher < ActiveRecord::Base
 
 	def pending_enrollments(params)
 		response = {}
-		enrollments = enroll_requests.where(accepted: nil)
+		enrollments = enroll_requests.where(accepted: nil, sent: true)
 		response[:draw] = params[:draw].to_i
 		response[:recordsTotal] = enrollments.count
 		response[:recordsFiltered] = enrollments.count

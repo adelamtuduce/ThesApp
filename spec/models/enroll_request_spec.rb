@@ -6,9 +6,11 @@
 #  student_id         :integer
 #  teacher_id         :integer
 #  diploma_project_id :integer
-#  accepted           :boolean          default(FALSE)
+#  accepted           :boolean
 #  created_at         :datetime
 #  updated_at         :datetime
+#  priority           :integer
+#  sent               :boolean          default(FALSE)
 #
 
 require 'spec_helper'

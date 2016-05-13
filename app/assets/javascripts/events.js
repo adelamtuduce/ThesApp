@@ -2,6 +2,9 @@ var createScheduler = function(student, teacher) {
 	scheduler.config.xml_date="%Y-%m-%d %H:%i";
     scheduler.config.first_hour = 8;
     scheduler.config.last_hour = 18;
+    scheduler.attachEvent("onBeforeTooltip",function(){
+      return false;
+    });
     var block_id = null;
     scheduler.attachEvent("onBeforeViewChange", function(old_mode,old_date,mode,date){
     if(block_id) 

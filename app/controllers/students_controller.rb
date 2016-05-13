@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: students
+#
+#  id                 :integer          not null, primary key
+#  diploma_project_id :integer
+#  user_id            :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  teacher_id         :integer
+#
+
 class StudentsController < ApplicationController
 
 	before_action :set_student, only: [:student_dasboard]

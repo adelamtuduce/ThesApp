@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: enroll_requests
+#
+#  id                 :integer          not null, primary key
+#  student_id         :integer
+#  teacher_id         :integer
+#  diploma_project_id :integer
+#  accepted           :boolean
+#  created_at         :datetime
+#  updated_at         :datetime
+#  priority           :integer
+#  sent               :boolean          default(FALSE)
+#
+
 class EnrollRequestsController < ApplicationController
 
 	before_action :set_request, only: [:destroy]

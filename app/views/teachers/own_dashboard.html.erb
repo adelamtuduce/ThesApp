@@ -1,0 +1,57 @@
+<div class="col-md-12">
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">Current status</div>
+            <div class="panel-body welcome-panel">
+                You currently have <b><%= @enrolls %></b> students enrolled.
+                <br/>
+                You currently have <b><%= @pending_enrolls %></b> enrollment requests.
+                <br/>
+                Your have <b><%= @proposed_projects %></b> projects proposed. 
+                <br/>
+                Uploaded documents until now: <b><%= current_user.documents.count %></b>
+                <br/>
+                Next meeting: <b><%= @next_meeting %></b>
+                <br/>
+                Unread Notifications: <b><%= @notifications.count %></b>
+                <br/>
+            </div>
+        </div>
+    </div>
+	<div class="col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading welcome-panel">
+          Existing Appointments - Hover on event for details.
+          </div>
+          <div class="panel-body calendar-panel">
+            <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:523px;'>
+             <div class="dhx_cal_navline">
+               <div class="dhx_cal_prev_button">&nbsp;</div>
+               <div class="dhx_cal_next_button">&nbsp;</div>
+               <div class="dhx_cal_today_button"></div>
+               <div class="dhx_cal_date"></div>
+               <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+               <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+               <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+             </div>
+             <div class="dhx_cal_header">
+             </div>
+             <div class="dhx_cal_data">
+             </div>
+            </div>
+          </div>
+        </div>
+  	</div>
+</div>
+
+<script>
+	scheduler.config.xml_date="%Y-%m-%d %H:%i";
+	scheduler.config.first_hour = 8;
+	scheduler.config.last_hour = 18;
+	scheduler.config.readonly = true;
+    scheduler.init("scheduler_here");
+    scheduler.load("/teachers/<%= current_user.teacher.id %>/retrieve_own_events", "json");
+    // var dp = new dataProcessor("/events/db_action?student_id=" + student + "&teacher_id=" + teacher);
+    // dp.init(scheduler);
+    // dp.setTransactionMode("GET", false);
+</script>

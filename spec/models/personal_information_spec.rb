@@ -16,6 +16,8 @@
 #  avatar_content_type :string(255)
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
+#  notifications       :boolean          default(TRUE)
+#  emails              :boolean          default(TRUE)
 #
 
 require 'spec_helper'

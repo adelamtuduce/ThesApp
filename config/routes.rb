@@ -30,6 +30,8 @@ SampleApp::Application.routes.draw do
     end
     member do
       post :update, to: 'personal_informations#update', as: 'update'
+      post 'toggle_notifications', to: 'personal_informations#toggle_notifications', as: 'toggle_notifications'
+      post 'toggle_emails', to: 'personal_informations#toggle_emails', as: 'toggle_emails'
     end
   end
 
@@ -48,6 +50,8 @@ SampleApp::Application.routes.draw do
     member do
       get 'students', to: 'teachers#show_students', as: 'students'
       get 'projects', to: 'teachers#show_projects', as: 'projects'
+      get 'own_dashboard', to: 'teachers#own_dashboard', as: 'own_dashboard'
+      get 'retrieve_own_events', to: 'teachers#retrieve_own_events', as: 'retrieve_own_events'
       get 'retrieve_projects', to: 'teachers#retrieve_projects', as: 'retrieve_projects'
       get 'enrolls', to: 'teachers#enrollment_requests', as: 'enrolls'
       get 'show_enrollments', to: 'teachers#show_enrollments', as: 'show_enrollments'
@@ -83,6 +87,7 @@ SampleApp::Application.routes.draw do
     end
 
     member do
+      post 'upload_documentation', to: 'diploma_projects#upload_documentation', as: 'upload_documentation'
       get 'diploma_project_modal', to: 'diploma_projects#diploma_project_modal', as: 'diploma_project_modal'
     end
     post 'enroll', to: 'diploma_projects#enroll_student', as: 'enroll'

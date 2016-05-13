@@ -1,11 +1,23 @@
-<% notifications.each do |notification| %>
-	<div class="col-md-6">
+<% if notifications.any? %>
+	<% notifications.each do |notification| %>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+		      	<div class="panel-heading clearfix"><%= notification.title %>
+		      		<i class="fa fa-times fa-1 pull-right deleteNotification" data-toggle='tooltip' data-placement='top' title='Delete Notification' id="<%=notification.id%>" aria-hidden="true"></i>
+		      	</div>
+		      	<div class="panel-body welcome-panel">
+		      		<%= notification.message %>
+		      	</div>
+		    </div>
+		</div>
+	<% end %>
+<% else %>
+	<div class="col-md-12">
 		<div class="panel panel-default">
-	      	<div class="panel-heading clearfix"><%= notification.title %>
-	      		<i class="fa fa-times fa-1 pull-right deleteNotification" data-toggle='tooltip' data-placement='top' title='Delete Notification' id="<%=notification.id%>" aria-hidden="true"></i>
+	      	<div class="panel-heading clearfix">Notifications page
 	      	</div>
 	      	<div class="panel-body welcome-panel">
-	      		<%= notification.message %>
+	      		You have no unread notifications.
 	      	</div>
 	    </div>
 	</div>

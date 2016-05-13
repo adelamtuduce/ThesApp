@@ -6,9 +6,11 @@
 #  student_id         :integer
 #  teacher_id         :integer
 #  diploma_project_id :integer
-#  accepted           :boolean          default(FALSE)
+#  accepted           :boolean
 #  created_at         :datetime
 #  updated_at         :datetime
+#  priority           :integer
+#  sent               :boolean          default(FALSE)
 #
 
 class EnrollRequest < ActiveRecord::Base
@@ -37,10 +39,17 @@ class EnrollRequest < ActiveRecord::Base
 
 
 	def diploma_enrolls
+		if sent 
+			html = "<span class='cancelRequest' data-enroll-id=#{id} data-teacher-id=#{teacher.id} data-project-id=#{diploma_project.id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Cancel request' style='color:red;' class='fa fa-times' aria-hidden='true'></i></i></span>
+					<span class='enrolledProject' data-enroll-id=#{id} data-teacher-id=#{teacher.id} data-project-id=#{diploma_project.id}><i data-toggle='tooltip' data-placement='top' title='Enroll Request sent'  class='fa fa-envelope-o' aria-hidden='true'></i></i></span>"
+		else
+			html = "<span class='cancelRequest' data-enroll-id=#{id} data-teacher-id=#{teacher.id} data-project-id=#{diploma_project.id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Cancel request' style='color:red;' class='fa fa-times' aria-hidden='true'></i></i></span>
+					<span class='enrollProject' data-enroll-id=#{id} data-teacher-id=#{teacher.id} data-project-id=#{diploma_project.id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Send enroll request' style='color:blue;' class='fa fa-envelope' aria-hidden='true'></i></i></span>"
+		end
 		{
 			name: diploma_project.name, 
 			teacher: teacher.name,
-			actions: "<span class='cancelRequest' data-enroll-id=#{id} data-teacher-id=#{teacher.id} data-project-id=#{diploma_project.id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='Cancel request' style='color:red;' class='fa fa-times' aria-hidden='true'></i></i></span>"
+			actions: html
 		}
 	end
 end

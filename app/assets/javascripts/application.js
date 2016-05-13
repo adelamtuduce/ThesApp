@@ -24,6 +24,7 @@
 //= require fullcalendar
 //= require dhtmlxscheduler
 //= require dhtmlxscheduler_limit
+//= require dhtmlxscheduler_tooltip
 //= require bootstrap.min
 //= require private_pub
 //= require_tree .

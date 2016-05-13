@@ -14,13 +14,18 @@
 	background-color: #daeeff;
 }
 
+
 .navbar-inverse .navbar-inner {
-	background-image: linear-gradient(to bottom, #daeeff, #daeeff);
-	border-color: #daeeff;
+    background-image: linear-gradient(to bottom, #daeeff, #daeeff);
+    border-color: #daeeff;
+}
+
+.dhtmlXTooltip.tooltip{
+   opacity: 1;
 }
 
 .navbar-inverse {
-	border-color: #daeeff;
+    border-color: #daeeff;
 }
 .fa-2 {
     font-size:2em;
@@ -33,7 +38,7 @@
 }
 
 body {
-	background-color: #957bbe;
+    background-color: #957bbe;
 }
 
 .container {
@@ -73,28 +78,28 @@ body {
 }
 
 .btn-info, .btn-info:hover, .btn-info:focus {
-	background-color: #fae3c4;
-	color: black;
+    background-color: #fae3c4;
+    color: black;
 }
 
 .welcome-panel, .hero-unit {
-	background-color: #fae3c4;
-	color: black;
+    background-color: #fae3c4;
+    color: black;
 }
 
 .informationPanel {
-	background-color: #daeeff;
+    background-color: #daeeff;
 }
 .addDocuments, .addDocuments:hover, .addDocuments:focus {
-	background-color: #957bbe;
+    background-color: #957bbe;
 }
 
 h2 {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .customClearfix { 
-	height: 55px;
+    height: 55px;
 }
 
 .header {
@@ -126,3 +131,11 @@ h2 {
 }
 
 .fa { padding-left: 3px; padding-right: 3px; }
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #fae3c4;
+}
+
+.navButton {
+    pointer-events:none;
+}

@@ -26,16 +26,20 @@
               </li>
             </ul>
           </li>
+          <% if current_user.regular_user? %>
+            <% if current_user.personal_information.notifications && current_user.notifications.any? %>
+              <li><%= nav_link "Notifications", notifications_path %></li>
+            <% end %>
+            <li><%= nav_link default_button(current_user), root_path %></li>
+          <% end %>
           <% if current_user.teacher? %>
-             <li><%= link_to "Your Enrollments", show_enrollments_teacher_path(current_user.teacher) %></li>
-             <li><%= link_to "Diploma Projects", projects_teacher_path(current_user.teacher) %></li>
+             <li><%= nav_link "My Enrollments", show_enrollments_teacher_path(current_user.teacher) %></li>
+             <li><%= nav_link "My Dashboard", own_dashboard_teacher_path(current_user.teacher) %></li>
           <% end %>
         <% else %>
           <li><%= link_to "Sign in",  new_user_session_path  %></li>
         <% end %>
-        <li><%= link_to "Notifications", notifications_path %></li>
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Help", help_path %></li>
+        <li><%= nav_link "Help", help_path %></li>
       </ul> 
     </div> 
   </div> 

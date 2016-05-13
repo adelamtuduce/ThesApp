@@ -11,6 +11,7 @@
 #  file_file_size    :integer
 #  file_updated_at   :datetime
 #  download_url      :string(255)
+#  enroll_request_id :integer
 #
 
 class DocumentsController < ApplicationController
@@ -24,7 +25,6 @@ class DocumentsController < ApplicationController
   	@document.save
   	@document.download_url = @document.file.url
   	@document.save
-  	puts @document
 	end
 
 	private

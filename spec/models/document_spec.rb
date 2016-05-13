@@ -11,6 +11,7 @@
 #  file_file_size    :integer
 #  file_updated_at   :datetime
 #  download_url      :string(255)
+#  enroll_request_id :integer
 #
 
 require 'spec_helper'

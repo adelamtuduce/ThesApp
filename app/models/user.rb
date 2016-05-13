@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
 
   has_one :personal_information
   has_many :documents
+  has_many :notifications
   has_one :student
   has_one :teacher
 

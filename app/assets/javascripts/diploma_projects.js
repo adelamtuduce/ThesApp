@@ -20,11 +20,12 @@ $(document).ready(function() {
 	  serverSide: true,
 	  pageLength: 8,
 	  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
-	  columns: [{ data: 'id' },
+	  columns: [
         { data: 'name' },
         { data: 'students' },
         { data: 'duration' },
         { data: 'description' },
+        { data: 'documentation' },
         { data: 'actions' }]
 	});
 

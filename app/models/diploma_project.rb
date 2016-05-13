@@ -2,19 +2,34 @@
 #
 # Table name: diploma_projects
 #
-#  id           :integer          not null, primary key
-#  name         :string(255)
-#  max_students :integer
-#  duration     :integer
-#  created_at   :datetime
-#  updated_at   :datetime
-#  teacher_id   :integer
-#  description  :text
+#  id                         :integer          not null, primary key
+#  name                       :string(255)
+#  max_students               :integer
+#  duration                   :integer
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  teacher_id                 :integer
+#  description                :text
+#  documentation_file_name    :string(255)
+#  documentation_content_type :string(255)
+#  documentation_file_size    :integer
+#  documentation_updated_at   :datetime
 #
 
 class DiplomaProject < ActiveRecord::Base
 	has_many :students
 	belongs_to :teacher
+	has_attached_file :document,
+    :storage => :dropbox,
+    :dropbox_credentials => Rails.root.join("config/dropbox.yml"),
+    :dropbox_options => {}
+  	validates_attachment_content_type :document, :content_type => ["application/pdf","application/vnd.ms-excel",     
+             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+             "application/msword", 
+             "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+             "text/plain"]
+
+  	after_create :save_download_url
 
 	def displayed_data
 		{
@@ -23,6 +38,7 @@ class DiplomaProject < ActiveRecord::Base
 			students: max_students,
 			duration: duration,
 			description: description,
+			documentation: upload_form,
 			actions: "<span class='deleteProject' id=#{id} style='cursor: pointer;'><i class='fa fa-times' aria-hidden='true'></i></span>"
 		}
 	end
@@ -58,7 +74,6 @@ class DiplomaProject < ActiveRecord::Base
 
 		end
 		{
-			id: id,
 			name: name,
 			students: max_students - students.count,
 			duration: duration,
@@ -81,6 +96,21 @@ class DiplomaProject < ActiveRecord::Base
 			projects = all.order(created_at: :desc)
 		end
 		projects
+	end
+
+	def upload_form
+		"<form accept-charset='UTF-8' action='/diploma_projects/#{id}/upload_documentation' class='fileupload' enctype='multipart/form-data' id='new_document_#{self.id}'' method='post'>
+	          <span class='btn addDocuments fileinput-button ui-btn-inline'>
+	              <i class='fa fa-plus' aria-hidden='true'></i>
+	              <span>Upload...</span>
+	              <input name='documentation[file]' multiple='' type='file'>
+	              <input id='documentation_#{self.id}' name='documentation[user_id]' type='hidden'>
+	          </span>
+            <button type='submit' class='btn btn-primary start hidden startUpload'>
+            	<i class='fa fa-cloud-upload' aria-hidden='true'></i>
+            	<span>Start upload</span>
+          </button>
+	     </form>"
 	end
 end
 

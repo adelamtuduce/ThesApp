@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513055732) do
+ActiveRecord::Schema.define(version: 20160513172043) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -31,6 +31,10 @@ ActiveRecord::Schema.define(version: 20160513055732) do
     t.datetime "updated_at"
     t.integer  "teacher_id"
     t.text     "description"
+    t.string   "documentation_file_name"
+    t.string   "documentation_content_type"
+    t.integer  "documentation_file_size"
+    t.datetime "documentation_updated_at"
   end
 
   create_table "diploma_selections", force: true do |t|
@@ -61,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160513055732) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "priority"
+    t.boolean  "sent",               default: false
   end
 
   create_table "events", force: true do |t|
@@ -115,6 +120,8 @@ ActiveRecord::Schema.define(version: 20160513055732) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "notifications",       default: true
+    t.boolean  "emails",              default: true
   end
 
   create_table "roles", force: true do |t|

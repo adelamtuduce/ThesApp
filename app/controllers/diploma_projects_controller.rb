@@ -2,14 +2,18 @@
 #
 # Table name: diploma_projects
 #
-#  id           :integer          not null, primary key
-#  name         :string(255)
-#  max_students :integer
-#  duration     :integer
-#  created_at   :datetime
-#  updated_at   :datetime
-#  teacher_id   :integer
-#  description  :text
+#  id                         :integer          not null, primary key
+#  name                       :string(255)
+#  max_students               :integer
+#  duration                   :integer
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  teacher_id                 :integer
+#  description                :text
+#  documentation_file_name    :string(255)
+#  documentation_content_type :string(255)
+#  documentation_file_size    :integer
+#  documentation_updated_at   :datetime
 #
 
 class DiplomaProjectsController < ApplicationController
@@ -34,13 +38,8 @@ class DiplomaProjectsController < ApplicationController
 		diploma_project = DiplomaProject.find(params[:diploma_project_id])
 		student = current_user.student
 		teacher = diploma_project.teacher
-		if student.enroll_requests.any?
-			priority = student.enroll_requests.count + 1
-		else
-			priority = 1
-		end
 		request = EnrollRequest.where(student: student, teacher: teacher, diploma_project: diploma_project).first_or_create
-		request.update_attributes(priority: priority)
+		request.update_attributes(sent: true)
 		# EnrollMailer.enroll_student(student, teacher, diploma_project).deliver
 	end
 
@@ -76,6 +75,15 @@ class DiplomaProjectsController < ApplicationController
 		render nothing: true
 	end
 
+	def upload_documentation
+		@project = DiplomaProject.find(params['diploma_project_id'])
+		@document = Document.new(document_params)
+  	@document.save
+  	@document.download_url = @document.file.url
+  	@document.save
+  	puts @document
+	end
+
 	private
 
 	def diploma_project_params
@@ -84,7 +92,8 @@ class DiplomaProjectsController < ApplicationController
     	:max_students, 
     	:duration,
     	:description,
-    	:teacher_id)
+    	:teacher_id,
+    	:documentation)
 	end
 
 end
