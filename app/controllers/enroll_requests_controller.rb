@@ -12,6 +12,9 @@ class EnrollRequestsController < ApplicationController
 		@teacher = @request.teacher
 		@student = @request.student
 		@documents = @request.documents
+		@next_meeting = Event.where(student: @student, teacher: @teacher)
+						.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
+						.first.start_at.strftime("%Y-%m-%d %T")
 
 		# redirect_to overview_enroll_request_path(@request)
 	end

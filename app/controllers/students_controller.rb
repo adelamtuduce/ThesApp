@@ -8,6 +8,10 @@ class StudentsController < ApplicationController
 	end
 
 	def student_dasboard
+		@next_meeting = Event.where(student: @student, teacher: @enrolled_teacher)
+										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
+										.first.start_at.strftime("%Y-%m-%d %T")
+		@notifications = Notification.where(user_id: @student.user.id, read: false)
 	end
 
 	def projects_to_enroll

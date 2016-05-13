@@ -26,6 +26,12 @@
     font-size:2em;
 }
 
+.fa-1 {
+    font-size:1.5em;
+    color: red;
+    cursor: pointer;
+}
+
 body {
 	background-color: #957bbe;
 }

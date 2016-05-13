@@ -69,6 +69,7 @@ SampleApp::Application.routes.draw do
   end
 
   resources :documents
+  resources :notifications
   resources :enroll_requests do
     member do
       delete 'destroy', to: 'enroll_requests#destroy', as: 'destroy'

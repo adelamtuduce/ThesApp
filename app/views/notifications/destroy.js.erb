@@ -1,0 +1,13 @@
+$(".notificationsView").html("<%=j render(:partial => 'notifications/notifications', :locals => { notifications: @notifications }) %>");
+
+$(".deleteNotification").on('click', function() {
+	var notificationID = $(this).attr('id');
+	console.log(notificationID)
+
+	$.ajax ({
+		type: 'DELETE',
+		url: '/notifications/' + notificationID,
+		data: {notification_id: notificationID},
+		success: function(data){}
+	})
+});
