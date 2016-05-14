@@ -37,4 +37,3 @@ u(a)),!0}),scheduler.attachEvent("onEventAdded",function(e,t){return scheduler._
 scheduler._selected_event_id=null,scheduler.map._infowindow.close(),!0}),scheduler._event_resolve_delay=1500,scheduler.attachEvent("onEventLoading",function(e){return scheduler.config.map_resolve_event_location&&e.event_location&&!e.lat&&!e.lng&&(scheduler._event_resolve_delay+=1500,p(h,this,[e],scheduler._event_resolve_delay)),!0}),scheduler.attachEvent("onEventCancel",function(e,t){return t&&(scheduler.map._markers[e]&&scheduler.map._markers[e].setMap(null),scheduler.map._infowindow.close()),!0;
 
 })});
-//# sourceMappingURL=../sources/ext/dhtmlxscheduler_map_view.js.map

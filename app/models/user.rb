@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
   has_one :student
   has_one :teacher
 
+    scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+
   def student?
   	Student.find_by(user_id: id)
   end
@@ -48,8 +50,11 @@ class User < ActiveRecord::Base
   end
 
   def regular_user?
-    puts Role.find(role_id).name
     %w(Student Profesor).include?(Role.find(role_id).name)
+  end
+
+  def admin_user?
+    %w(admin).include?(Role.find(role_id).name)
   end
 
   def incomplete_information?

@@ -82,6 +82,10 @@ body {
     color: black;
 }
 
+.fileName {
+    font-size: 0.8em;
+}
+
 .welcome-panel, .hero-unit {
     background-color: #fae3c4;
     color: black;
@@ -138,4 +142,9 @@ h2 {
 
 .navButton {
     pointer-events:none;
+}
+
+.fileType {
+    padding-left: 16px;
+
 }

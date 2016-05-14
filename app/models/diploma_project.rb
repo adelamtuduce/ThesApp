@@ -19,17 +19,16 @@
 class DiplomaProject < ActiveRecord::Base
 	has_many :students
 	belongs_to :teacher
-	has_attached_file :document,
-    :storage => :dropbox,
-    :dropbox_credentials => Rails.root.join("config/dropbox.yml"),
-    :dropbox_options => {}
-  	validates_attachment_content_type :document, :content_type => ["application/pdf","application/vnd.ms-excel",     
-             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-             "application/msword", 
-             "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-             "text/plain"]
+	has_many :documents
 
-  	after_create :save_download_url
+	scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+
+
+	def get_occupied
+		ap (max_students - students.count) == 0
+		return self if (max_students - students.count) == 0
+		nil
+	end
 
 	def displayed_data
 		{
@@ -39,7 +38,8 @@ class DiplomaProject < ActiveRecord::Base
 			duration: duration,
 			description: description,
 			documentation: upload_form,
-			actions: "<span class='deleteProject' id=#{id} style='cursor: pointer;'><i class='fa fa-times' aria-hidden='true'></i></span>"
+			actions: "<span class='deleteProject' id=#{id} style='cursor: pointer;'><i class='fa fa-times' aria-hidden='true' data-toggle='tooltip' data-placement='top' title='Delete project' style='color:red;'></i></span>
+								<span id='showDiplomaDetails_#{id}' data-diploma-id=#{id} style='cursor: pointer;'><span class='label label-info docPopover'>View uploads</span></span>"
 		}
 	end
 
@@ -64,6 +64,13 @@ class DiplomaProject < ActiveRecord::Base
 		response
 	end
 
+	def document_data
+		{
+			id: id,
+			document_data: documents.map(&:data)
+		}
+	end
+
 	def student_displayed_data(student)
 		if available_diploma?(student)
 			html = "<span class='enrollProject' data-teacher-id=#{teacher.id} data-project-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' class='fa fa-plus' title='Apply to project' style='color:green;' aria-hidden='true'></i></i></span>
@@ -73,6 +80,7 @@ class DiplomaProject < ActiveRecord::Base
 						<span class='viewDetails' data-details-id=#{id} style='cursor: pointer;'><i data-toggle='tooltip' data-placement='top' title='More Details' class='fa fa-cogs' aria-hidden='true'></i></span>"
 
 		end
+		html += "<span id='showDiplomaDetails_#{id}' data-diploma-id=#{id} style='cursor: pointer;'><i style='color: #17a589;' class='fa fa-cloud-download docPopover'></i></span>"
 		{
 			name: name,
 			students: max_students - students.count,
@@ -99,18 +107,9 @@ class DiplomaProject < ActiveRecord::Base
 	end
 
 	def upload_form
-		"<form accept-charset='UTF-8' action='/diploma_projects/#{id}/upload_documentation' class='fileupload' enctype='multipart/form-data' id='new_document_#{self.id}'' method='post'>
-	          <span class='btn addDocuments fileinput-button ui-btn-inline'>
-	              <i class='fa fa-plus' aria-hidden='true'></i>
-	              <span>Upload...</span>
-	              <input name='documentation[file]' multiple='' type='file'>
-	              <input id='documentation_#{self.id}' name='documentation[user_id]' type='hidden'>
-	          </span>
-            <button type='submit' class='btn btn-primary start hidden startUpload'>
-            	<i class='fa fa-cloud-upload' aria-hidden='true'></i>
-            	<span>Start upload</span>
-          </button>
-	     </form>"
+		"<span data-project-id=#{id} class='label label-info addDocuments showModalDoc' style='cursor: pointer;' data-toggle='modal' data-target='#myUploadModal'>
+			<i class='fa fa-plus' aria-hidden='true'></i> Upload files
+		</span>"
 	end
 end
 

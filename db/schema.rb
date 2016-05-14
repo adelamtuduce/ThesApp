@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513172043) do
+ActiveRecord::Schema.define(version: 20160514093452) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -31,10 +31,6 @@ ActiveRecord::Schema.define(version: 20160513172043) do
     t.datetime "updated_at"
     t.integer  "teacher_id"
     t.text     "description"
-    t.string   "documentation_file_name"
-    t.string   "documentation_content_type"
-    t.integer  "documentation_file_size"
-    t.datetime "documentation_updated_at"
   end
 
   create_table "diploma_selections", force: true do |t|
@@ -55,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160513172043) do
     t.datetime "file_updated_at"
     t.string   "download_url"
     t.integer  "enroll_request_id"
+    t.integer  "diploma_project_id"
   end
 
   create_table "enroll_requests", force: true do |t|

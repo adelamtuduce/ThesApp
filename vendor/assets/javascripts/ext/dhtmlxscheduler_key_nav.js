@@ -12,4 +12,3 @@ scheduler.config.multisection?r[l]=i[l]:r[l]=a}return r},scheduler._do_paste=fun
 
 return scheduler.setCurrentView(t),!0}var a=scheduler._select_id;if(e.ctrlKey&&67==e.keyCode)return a&&(scheduler._buffer_id=a,i=!0,scheduler.callEvent("onEventCopied",[scheduler.getEvent(a)])),!0;if(e.ctrlKey&&88==e.keyCode&&a){i=!1,scheduler._buffer_id=a;var n=scheduler.getEvent(a);scheduler.updateEvent(n.id),scheduler.callEvent("onEventCut",[n])}if(e.ctrlKey&&86==e.keyCode){var n=scheduler.getEvent(scheduler._buffer_id);if(n){var r=scheduler._make_pasted_event(n);if(i)r.id=scheduler.uid(),scheduler._do_paste(i,r,n);
 else{var l=scheduler.callEvent("onBeforeEventChanged",[r,e,!1,n]);l&&(scheduler._do_paste(i,r,n),i=!0)}}return!0}})},scheduler._temp_key_scope();
-//# sourceMappingURL=../sources/ext/dhtmlxscheduler_key_nav.js.map

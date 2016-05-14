@@ -29,9 +29,6 @@ class Event < ActiveRecord::Base
   end
 
   def self.format_date(date_time)
-  	puts date_time
-  	puts Time.at(date_time.to_i)
-  	puts Time.parse(date_time).utc.beginning_of_day
    	Time.parse(date_time)
   end
 

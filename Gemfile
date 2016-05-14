@@ -27,6 +27,7 @@ gem 'jquery-datatables-rails', '~> 3.3.0'
 gem "letter_opener", :group => :development
 gem 'jquery-ui-rails'
 gem 'event-calendar', :require => 'event_calendar'
+gem "awesome_print"
 
 group :development, :test do
   gem 'sqlite3'

@@ -19,6 +19,8 @@ class EnrollRequest < ActiveRecord::Base
 	belongs_to :diploma_project
 	has_many :documents
 
+	scope :in_interval, -> (start_date, end_date) { where("date(enroll_requests.created_at) >= date('#{start_date}') AND date(enroll_requests.created_at) <= date('#{end_date}')") }
+
 	def displayed_data
 		{
 			student: student.name,

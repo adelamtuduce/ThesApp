@@ -15,4 +15,3 @@ var _=!1;s.start_date<this._max_date&&s.end_date>this._min_date&&s.start_date<s.
 scheduler.get_visible_events=function(e){return this.config.all_timed&&this.config.multi_day?a.call(this,!1):a.call(this,e)},scheduler.attachEvent("onBeforeViewChange",function(e,t,a,i){return scheduler._allow_dnd="day"==a||"week"==a,!0}),scheduler._is_main_area_event=function(t){return!!(t._timed||this.config.all_timed===!0||"short"==this.config.all_timed&&e(t))};var i=scheduler.updateEvent;scheduler.updateEvent=function(e){var t,a=scheduler.config.all_timed&&!(scheduler.isOneDayEvent(scheduler._events[e])||scheduler.getState().drag_id);
 
 a&&(t=scheduler.config.update_render,scheduler.config.update_render=!0),i.apply(scheduler,arguments),a&&(scheduler.config.update_render=t)}}();
-//# sourceMappingURL=../sources/ext/dhtmlxscheduler_all_timed.js.map

@@ -2,6 +2,15 @@
 var addTooltip = function() {
 	$('[data-toggle="tooltip"]').tooltip();
 }
+
+var addPopover = function () {
+	var url = window.location.pathname;
+	var url_components = url.split('/');
+	var page = url_components[url_components.length -1];
+	if (page === 'projects' || page === 'projects_to_request') {
+  		loadDocumentsDetails();
+  	}
+};
 var columns =  [
     { data: 'name', orderable: false, className: "noSort" },
     { data: 'students' },
@@ -103,6 +112,7 @@ $(document).ready(function() {
 	});
 
 	setTimeout(addTooltip, 500);
+	setTimeout(addPopover, 500);
 
 	$(document).on('click',".paginate_button a", function(){
 		setTimeout(addTooltip, 500);
@@ -125,17 +135,33 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', ".allDiplomaProjects tbody .viewDetails", function() {
-		var projectID = $(this).parent().parent().attr('id');
+		var projectID = $(this).data('details-id');
 		$.ajax ({
 			type: 'get',
 			url: '/diploma_projects/' + projectID + '/diploma_project_modal',
 			data: {diploma_project_id: projectID},
 			success: function(data){
-				console.log(data);
         		$('#projectModal').html(data).modal({show: true});
         	}
 		})
 	});
+
+
+	$(document).on('click', ".diploma_projects tbody .showModalDoc", function() {
+		var projectID = $(this).data('project-id');
+		$.ajax ({
+			type: 'get',
+			url: '/diploma_projects/' + projectID + '/show_upload_modal',
+			data: {diploma_project_id: projectID},
+			success: function(data){
+        		$('#showUploadModal').html(data).modal({show: true});
+        	}
+		})
+	});
+
+	$('#myModal').on('hidden.bs.modal', function () {
+   	 	$(this).find('form').trigger('reset');
+	})
 
 	$(document).on('click', ".deleteProject", function() {
 		var projectID = $(this).attr('id');

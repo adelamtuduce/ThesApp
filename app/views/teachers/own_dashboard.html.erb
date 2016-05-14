@@ -1,5 +1,11 @@
 <div class="col-md-12">
     <div class="col-md-5">
+      <div class="panel panel-default">
+        <div class="panel-heading">Evolution of Enrollments - last 7 days</div>
+          <div class="panel-body addDocuments">
+            <div id="requests-all"></div>
+          </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading">Current status</div>
             <div class="panel-body welcome-panel">
@@ -18,7 +24,7 @@
             </div>
         </div>
     </div>
-	<div class="col-md-7">
+  <div class="col-md-7">
         <div class="panel panel-default">
           <div class="panel-heading welcome-panel">
           Existing Appointments - Hover on event for details.
@@ -41,17 +47,15 @@
             </div>
           </div>
         </div>
-  	</div>
+    </div>
 </div>
 
 <script>
-	scheduler.config.xml_date="%Y-%m-%d %H:%i";
-	scheduler.config.first_hour = 8;
-	scheduler.config.last_hour = 18;
-	scheduler.config.readonly = true;
+  scheduler.config.xml_date="%Y-%m-%d %H:%i";
+  scheduler.config.first_hour = 8;
+  scheduler.config.last_hour = 18;
+  scheduler.config.readonly = true;
     scheduler.init("scheduler_here");
     scheduler.load("/teachers/<%= current_user.teacher.id %>/retrieve_own_events", "json");
-    // var dp = new dataProcessor("/events/db_action?student_id=" + student + "&teacher_id=" + teacher);
-    // dp.init(scheduler);
-    // dp.setTransactionMode("GET", false);
+    loadChart();
 </script>

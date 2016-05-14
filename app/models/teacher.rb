@@ -13,6 +13,8 @@ class Teacher < ActiveRecord::Base
 	belongs_to :user
 	has_many :enroll_requests
 
+	  scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+
 	def name
 		first_name = user.personal_information.first_name.blank? ? '' : user.personal_information.first_name
 		last_name = user.personal_information.last_name.blank? ? '' : user.personal_information.last_name

@@ -21,10 +21,12 @@
 //= require jquery-fileupload/basic
 //= require chat
 //= require columnFilter
-//= require fullcalendar
+//= require bootstrap.min
 //= require dhtmlxscheduler
 //= require dhtmlxscheduler_limit
 //= require dhtmlxscheduler_tooltip
-//= require bootstrap.min
+//= require c3
+//= require d3
+//= require datetimepicker.min
 //= require private_pub
 //= require_tree .

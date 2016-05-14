@@ -11,7 +11,7 @@
 class TeachersController < ApplicationController
   before_filter :authenticate_user!
 
-  before_action :set_teacher, only: [:own_dashboard, :show_students, :show_projects, :accepted_requests, :show_enrollments, :retrieve_projects, :enrollment_requests]
+  before_action :set_teacher, only: [:retrieve_charts_data, :own_dashboard, :show_students, :show_projects, :accepted_requests, :show_enrollments, :retrieve_projects, :enrollment_requests]
 
 	def show_students
 		@students = @teacher.students
@@ -92,6 +92,44 @@ class TeachersController < ApplicationController
 		@enrolls = EnrollRequest.where(teacher: @teacher, accepted: true).count
 		@pending_enrolls = EnrollRequest.where(teacher: @teacher, accepted: nil).count
 		@proposed_projects = DiplomaProject.where(teacher_id: @teacher).count
+	end
+
+	def retrieve_charts_data
+		@requests = EnrollRequest.where(teacher_id: @teacher.id)
+
+		start_valid = true
+    end_valid   = true
+
+    begin
+      from = Date.parse(Date.strptime(params[:chart_from], '%m/%d/%Y').strftime('%Y-%m-%d')).beginning_of_day if params[:chart_from] && params[:chart_from].length == 10
+    rescue ArgumentError
+      start_valid = false
+    end
+    begin
+      to = Date.parse(Date.strptime(params[:chart_to], '%m/%d/%Y').strftime('%Y-%m-%d')).beginning_of_day if params[:chart_to] && params[:chart_to].length == 10
+    rescue ArgumentError
+      end_valid = false
+    end
+
+    to   = Time.zone.now.to_date if to.nil? || !end_valid
+    from = to - 6.days if from.nil? || !start_valid
+
+    from = to if from > to
+    result = []
+    from.to_date.step(to.to_date) do |day|
+    	start = day.beginning_of_day.strftime("%Y-%m-%d %T")
+    	end_day = day.end_of_day.strftime("%Y-%m-%d %T")
+    	requests_list = @requests.in_interval(start, end_day)
+    	value = {
+    		x: day.to_date.strftime("%Y-%m-%d"),
+    		wishlist: requests_list.where(sent: false).count,
+    		requests: requests_list.where(sent: true).count,
+    		total: requests_list.count
+    	}
+    	ap value
+    	result << value
+    end
+    render json: { result: result }
 	end
 
 	def set_teacher

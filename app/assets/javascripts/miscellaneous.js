@@ -1,4 +1,23 @@
+var identifyFileType = function(type) {
+	var icon;
+	switch(type) {
+	    case 'word':
+	        icon = '<i class="fa fa-file-word-o fileType" aria-hidden="true"></i>';
+	        break;
+	    case 'pdf':
+	        icon = '<i class="fa fa-file-pdf-o fileType" aria-hidden="true"></i>';
+	        break;
+	    default:
+	        icon = '<i class="fa fa-file-text fileType" aria-hidden="true"></i>';
+	}
+	return icon;
+}
+
+
 $(document).ready(function() {
+
+	$("#start-date").datetimepicker().show('true');
+	$("#end-date").datetimepicker();
 	
 	$('.toggleStatus').on('click', function() {
 		var statusID = $(this).attr('id');

@@ -19,6 +19,7 @@
 class DiplomaProjectsController < ApplicationController
 	before_filter :authenticate_user!
 
+	# before_action :set_project, only: [:retrieve_documentations]
 
 	def index
 		response = DiplomaProject.retrieve_all_projects(params, current_user.student)
@@ -75,13 +76,33 @@ class DiplomaProjectsController < ApplicationController
 		render nothing: true
 	end
 
+	def show_upload_modal
+		@project = DiplomaProject.find(params['diploma_project_id'])
+		respond_to do |format|
+      format.html { render partial: 'upload_documentation_modal', locals: { diploma_project: @project }, layout: false }
+    end
+	# @document = Document.new(document_params)
+  # 	@document.save
+  # 	@document.download_url = @document.file.url
+  # 	@document.save
+	end
+
 	def upload_documentation
 		@project = DiplomaProject.find(params['diploma_project_id'])
-		@document = Document.new(document_params)
-  	@document.save
-  	@document.download_url = @document.file.url
-  	@document.save
-  	puts @document
+		@project.update(diploma_project_params)
+		@project.save
+
+		render nothing: true
+	end
+
+	def retrieve_documentations
+		if current_user.student?
+			projects = DiplomaProject.all
+		end 
+		if current_user.teacher?
+			projects = DiplomaProject.where(teacher: current_user.teacher)
+		end
+		render json: projects.map(&:document_data)
 	end
 
 	private
@@ -94,6 +115,11 @@ class DiplomaProjectsController < ApplicationController
     	:description,
     	:teacher_id,
     	:documentation)
+	end
+
+
+	def set_project
+		@project = DiplomaProject.find(params[:id])
 	end
 
 end

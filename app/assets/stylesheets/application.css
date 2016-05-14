@@ -16,6 +16,8 @@
  *= require bootstrap.min
  *= require fullcalendar
  *= require dhtmlxscheduler
+ *= require c3
+ *= require datetimepicker
  *= require_tree .
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require rowReorder.dataTables

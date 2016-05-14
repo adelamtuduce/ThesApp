@@ -7,6 +7,7 @@
     require "sprockets/railtie"
 
     require 'omniauth'
+    require "awesome_print"
 
     # require "rails/test_unit/railtie"
 

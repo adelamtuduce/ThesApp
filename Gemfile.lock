@@ -31,6 +31,7 @@ GEM
       rake (~> 10.4)
     arel (4.0.2)
     ast (2.2.0)
+    awesome_print (1.6.1)
     bcrypt (3.1.11)
     bcrypt-ruby (3.1.2)
     better_errors (2.1.1)
@@ -357,6 +358,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  awesome_print
   bcrypt-ruby (= 3.1.2)
   better_errors
   binding_of_caller

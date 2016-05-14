@@ -10,4 +10,3 @@ This software is covered by GPL license. You also can obtain Commercial or Enter
 
 if(o){scheduler._min_date||(scheduler._min_date=r),o=unescape(o).split("@"),o[0]=this.templates.xml_date(o[0]);var s=this.isViewExists(o[1])?o[1]:l,_=isNaN(+o[0])?r:o[0];return window.setTimeout(function(){scheduler.setCurrentView(_,s)},1),!1}}var c=escape(this.templates.xml_format(r||n)+"@"+(l||i));return e("scheduler_settings","expires=Sun, 31 Jan 9999 22:00:00 GMT",c),!0});var i=scheduler._load;scheduler._load=function(){var e=arguments;if(!scheduler._date&&scheduler._load_mode){var t=this;window.setTimeout(function(){
 i.apply(t,e)},1)}else i.apply(this,e)}}();
-//# sourceMappingURL=../sources/ext/dhtmlxscheduler_cookie.js.map

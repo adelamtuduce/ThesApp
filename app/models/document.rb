@@ -16,6 +16,7 @@
 
 class Document < ActiveRecord::Base
   belongs_to :user
+  belongs_to :diploma_project
   belongs_to :enroll_request
   has_attached_file :file,
     :storage => :dropbox,
@@ -29,6 +30,30 @@ class Document < ActiveRecord::Base
 
   after_create :save_download_url
 
+  scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+
   def save_download_url    
+  end
+
+  def data
+    {
+      id: id,
+      document_name: file_file_name,
+      download_url: download_url,
+      file_type: file_type
+    }
+  end
+
+  def file_type
+    case file_content_type
+    when 'application/pdf'
+      return 'pdf'
+    when 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      return 'excel'
+    when 'application/msword'
+      return 'word'
+    else
+      return 'text'
+    end
   end
 end

@@ -17,4 +17,3 @@ break;case"dhx_multi_day":r=l?l.offsetHeight:0,1==r&&(r=0);break;case"dhx_cal_da
 
 }("day"==d||"week"==d)&&(r+=2)}t+=r}scheduler._obj.style.height=t+"px",e||scheduler.updateView()},n=function(){if(!scheduler.config.container_autoresize||!t)return!0;var e=scheduler.getState().mode;i(),(scheduler.matrix&&scheduler.matrix[e]||"month"==e)&&window.setTimeout(function(){i(!0)},1)};scheduler.attachEvent("onViewChange",n),scheduler.attachEvent("onXLE",n),scheduler.attachEvent("onEventChanged",n),scheduler.attachEvent("onEventCreated",n),scheduler.attachEvent("onEventAdded",n),scheduler.attachEvent("onEventDeleted",n),
 scheduler.attachEvent("onAfterSchedulerResize",n),scheduler.attachEvent("onClearAll",n),scheduler.attachEvent("onBeforeExpand",function(){return t=!1,!0}),scheduler.attachEvent("onBeforeCollapse",function(){return t=!0,!0})}();
-//# sourceMappingURL=../sources/ext/dhtmlxscheduler_container_autoresize.js.map

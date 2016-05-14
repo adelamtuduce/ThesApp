@@ -23,8 +23,14 @@ class DocumentsController < ApplicationController
 	def create
 		@document = Document.new(document_params)
   	@document.save
+
+    if  params['document']['diploma_project_id']
+      @document.diploma_project_id =  params['document']['diploma_project_id']
+    end
   	@document.download_url = @document.file.url
   	@document.save
+
+    redirect_to :back
 	end
 
 	private

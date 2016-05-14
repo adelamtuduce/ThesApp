@@ -58,6 +58,7 @@ SampleApp::Application.routes.draw do
       get 'accepted_requests', to: 'teachers#accepted_requests', as: 'accepted_requests'
       get 'accept_enrollment', to: 'teachers#accept_student_enrollment', as: 'accept_student_enrollment'
       post 'decline_enrollment', to: 'teachers#decline_student_enrollment', as: 'decline_student_enrollment'
+      get 'retrieve_charts_data', to: 'teachers#retrieve_charts_data', as: 'retrieve_charts_data'
     end
   end
 
@@ -84,11 +85,13 @@ SampleApp::Application.routes.draw do
     collection do
       get 'student_enrolls', to: 'diploma_projects#student_enrolls', as: 'student_enrolls'
       post 'update_priorities', to: 'diploma_projects#update_priorities', as: 'update_priorities'
+      get 'retrieve_documentations', to: 'diploma_projects#retrieve_documentations', as: 'retrieve_documentations'
     end
 
     member do
-      post 'upload_documentation', to: 'diploma_projects#upload_documentation', as: 'upload_documentation'
       get 'diploma_project_modal', to: 'diploma_projects#diploma_project_modal', as: 'diploma_project_modal'
+      post 'upload_documentation', to: 'diploma_projects#upload_documentation', as: 'upload_documentation'
+      get 'show_upload_modal', to: 'diploma_projects#show_upload_modal', as: 'show_upload_modal'
     end
     post 'enroll', to: 'diploma_projects#enroll_student', as: 'enroll'
   end
@@ -99,6 +102,8 @@ SampleApp::Application.routes.draw do
       post 'toggle_selection', to: 'users#toggle_selection_mode', as: 'toggle_selection'
     end
     member do
+      get 'admin_chart_data', to: 'users#admin_chart_data', as: 'admin_chart_data'
+      get 'view_data', to: 'users#view_data', as: 'view_data'
     end
   end
 

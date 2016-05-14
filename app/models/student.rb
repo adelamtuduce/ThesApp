@@ -16,6 +16,8 @@ class Student < ActiveRecord::Base
 	belongs_to :teacher
 	has_many :enroll_requests
 
+	  scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+
 	def personal_information
 		user.personal_information
 	end
