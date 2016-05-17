@@ -7,7 +7,11 @@ SampleApp::Application.routes.draw do
 #   get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
 #   get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
 # end
-  root to: 'dashboard#home'
+  namespace :admin do
+      get 'admin_chart_data', to: 'admin_dashboard#admin_chart_data', as: 'admin_chart_data'
+      get 'view_data', to: 'admin_dashboard#view_data', as: 'view_data'
+  end
+  root to: 'dashboard#root'
   # match '/signup',  to: 'users#new',            via: 'get'
   # match '/signin',  to: 'sessions#new',         via: 'get'
   # match '/signout', to: 'sessions#destroy',     via: 'delete'
@@ -46,6 +50,7 @@ SampleApp::Application.routes.draw do
   resources :teachers do
     collection do
       get 'retrieve_teachers', to: 'teachers#retrieve_all_teachers', as: 'retrieve_teachers'
+      get 'start_import_parser', to: 'teachers#start_import_parser', as: 'start_import_parser'
     end
     member do
       get 'students', to: 'teachers#show_students', as: 'students'
@@ -58,6 +63,8 @@ SampleApp::Application.routes.draw do
       get 'accepted_requests', to: 'teachers#accepted_requests', as: 'accepted_requests'
       get 'accept_enrollment', to: 'teachers#accept_student_enrollment', as: 'accept_student_enrollment'
       post 'decline_enrollment', to: 'teachers#decline_student_enrollment', as: 'decline_student_enrollment'
+      post 'import_projects', to: 'teachers#import_projects', as: 'import_projects'
+      get 'show_import_modal', to: 'teachers#show_import_modal', as: 'show_import_modal'
       get 'retrieve_charts_data', to: 'teachers#retrieve_charts_data', as: 'retrieve_charts_data'
     end
   end
@@ -102,8 +109,7 @@ SampleApp::Application.routes.draw do
       post 'toggle_selection', to: 'users#toggle_selection_mode', as: 'toggle_selection'
     end
     member do
-      get 'admin_chart_data', to: 'users#admin_chart_data', as: 'admin_chart_data'
-      get 'view_data', to: 'users#view_data', as: 'view_data'
+      post 'update_personal_information', to: 'users#update_personal_information', as: 'update_personal_information'
     end
   end
 

@@ -37,6 +37,14 @@
     cursor: pointer;
 }
 
+.error { 
+color: red;
+}
+
+.fa-lg {
+    padding-top: 10px;
+}
+
 body {
     background-color: #957bbe;
 }

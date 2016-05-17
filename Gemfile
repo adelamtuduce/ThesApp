@@ -17,17 +17,18 @@ gem "jquery-fileupload-rails"
 gem 'private_pub'
 gem 'thin'
 gem 'devise'
+gem 'toastr-rails'
 gem 'better_errors'
 gem "binding_of_caller"
 gem "font-awesome-rails"
 gem "paperclip-dropbox"
-gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem "letter_opener", :group => :development
 gem 'jquery-ui-rails'
 gem 'event-calendar', :require => 'event_calendar'
 gem "awesome_print"
+gem "cancan"
 
 group :development, :test do
   gem 'sqlite3'
@@ -47,10 +48,10 @@ group :test do
   # gem 'database_cleaner', github: 'bmabey/database_cleaner'
 
   # Uncomment this line on OS X.
-  gem 'growl', '1.0.3'
+  # gem 'growl', '1.0.3'
 
   # Uncomment these lines on Linux.
-  # gem 'libnotify', '0.8.0'
+  gem 'libnotify', '0.8.0'
 
   # Uncomment these lines on Windows.
   # gem 'rb-notifu', '0.0.4'

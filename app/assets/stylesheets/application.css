@@ -18,8 +18,10 @@
  *= require dhtmlxscheduler
  *= require c3
  *= require datetimepicker
+ *= require formvalidation
  *= require_tree .
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require toastr
  *= require rowReorder.dataTables
  
  */

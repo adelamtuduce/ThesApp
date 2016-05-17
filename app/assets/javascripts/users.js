@@ -8,7 +8,9 @@ var ready = function () {
 
     $(document).on('click', '.start-conversation', function(e){
         e.preventDefault();
-
+        console.log($(this));
+        $(document).find(".paginate_button").removeClass('active');
+        console.log($(this).data('sid'));
         var sender_id = $(this).data('sid');
         var recipient_id = $(this).data('rip');
         $.post('/conversations', { sender_id: sender_id, recipient_id: recipient_id }, function (data) {
@@ -33,7 +35,6 @@ var ready = function () {
 
     $(document).on('click', '.closeChat', function (e) {
         e.preventDefault();
-
         var id = $(this).data('cid');
         chatBox.close(id);
     });

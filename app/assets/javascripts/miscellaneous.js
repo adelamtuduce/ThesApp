@@ -32,6 +32,7 @@ $(document).ready(function() {
 		})
 	});
 
+
 	$('.toggleNotifications').on('click', function() {
 		var infoId = $(this).attr('id').replace('notif_', '');
 
@@ -44,6 +45,7 @@ $(document).ready(function() {
 			}
 		})
 	});
+
 
 	$('.toggleEmails').on('click', function() {
 		var infoId = $(this).attr('id').replace('email_', '');

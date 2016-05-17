@@ -33,7 +33,7 @@
             <li><%= nav_link default_button(current_user), root_path %></li>
           <% end %>
           <% if current_user.admin_user? %>
-            <li><%= nav_link 'Data charts', view_data_user_path(current_user) %></li>
+            <li><%= nav_link 'Data charts', admin_view_data_path %></li>
           <% end %>
           <% if current_user.teacher? %>
              <li><%= nav_link "My Enrollments", show_enrollments_teacher_path(current_user.teacher) %></li>

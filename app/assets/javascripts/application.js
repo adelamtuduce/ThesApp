@@ -28,5 +28,28 @@
 //= require c3
 //= require d3
 //= require datetimepicker.min
+//= require validation
 //= require private_pub
+//= require toastr
 //= require_tree .
+
+$(document).ready(function() {
+	
+	
+	 toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "positionClass": "toast-bottom-right",
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+  	}
+
+	});
+

@@ -216,7 +216,7 @@ var loadAdminChart = function(){
   var id = stuff[2];
   var startDate = $('#start-date').val();
   var endDate   = $('#end-date').val();
-  var url = '/users/' + id + '/admin_chart_data';
+  var url = '/admin_dashboard/admin_chart_data';
   $.ajax({
     type: 'get',
     url: url,

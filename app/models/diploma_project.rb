@@ -2,24 +2,25 @@
 #
 # Table name: diploma_projects
 #
-#  id                         :integer          not null, primary key
-#  name                       :string(255)
-#  max_students               :integer
-#  duration                   :integer
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  teacher_id                 :integer
-#  description                :text
-#  documentation_file_name    :string(255)
-#  documentation_content_type :string(255)
-#  documentation_file_size    :integer
-#  documentation_updated_at   :datetime
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  max_students :integer
+#  duration     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  teacher_id   :integer
+#  description  :text
 #
 
 class DiplomaProject < ActiveRecord::Base
 	has_many :students
 	belongs_to :teacher
 	has_many :documents
+
+	validates :name, presence: true
+	validates :max_students, presence: true
+	validates :duration, presence: true
+	validates :description, presence: true
 
 	scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
 
@@ -30,12 +31,16 @@ class DiplomaProject < ActiveRecord::Base
 		nil
 	end
 
+	def current_time_span
+		time_span.nil? ? '' : time_span
+	end
+
 	def displayed_data
 		{
 			id: id,
 			name: name,
 			students: max_students,
-			duration: duration,
+			duration: duration.to_s + " " + current_time_span,
 			description: description,
 			documentation: upload_form,
 			actions: "<span class='deleteProject' id=#{id} style='cursor: pointer;'><i class='fa fa-times' aria-hidden='true' data-toggle='tooltip' data-placement='top' title='Delete project' style='color:red;'></i></span>

@@ -11,7 +11,8 @@
 #
 
 class StudentsController < ApplicationController
-
+	before_filter :authenticate_user!
+  load_and_authorize_resource
 	before_action :set_student, only: [:student_dasboard]
 	 
 	def retrieve_all_students
@@ -22,7 +23,13 @@ class StudentsController < ApplicationController
 	def student_dasboard
 		@next_meeting = Event.where(student: @student, teacher: @enrolled_teacher)
 										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
-										.first.start_at.strftime("%Y-%m-%d %T")
+		if @next_meeting.any?
+			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
+		else
+			@meeting_date = 'No new meetings yet.'
+		end
+
+										
 		@notifications = Notification.where(user_id: @student.user.id, read: false)
 	end
 

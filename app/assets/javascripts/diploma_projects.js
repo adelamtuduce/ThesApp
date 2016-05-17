@@ -158,11 +158,6 @@ $(document).ready(function() {
         	}
 		})
 	});
-
-	$('#myModal').on('hidden.bs.modal', function () {
-   	 	$(this).find('form').trigger('reset');
-	})
-
 	$(document).on('click', ".deleteProject", function() {
 		var projectID = $(this).attr('id');
 		$.ajax ({

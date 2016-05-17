@@ -14,6 +14,8 @@
 #
 
 class EventsController < ApplicationController
+  before_filter :authenticate_user!
+  # load_and_authorize_resource
 
   def index
     events = Event.all.where(student_id: params['student_id'], teacher_id: params['teacher_id'])

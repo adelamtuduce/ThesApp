@@ -21,6 +21,8 @@
 #
 
 class PersonalInformationsController < ApplicationController
+  before_filter :authenticate_user!
+  load_and_authorize_resource
 	before_action :set_pi, except: [:create, :toggle_notifications, :toggle_emails]
   skip_before_filter :verify_authenticity_token
 
@@ -34,13 +36,13 @@ class PersonalInformationsController < ApplicationController
   end
 
   def update
-  	if @personal_information.update(personal_information_params)
-  		flash[:notice] = 'User saved'
+    if @personal_information.update(personal_information_params)
+      flash[:notice] = 'User saved'
+    end
       redirect_to user_path(params[:id])
-  	else
-  		render 'new'
-  	end
   end
+
+
 
   def toggle_notifications
     @personal_information = PersonalInformation.find(params[:information_id])
@@ -57,14 +59,14 @@ class PersonalInformationsController < ApplicationController
 
   private
 
-    def personal_information_params
+   def personal_information_params
       params.require(:personal_information).permit(
-      	:first_name, 
-      	:last_name, 
-      	:age,
-      	:year,
-      	:section_id,
-      	:code,
+        :first_name, 
+        :last_name, 
+        :age,
+        :year,
+        :section_id,
+        :code,
         :avatar,
         :user_id)
     end

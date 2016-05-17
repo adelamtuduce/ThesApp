@@ -10,8 +10,11 @@
 
 class TeachersController < ApplicationController
   before_filter :authenticate_user!
-
+  load_and_authorize_resource
   before_action :set_teacher, only: [:retrieve_charts_data, :own_dashboard, :show_students, :show_projects, :accepted_requests, :show_enrollments, :retrieve_projects, :enrollment_requests]
+  before_action :copy_to_local_import, only: [:start_import_parser]
+
+  protect_from_forgery :except => [:import_projects]
 
 	def show_students
 		@students = @teacher.students
@@ -87,11 +90,47 @@ class TeachersController < ApplicationController
 	def own_dashboard
 		@next_meeting = Event.where(teacher: @teacher)
 										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
-										.first.start_at.strftime("%Y-%m-%d %T")
+		if @next_meeting.any?
+			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
+		else
+			@meeting_date = 'No new meetings yet.'
+		end
+
 		@notifications = Notification.where(user_id: @teacher.user.id, read: false)
 		@enrolls = EnrollRequest.where(teacher: @teacher, accepted: true).count
 		@pending_enrolls = EnrollRequest.where(teacher: @teacher, accepted: nil).count
 		@proposed_projects = DiplomaProject.where(teacher_id: @teacher).count
+	end
+
+	def show_import_modal
+		@teacher = Teacher.find(params[:id])
+
+		respond_to do |format|
+      format.html { render partial: 'import_projects_modal', locals: { teacher: @teacher }, layout: false }
+    end
+	end
+
+	def import_projects 
+		@import_file = ImportProject.new(import_params)
+		@import_file.status = 'pending'
+		@import_file.save
+		render nothing: true
+	end
+
+	def start_import_parser
+		status = ''
+		message = ''
+		if @temporary_file
+			if CSV.readlines(@temporary_file)[0].compact.blank?
+				status = 'error'
+				message = 'Improper file'
+			end
+			status, message = Resque.enqueue(ProjectsParserWorker, @last_import)
+		else
+			status = 'error'
+			message = 'Wrong'
+		end
+
 	end
 
 	def retrieve_charts_data
@@ -132,7 +171,22 @@ class TeachersController < ApplicationController
     render json: { result: result }
 	end
 
+	private 
+
 	def set_teacher
 		@teacher = Teacher.find_by(user_id: current_user.id)
+	end
+
+	def import_params
+    params.require(:import_project).permit(
+      :import,
+      :teacher_id)
+	end
+
+	def copy_to_local_import
+		@last_import = ImportProject.last 
+		return unless import
+		@temporary_file = "tmp/import_project_#{last_import.id}.csv"
+		@last_import.copy_to_local_file(:original, @temporary_file)
 	end
 end

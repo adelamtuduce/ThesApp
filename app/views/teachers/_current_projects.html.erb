@@ -2,9 +2,11 @@
   <!-- Default panel contents -->
   	<div class="panel-heading clearfix">Your Projects
   		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary pull-right addDocuments" data-toggle="modal" data-target="#myModal">
-			<i class="fa fa-plus" aria-hidden="true"></i> Add new project
-		</button>
+  		<div class='row pull-right'>
+			<button type="button" class="btn btn-primary addDocuments" style='margin-right: 7px;' data-toggle="modal" data-target="#myModal">
+				<i class="fa fa-plus" aria-hidden="true"></i> Add new project
+			</button>
+		</div>
 	</div>
   	<div class="panel-body informationPanel">
 		<table class="table diploma_projects" class="display" data-source="<%= retrieve_projects_teacher_url(current_user.teacher.id) %>">
@@ -41,15 +43,29 @@
 	        		<%= f.text_field :name, class: 'form-control' %>
 	        	</div>
 
-	        	<div class="form-group">
-	        		<%= f.label :max_students, class: 'control-label' %>
-	        		<%= f.text_field :max_students, class: 'form-control' %>
-	        	</div>
+                <div class='col-md-12'>
+                    <div class='row'>
+                        <div class='col-md-4 '>
+            	        	<div class="form-group">
+            	        		<%= f.label :max_students, class: 'control-label' %>
+            	        		<%= f.text_field :max_students, class: 'form-control' %>
+            	        	</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-12'>
+                    <div class='row'>
+        	        	<div class="col-md-6 form-group">
+        	        		<%= f.label :duration, class: 'control-label' %>
+        	        		<%= f.text_field :duration, class: 'form-control' %>
+        	        	</div>
 
-	        	<div class="form-group">
-	        		<%= f.label :duration, class: 'control-label' %>
-	        		<%= f.text_field :duration, class: 'form-control' %>
-	        	</div>
+                        <div class="col-md-6 form-group">
+                            <%= f.label :time_span, class: 'control-label' %>
+                            <%= f.select :time_span, [['days', 'days'], ['weeks', 'weeks'], ['months', 'months']], {}, {class: 'form-control'} %>
+                        </div>
+                    </div>
+                </div>
 
 	        	<div class="form-group">
 	        		<%= f.label :description, class: 'control-label' %>
@@ -60,7 +76,6 @@
 		    <div class="modal-footer">
 		        <div class="btn-group" role="group" aria-label="...">
 					<%= f.button "Save project", class: "btn btn-primary addDocuments" %>
-					<%= f.button "Clear inputs", :type => "reset", class: 'btn btn-info' %>
 					<button type="button" class="btn btn-default informationPanel" data-dismiss="modal">Close modal</button>
 				</div>
 		    </div>
@@ -69,25 +84,52 @@
   </div>
 </div>
 
-
 <div class="modal fade" id="showUploadModal" tabindex="-1" role="dialog" aria-labelledby="myProjectModal"></div>
+<div class="modal fade" id="myParserModal" tabindex="-1" role="dialog" aria-labelledby="myUploadsImportModalLabel"></div>
 
-<style>
 
-.fa-3 {
-    font-size:1.5em;
-    padding-top: 0.2cm;
-}
+<script>
+   $("#new_diploma_project").validate({
 
-.fa-4 {
-    font-size:4em;
-}
+        rules: {
+          "diploma_project[name]": {
+            required: true,
+            maxlength: 50,
+            minlength: 5
+          },
+          'diploma_project[max_students]': {
+            required: true,
+            number: true
+          },
+        'diploma_project[duration]': {
+            required: true,
+            number: true
+          },
+        'diploma_project[description]': {
+            required: true,
+            minlength: 8
+          }
+        },
 
-.startDocUpload {
-	margin-top: 5px;
-}
+        messages: {
+            "diploma_project[name]": 'A valid name for the project is required.',
+            "diploma_project[max_students]": 'A number of allowed students is required.',
+            "diploma_project[duration]": 'A valid duration is required.',
+            "diploma_project[description]": 'A short description for the project is required.'
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+        }
+    });
 
-.addDocumentation {
-    margin-top: 5px;
-}
-</style>
+    $("#myModal").on('hidden.bs.modal', function() {
+    var validator = $('#new_diploma_project').validate();
+    validator.resetForm();
+    $("#new_diploma_project").trigger('reset');
+    $('.form-group').removeClass('has-error');
+    $('.form-group').removeClass('has-success');
+    })
+</script>

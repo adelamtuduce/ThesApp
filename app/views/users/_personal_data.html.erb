@@ -1,7 +1,5 @@
 <div class="row">
   <div class="col-md-12">
-      <br/>
-      <br/>
   </div>
 </div>
 <div class="col-md-12">
@@ -24,7 +22,6 @@
           </div>
           <div class="panel-body informationPanel">
             <%= form_for current_user.personal_information, url: @url do |f| %>
-              <div class="col-md-6">
               <div class="form-group">
                 <%= f.label :first_name, class: 'control-label' %>
                 <%= f.text_field :first_name, class: 'form-control' %>
@@ -33,15 +30,9 @@
                 <%= f.label :last_name, class: 'control-label' %>
                 <%= f.text_field :last_name, class: 'form-control' %>
               </div>
-               <div class="form-group">
-                <%= f.label :age, class: 'control-label' %>
-                <%= f.text_field :age, class: 'form-control' %>
-              </div>
 
                 <%= f.hidden_field :user_id, :value => current_user.id %>
-              </div>
 
-              <div class="col-md-6">
                 <div class="form-group">
                   <%= f.label :code, class: 'control-label' %>
                   <% if current_user.personal_information.code.blank? %>
@@ -83,7 +74,6 @@
                   <% end %>
                   
                 </div>
-              </div>
               <br />
               <div style="text-align: center">
               <%= f.submit 'Save data', :class => 'btn btn-default addDocuments' %>

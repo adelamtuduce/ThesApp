@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160514093452) do
+ActiveRecord::Schema.define(version: 20160517184645) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160514093452) do
     t.datetime "updated_at"
     t.integer  "teacher_id"
     t.text     "description"
+    t.string   "time_span"
   end
 
   create_table "diploma_selections", force: true do |t|
@@ -80,6 +81,17 @@ ActiveRecord::Schema.define(version: 20160514093452) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "import_projects", force: true do |t|
+    t.integer  "teacher_id"
+    t.string   "status",              default: "f"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "import_file_name"
+    t.string   "import_content_type"
+    t.integer  "import_file_size"
+    t.datetime "import_updated_at"
   end
 
   create_table "messages", force: true do |t|

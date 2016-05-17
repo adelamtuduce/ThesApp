@@ -45,6 +45,7 @@ GEM
     bootstrap-will_paginate (0.0.9)
       will_paginate
     builder (3.1.4)
+    cancan (1.6.10)
     capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -129,9 +130,7 @@ GEM
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
     formatador (0.2.5)
-    fullcalendar-rails (2.0.2.0)
     gherkin (3.2.0)
-    growl (1.0.3)
     guard (2.13.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
@@ -182,6 +181,8 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
+    libnotify (0.8.0)
+      ffi (>= 1.0.11)
     listen (3.0.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
@@ -332,6 +333,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    toastr-rails (1.0.3)
+      railties (>= 3.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -364,6 +367,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 3.2.0)
   bootstrap-will_paginate (= 0.0.9)
+  cancan
   capybara (= 2.1.0)
   coffee-rails (= 4.0.1)
   cucumber-rails (= 1.3.0)
@@ -372,8 +376,6 @@ DEPENDENCIES
   factory_girl_rails (= 4.2.0)
   faker (= 1.1.2)
   font-awesome-rails
-  fullcalendar-rails
-  growl (= 1.0.3)
   guard-rails (= 0.7.2)
   guard-rspec (= 3.1.0)
   guard-rubocop (= 1.2.0)
@@ -384,6 +386,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   jquery-ui-rails
   letter_opener
+  libnotify (= 0.8.0)
   momentjs-rails
   omniauth
   omniauth-azure-oauth2
@@ -401,6 +404,7 @@ DEPENDENCIES
   sprockets (= 2.11.0)
   sqlite3
   thin
+  toastr-rails
   turbolinks (= 1.1.1)
   uglifier (= 2.1.1)
   will_paginate (= 3.0.4)

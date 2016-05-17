@@ -2,24 +2,19 @@
 #
 # Table name: diploma_projects
 #
-#  id                         :integer          not null, primary key
-#  name                       :string(255)
-#  max_students               :integer
-#  duration                   :integer
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  teacher_id                 :integer
-#  description                :text
-#  documentation_file_name    :string(255)
-#  documentation_content_type :string(255)
-#  documentation_file_size    :integer
-#  documentation_updated_at   :datetime
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  max_students :integer
+#  duration     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  teacher_id   :integer
+#  description  :text
 #
 
 class DiplomaProjectsController < ApplicationController
 	before_filter :authenticate_user!
-
-	# before_action :set_project, only: [:retrieve_documentations]
+  load_and_authorize_resource
 
 	def index
 		response = DiplomaProject.retrieve_all_projects(params, current_user.student)
@@ -114,6 +109,7 @@ class DiplomaProjectsController < ApplicationController
     	:duration,
     	:description,
     	:teacher_id,
+    	:time_span,
     	:documentation)
 	end
 

@@ -14,13 +14,10 @@
 #
 
 class EnrollRequestsController < ApplicationController
-
+	before_filter :authenticate_user!
+  load_and_authorize_resource
 	before_action :set_request, only: [:destroy]
-	def destroy
-		@request.destroy
-		render nothing: true
-	end
-
+	
 	def overview
 		@request = EnrollRequest.find(params[:id])
 		@diploma_project = @request.diploma_project
@@ -28,10 +25,17 @@ class EnrollRequestsController < ApplicationController
 		@student = @request.student
 		@documents = @request.documents
 		@next_meeting = Event.where(student: @student, teacher: @teacher)
-						.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
-						.first.start_at.strftime("%Y-%m-%d %T")
+										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
+		if @next_meeting.any?
+			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
+		else
+			@meeting_date = 'No new meetings yet.'
+		end
+	end
 
-		# redirect_to overview_enroll_request_path(@request)
+	def destroy
+		@request.destroy
+		render nothing: true
 	end
 
 	private

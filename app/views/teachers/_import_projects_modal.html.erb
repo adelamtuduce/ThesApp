@@ -1,0 +1,98 @@
+<div class="modal-dialog">
+    <div class="modal-content" style='text-align:center;'>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    		<h4 class="modal-title" id="myUploadsImportModalLabel">Upload projects from CSV</b></h4>
+  		</div>
+        <div class="panel-body welcome-panel">
+    		 <%= form_for ImportProject.new, :url => import_projects_teacher_path(@teacher), remote: true, html: { multipart: true, class: 'projectsUpload' } do |f| %>  
+                <div class="col-md-12">
+                    <div class='row'>
+                            <div class="col-md-3">
+                	            <span class="btn addDocuments addDocumentation fileinput-button ui-btn-inline">
+                	                <i class="fa fa-plus" aria-hidden="true"></i>
+                	                <span>Select File</span>
+                	                <input name="import_project[import]" multiple="" type="file">
+                	            </span>
+                            </div>
+                            <div class='col-md-2' style='text-align:center;'>
+                                <i class="fa fa-arrow-right fa-3" aria-hidden="true"></i>
+                            </div>
+                        <div class='col-md-2'>
+                            <div class='row'>
+                                <i class="fa fa-file-o fa-4 noSelected" aria-hidden="true"></i>
+                                <i class="fa fa-file fa-4 hidden selectedFile" aria-hidden="true"></i>
+                                <br/>
+                                <p class='showFileName'>No file selected.</p>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-2'>
+                                <i class="fa fa-arrow-right fa-3" aria-hidden="true"></i>
+                            </div>
+                            <div class='col-md-3'>
+                                <button type="submit" class="btn btn-success start startDocUpload" disabled="disabled">
+                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                    <span>Start upload</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+		</div>
+	</div>
+</div>
+
+<script>
+        $(".projectsUpload").fileupload({
+            replaceFileInput: false,
+            send: function(e, data) {
+                console.log("NNNNNNNNNNNNNNNNNNNNNNNN")
+            var types = /(\.|\/)(csv)$/i;
+            var uploading = true;
+            var valid = true;
+            $.each(data.files, function(index, value) {
+              if(!types.test(value.name)) {
+                uploading = false;
+              }
+              if (value.size === 0) {
+                valid = false;
+              }
+            });
+            if (uploading === false) {
+              // set_global_message('error', 'File format not supported. Please select a .csv file.');
+            }
+
+            if (valid === false) {
+              uploading = false;
+              // set_global_message('error', 'File is empty. Please choose a valid .csv file.');
+            }
+            return uploading;
+          },
+          add: function (e, data) {
+            $('.addDocumentation').attr('disabled', 'disabled');
+            $('.addDocumentation').attr('style', 'pointer-events: none;')
+            // display name of uploaded file
+            $(".showFileName").text(data.files[0].name);
+            $(".noSelected").addClass('hidden');
+            $(".selectedFile").removeClass('hidden');
+            $('.startDocUpload').removeAttr('disabled')
+
+            data.context = $(".startUpload").click(function() {
+            });
+        },
+        progress: function (e, data) {
+          var progress = parseInt(data.loaded / data.total * 100, 10);
+          $('#js-file-upload-progress').css('width', progress + '%');
+        },
+        success: function (e, data) {
+            console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ")
+            $.ajax ({
+                type: 'get',
+                url: '/teachers/start_import_parser',
+                success: function(data) {}
+            })
+        }
+    });
+</script>

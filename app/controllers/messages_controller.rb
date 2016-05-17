@@ -12,6 +12,7 @@
 
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource
 
   def create
     @conversation = Conversation.find(params[:conversation_id])
