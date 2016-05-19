@@ -86,6 +86,7 @@ SampleApp::Application.routes.draw do
     member do
       delete 'destroy', to: 'enroll_requests#destroy', as: 'destroy'
       get 'overview', to: 'enroll_requests#overview', as: 'overview'
+      get 'display_tabbed_content', to: 'enroll_requests#display_tabbed_content', as: 'display_tabbed_content'
     end
   end
   resources :diploma_projects do
@@ -99,6 +100,7 @@ SampleApp::Application.routes.draw do
       get 'diploma_project_modal', to: 'diploma_projects#diploma_project_modal', as: 'diploma_project_modal'
       post 'upload_documentation', to: 'diploma_projects#upload_documentation', as: 'upload_documentation'
       get 'show_upload_modal', to: 'diploma_projects#show_upload_modal', as: 'show_upload_modal'
+      post 'submit_enroll', to: 'diploma_projects#submit_enroll', as: 'submit_enroll'
     end
     post 'enroll', to: 'diploma_projects#enroll_student', as: 'enroll'
   end

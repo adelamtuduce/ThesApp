@@ -35,14 +35,6 @@ class PersonalInformationsController < ApplicationController
     @personal_information.save
   end
 
-  def update
-    if @personal_information.update(personal_information_params)
-      flash[:notice] = 'User saved'
-    end
-      redirect_to user_path(params[:id])
-  end
-
-
 
   def toggle_notifications
     @personal_information = PersonalInformation.find(params[:information_id])
@@ -59,17 +51,6 @@ class PersonalInformationsController < ApplicationController
 
   private
 
-   def personal_information_params
-      params.require(:personal_information).permit(
-        :first_name, 
-        :last_name, 
-        :age,
-        :year,
-        :section_id,
-        :code,
-        :avatar,
-        :user_id)
-    end
 
     def set_pi
     	@personal_information = User.find(params[:id]).personal_information

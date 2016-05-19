@@ -19,15 +19,24 @@ class DocumentsController < ApplicationController
 	before_filter :authenticate_user!
   load_and_authorize_resource
 	skip_before_filter :verify_authenticity_token
+  before_action :set_document, only: [:destroy]
 	
   def new
 		@document = Document.new
 	end
 	def create
-		@document = Document.new(document_params)
-  	@document.save
-
-    if  params['document']['diploma_project_id']
+    if params[:document]['file'].original_filename.match(/\.(pdf|doc|txt|odt)$/i).nil?
+      return redirect_to :back, alert: 'File format not supported. Please select a valid type file: word/pdf/text.'
+    end
+    if Document.find_by(file_file_name: params[:document]['file'].original_filename)
+      return redirect_to :back, alert: "You already have a document uploaded with the name: #{params[:document]['file'].original_filename}"
+    end
+    if params[:document]['file'].size == 0
+      return redirect_to :back, alert: 'File is empty. Please upload a valid file.'
+    end
+    @document = Document.new(document_params)
+    @document.save
+    if params['document']['diploma_project_id']
       @document.diploma_project_id =  params['document']['diploma_project_id']
     end
   	@document.download_url = @document.file.url
@@ -36,12 +45,22 @@ class DocumentsController < ApplicationController
     redirect_to :back
 	end
 
+  def destroy
+    @document.file.destroy
+    @document.destroy
+  end
+
 	private
+
+  def set_document
+    @document = Document.find(params['id'])
+  end
 
   def document_params
     params.require(:document).permit(
       :file,
       :user_id,
-      :enroll_request_id)
+      :enroll_request_id,
+      :diploma_project_id)
   end
 end

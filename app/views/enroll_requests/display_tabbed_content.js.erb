@@ -1,0 +1,3 @@
+<% @request.diploma_project.students.each do |student| %>
+	$(".tab-content").find("#tabbed_content_<%= student.id %>").html("<%=j render(:partial => 'tabbed_overview', :locals => { documents: @request.documents, diploma_project: @request.diploma_project, student: student, teacher: @request.teacher, request: @request }) %>");
+<% end %>

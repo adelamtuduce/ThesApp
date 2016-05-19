@@ -1,4 +1,7 @@
-var createScheduler = function(student, teacher) {
+var createScheduler = function(student, teacher, element_id) {
+  console.log(element_id)
+  console.log(student)
+  console.log(teacher)
 	scheduler.config.xml_date="%Y-%m-%d %H:%i";
     scheduler.config.first_hour = 8;
     scheduler.config.last_hour = 18;
@@ -29,7 +32,7 @@ var createScheduler = function(student, teacher) {
      scheduler.config.limit_start = new Date();
   }, 1000*60);
 
-    scheduler.init("scheduler_here");
+    scheduler.init(element_id);
     scheduler.load("/events?student_id=" + student + "&teacher_id=" + teacher, "json");
     var dp = new dataProcessor("/events/db_action?student_id=" + student + "&teacher_id=" + teacher);
     dp.init(scheduler);

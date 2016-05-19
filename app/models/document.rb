@@ -41,6 +41,7 @@ class Document < ActiveRecord::Base
       id: id,
       document_name: file_file_name,
       download_url: download_url,
+      delete_url: "<a class='fileName' data-remote='true' action='destroy' href='/documents/#{id}' data-method='delete'><span class='label label-danger'>Delete</span></a>",
       file_type: file_type
     }
   end

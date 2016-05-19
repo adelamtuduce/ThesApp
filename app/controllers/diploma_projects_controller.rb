@@ -14,7 +14,7 @@
 
 class DiplomaProjectsController < ApplicationController
 	before_filter :authenticate_user!
-  load_and_authorize_resource
+  	load_and_authorize_resource
 
 	def index
 		response = DiplomaProject.retrieve_all_projects(params, current_user.student)
@@ -35,8 +35,12 @@ class DiplomaProjectsController < ApplicationController
 		student = current_user.student
 		teacher = diploma_project.teacher
 		request = EnrollRequest.where(student: student, teacher: teacher, diploma_project: diploma_project).first_or_create
-		request.update_attributes(sent: true)
-		# EnrollMailer.enroll_student(student, teacher, diploma_project).deliver
+		
+	end
+
+	def submit_enroll
+		request = EnrollRequest.find(params['enroll_id'])
+		EnrollMailer.enroll_student(request).deliver
 	end
 
 	def update_priorities
@@ -76,10 +80,6 @@ class DiplomaProjectsController < ApplicationController
 		respond_to do |format|
       format.html { render partial: 'upload_documentation_modal', locals: { diploma_project: @project }, layout: false }
     end
-	# @document = Document.new(document_params)
-  # 	@document.save
-  # 	@document.download_url = @document.file.url
-  # 	@document.save
 	end
 
 	def upload_documentation

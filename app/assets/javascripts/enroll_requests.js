@@ -36,4 +36,26 @@ $(document).ready(function() {
 	// 	})
 	// });
 
+	var url = window.location.pathname;
+   	var url_components = url.split('/');
+  	var page = url_components[2];
+	var requestID = page;
+	$.ajax ({
+		type: 'GET',
+		url: '/enroll_requests/' + requestID + '/display_tabbed_content',
+		data: {},
+		success: function(data) {
+		}
+	})
+
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		var studentID = $(this).parent().data('student-id');
+		var teacherID = $(this).parent().data('teacher-id');
+		console.log(studentID)
+		if(studentID != undefined) {
+			createScheduler(studentID, teacherID, "scheduler_here_" + studentID);
+		} else {
+			createScheduler(studentID, teacherID, "scheduler_here");
+		}
+	});
 });

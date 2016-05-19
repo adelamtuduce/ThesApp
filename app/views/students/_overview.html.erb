@@ -26,12 +26,12 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <%= form_for Document.new, :url => documents_path, html: { multipart: true, class: 'fileupload' } do |f| %>  
+                <%= form_for Document.new, :url => documents_path, html: { multipart: true, class: 'fileupload', id: 'uploadForm'} do |f| %>  
                     <div class="panel-heading clearfix">
                         <span class="btn addDocuments fileinput-button pull-right ui-btn-inline">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <span>Upload files...</span>
-                            <input name="document[file]" multiple="" type="file">
+                            <input name="document[file]" multiple="" type="file" id='fileInput'>
                             <%= f.hidden_field :user_id, :value => current_user.id %>
                         </span>
                     </div>
@@ -57,15 +57,22 @@
                         <% end %>
                         <hr class="uploadHr hidden">
                         <br class="uploadHr hidden"/>
-                        <%= image_tag 'file.png', size: "180x90", class: 'uploadImage hidden' %>
+                        <div class='row'>
+                          <%= image_tag 'file.png', size: "90x90", class: 'uploadImage hidden' %>
+                          <br/>
+                          <p class='documentFileName'></p>
+                        </div>
                         <hr class="uploadHr hidden">
                         <br class="uploadHr hidden"/>
                         <button type="submit" class="btn btn-primary start hidden startUpload">
                           <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                           <span>Start upload</span>
                         </button>
-                <% end %>
-                    </div>
+                        </div>
+                        <% end %>
+                        <button class="btn btn-default hidden cancelButton" onclick="reset($('#fileInput'))">
+                          Cancel upload
+                        </button>
             </div>
         </div>
         <div class="col-md-7">

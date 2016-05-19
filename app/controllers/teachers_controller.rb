@@ -13,6 +13,7 @@ class TeachersController < ApplicationController
   load_and_authorize_resource
   before_action :set_teacher, only: [:retrieve_charts_data, :own_dashboard, :show_students, :show_projects, :accepted_requests, :show_enrollments, :retrieve_projects, :enrollment_requests]
   before_action :copy_to_local_import, only: [:start_import_parser]
+  after_action :redirect_to_dashboard, only: [:accept_enroll]
 
   protect_from_forgery :except => [:import_projects]
 
@@ -53,9 +54,16 @@ class TeachersController < ApplicationController
 		student.diploma_project = diploma_project
 		student.save
 		enroll_request = EnrollRequest.find_by(student: student, teacher: teacher, diploma_project: diploma_project)
-		EnrollRequest.where.not(id: enroll_request.id).where(student: student).destroy_all if student.diploma_project
+		if student.diploma_project
+			remaining_requests = EnrollRequest.where.not(id: enroll_request.id).where(student: student)
+			remaining_requests.each do |enroll|
+				EnrollMailer.cancel_sent_requests(enroll).deliver
+				enroll.destroy
+			end
+		end
 		enroll_request.update_attributes(accepted: true)
-		# AcceptEnrollmentMailer.accept_request
+		EnrollMailer.accept_enroll(enroll_request).deliver
+		EnrollMailer.decline_other_enrolls(student).deliver
 		render json: { success: true }
 	end
 
@@ -65,6 +73,7 @@ class TeachersController < ApplicationController
 		enroll_request = EnrollRequest.find_by(student: student, teacher: diploma_project.teacher, diploma_project: diploma_project)
 		enroll_request.accepted = false
 		enroll_request.save
+		EnrollMailer.decline_enroll(enroll_request)
 	end
 
 	def retrieve_own_students

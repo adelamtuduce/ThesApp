@@ -8,7 +8,8 @@ class Ability
       else
         case user.role.name 
         when 'Student'
-          can :manage, Student
+          can :projects_to_enroll, Student unless user.student.diploma_project
+          can :student_dasboard, Student if user.student.diploma_project
           can :manage, DiplomaProject
           can :manage, Conversation
           can :manage, Message
@@ -17,6 +18,7 @@ class Ability
           can :manage, Document
           can :manage, Notification
           can :show, User
+          can :update, User
         when 'Profesor'
           can :manage, Teacher
           can :manage, DiplomaProject
@@ -27,6 +29,7 @@ class Ability
           can :manage, Document
           can :manage, Notification
           can :show, User
+          can :update, User
         end
         # rules for non-admin controllers here
     end

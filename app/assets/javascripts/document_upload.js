@@ -1,10 +1,25 @@
+// reset upload file field
+window.reset = function (e) {
+  document.getElementById("uploadForm").reset();
+  $('.uploadHr').addClass('hidden');
+  $(".documentFileName").text('');
+  $(".noSelected").removeClass('hidden');
+  $(".selectedFile").addClass('hidden');
+  $(".uploadImage").addClass('hidden');
+  $(".startUpload").addClass('hidden');
+  $(".cancelButton").addClass('hidden');
+};
+
 var loadDocumentsDetails = function() {
+  var url = window.location.pathname;
+  var url_components = url.split('/');
+  var page = url_components[url_components.length -1];
   $.ajax({
     type: 'GET',
     url: '/diploma_projects/retrieve_documentations',
     data: {},
     success: function(data) {
-      var url, name, type, html_content, id, label;
+      var url, name, type, html_content, id, label, delete_url;
       label = "<span class='label label-info fileName'>Download</span>"
       $.each(data, function(index, value) {
         html = '';
@@ -18,7 +33,11 @@ var loadDocumentsDetails = function() {
             type = identifyFileType(v.file_type);
             html_content = html_content + "<tr>" + "<td>" + type + "</td>";
             html_content = html_content + "<td class='fileName'>" + name.substr(1,6) + "..." + "</td>";  
-            html_content = html_content + "<td> <a href=" + url + " class='fileName'>" + label + "</a></td></tr>"
+            if (page === 'projects') {
+              html_content = html_content + "<td> <a href=" + url + " class='fileName'>" + label + "</a></br>" + delete_url + "</td></tr>"
+            } else {
+              html_content = html_content + "<td> <a href=" + url + " class='fileName'>" + label + "</a></td></tr>"
+            }
           })
           html_content = html_content + "</table></div>"
           $("#showDiplomaDetails_" + id).popover({trigger: 'click', title: "Uploaded documents", html: true, content: html_content, placement: 'top'});
@@ -59,9 +78,13 @@ $(document).ready(function() {
       add: function (e, data) {
         $('.btn-file').addClass('hidden');
         // display name of uploaded file
-        $(".show-file").text(data.files[0].name).removeClass('hidden');
+        $('.uploadHr').removeClass('hidden');
+        $(".documentFileName").text(data.files[0].name);
+        $(".noSelected").addClass('hidden');
+        $(".selectedFile").removeClass('hidden');
         $(".uploadImage").removeClass('hidden');
         $(".startUpload").removeClass('hidden');
+        $(".cancelButton").removeClass('hidden');
 
         data.context = $(".startUpload").click(function() {
         });

@@ -12,7 +12,8 @@
 
 class StudentsController < ApplicationController
 	before_filter :authenticate_user!
-  load_and_authorize_resource
+  	load_and_authorize_resource
+	# before_action :redirect_to_select, only: [:student_dasboard]
 	before_action :set_student, only: [:student_dasboard]
 	 
 	def retrieve_all_students
@@ -27,9 +28,7 @@ class StudentsController < ApplicationController
 			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
 		else
 			@meeting_date = 'No new meetings yet.'
-		end
-
-										
+		end										
 		@notifications = Notification.where(user_id: @student.user.id, read: false)
 	end
 

@@ -7,7 +7,7 @@ var addPopover = function () {
 	var url = window.location.pathname;
 	var url_components = url.split('/');
 	var page = url_components[url_components.length -1];
-	if (page === 'projects' || page === 'projects_to_request') {
+	if (page === 'projects' || page === 'projects_to_enroll') {
   		loadDocumentsDetails();
   	}
 };
@@ -127,6 +127,23 @@ $(document).ready(function() {
 			type: 'POST',
 			url: '/diploma_projects/' + project_id + '/enroll',
 			data: { teacher_id: teacher_id, project_id: project_id },
+			success: function(data) {
+				table.ajax.reload();
+				setTimeout(addTooltip, 500);
+			}
+		});
+	});
+
+	$(document).on('click', '.submitEnrollProject', function(event){
+		event.stopPropagation();
+		var teacher_id = $(this).data('teacher-id');
+		var project_id = $(this).data('project-id');
+		var enroll_id = $(this).data('enroll-id');
+
+		$.ajax ({
+			type: 'POST',
+			url: '/diploma_projects/' + project_id + '/submit_enroll',
+			data: {enroll_id: enroll_id},
 			success: function(data) {
 				table.ajax.reload();
 				setTimeout(addTooltip, 500);

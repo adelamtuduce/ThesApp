@@ -1,6 +1,3 @@
-$('#myModal').modal('hide');
-var table = $('.diploma_projects').DataTable();
-table.ajax.reload();
 $.ajax({
   type: 'GET',
   url: '/diploma_projects/retrieve_documentations',
@@ -24,10 +21,12 @@ $.ajax({
           html_content = html_content + "<td> <a href=" + url + " class='fileName'>" + label + "</a></br>" + delete_url + "</td></tr>"
         })
         html_content = html_content + "</table></div>"
-        $("#showDiplomaDetails_" + id).popover({trigger: 'click', title: "Uploaded documents", html: true, content: html_content, placement: 'top'});
+        $("#showDiplomaDetails_" + id).data('bs.popover').options.content = html_content;
+        $("#showDiplomaDetails_" + id).popover('show');
       } else {
         html_content = 'There are no documents uploaded for this project.';
-        $("#showDiplomaDetails_" + id).popover({trigger: 'click', title: "Uploaded documents", html: true, content: html_content, placement: 'top'});
+        $("#showDiplomaDetails_" + id).data('bs.popover').options.content = html_content;
+        $("#showDiplomaDetails_" + id).popover('show');
       }  
     })
     

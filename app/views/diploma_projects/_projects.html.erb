@@ -1,50 +1,61 @@
-<div class="col-md-12">
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">Available Diploma Projects</div>
-      <div class="panel-body informationPanel">
-        <table class="table allDiplomaProjects" class="display" data-source="<%= diploma_projects_path %>">
-          <thead>
-           <!--  <div class="col-md-12" >
-              <div class="panel panel-default ">
-                <div class="panel-body welcome-panel" id='filters'>
-                  <p> Filter projects </p>
+<% if DiplomaProject.any? %>
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix">Available Diploma Projects</div>
+        <div class="panel-body informationPanel">
+          <table class="table allDiplomaProjects" class="display" data-source="<%= diploma_projects_path %>">
+            <thead>
+             <!--  <div class="col-md-12" >
+                <div class="panel panel-default ">
+                  <div class="panel-body welcome-panel" id='filters'>
+                    <p> Filter projects </p>
+                  </div>
                 </div>
-              </div>
-            </div> -->
-            <th style="text-align:left">Name</th>
-            <th>Students</th>
-            <th>Duration</th>
-            <th>Description</th>
-            <th>Teacher</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            
-          </tbody>
-          <tfoot>
-            
-          </tbody>
-        </table>
+              </div> -->
+              <th style="text-align:left">Name</th>
+              <th>Students</th>
+              <th>Duration</th>
+              <th>Description</th>
+              <th>Teacher</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              
+            </tbody>
+            <tfoot>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix">Projects to request enroll - <b><%= DiplomaSelection.find_by(active: true).name == 'unique' ? 'Singular selection' : 'Multiple Selection' %></b></div>
+        <div class="panel-body informationPanel">
+          <table class="table toRequestEnroll" class="display" data-source="<%= student_enrolls_diploma_projects_path %>">
+            <thead>
+              <th style="text-align:left">Name</th>
+              <th>Teacher</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">Projects to request enroll - <b><%= DiplomaSelection.find_by(active: true).name == 'unique' ? 'Singular selection' : 'Multiple Selection' %></b></div>
-      <div class="panel-body informationPanel">
-        <table class="table toRequestEnroll" class="display" data-source="<%= student_enrolls_diploma_projects_path %>">
-          <thead>
-            <th style="text-align:left">Name</th>
-            <th>Teacher</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
-      </div>
+  <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="myProjectModal"></div>
+<% else %>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">Available Diploma Projects</div>
+            <div class="panel-body informationPanel">
+                There are no diploma projects added yet.
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="myProjectModal"></div>
+<% end %>

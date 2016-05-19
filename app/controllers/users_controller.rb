@@ -19,6 +19,17 @@ class UsersController < ApplicationController
 
   def edit
   end
+    
+  def update
+    ap @user.personal_information.valid?
+    ap @user.personal_information.errors
+    if @user.personal_information.update(personal_information_params)
+      flash[:notice] = 'Personal information successfully saved.'
+    else
+      flash[:alert] = 'Personal information was not saved due to one or many errors.'
+    end
+    redirect_to user_path(@user)
+  end
 
   private
 
@@ -26,6 +37,20 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password,
                                    :password_confirmation, :role_id)
     end
+
+    def personal_information_params
+      params.require(:personal_information).permit(
+        :first_name, 
+        :last_name, 
+        :age,
+        :year,
+        :section_id,
+        :code,
+        :avatar,
+        :user_id)
+    end
+
+
 
     # Before filters
 

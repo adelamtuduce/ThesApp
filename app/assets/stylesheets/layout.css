@@ -24,6 +24,9 @@
    opacity: 1;
 }
 
+.uploadImage {
+    margin-left: 30px;
+}
 .navbar-inverse {
     border-color: #daeeff;
 }
@@ -57,6 +60,10 @@ body {
     color: #333;
     background-color: #fff;
     border-color: #ccc;
+}
+
+.documentFileName {
+    margin-left: 15px;
 }
 .btn {
     display: inline-block;

@@ -26,7 +26,6 @@ class DiplomaProject < ActiveRecord::Base
 
 
 	def get_occupied
-		ap (max_students - students.count) == 0
 		return self if (max_students - students.count) == 0
 		nil
 	end
@@ -89,7 +88,7 @@ class DiplomaProject < ActiveRecord::Base
 		{
 			name: name,
 			students: max_students - students.count,
-			duration: duration,
+			duration: duration.to_s + " " + current_time_span,
 			description: description,
 			teacher: teacher.name,
 			actions: html

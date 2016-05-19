@@ -49,25 +49,25 @@
     $(".documentationUpload").fileupload({
     replaceFileInput: false,
       send: function(e, data) {
-        // var types = /(\.|\/)(csv)$/i;
+        var types = /(\.|\/)(pdf)$/i;
         var uploading = true;
         var valid = true;
-        // $.each(data.files, function(index, value) {
-        //   if(!types.test(value.name)) {
-        //     uploading = false;
-        //   }
-        //   if (value.size === 0) {
-        //     valid = false;
-        //   }
-        // });
-        // if (uploading === false) {
-        //   // set_global_message('error', 'File format not supported. Please select a .csv file.');
-        // }
+        $.each(data.files, function(index, value) {
+          if(!types.test(value.name)) {
+            uploading = false;
+          }
+          if (value.size === 0) {
+            valid = false;
+          }
+        });
+        if (uploading === false) {
+          toastr.info('error', 'File format not supported. Please select a valid type file: word/pdf/text.');
+        }
 
-        // if (valid === false) {
-        //   uploading = false;
-        //   // set_global_message('error', 'File is empty. Please choose a valid .csv file.');
-        // }
+        if (valid === false) {
+          uploading = false;
+          set_global_message('error', 'File is empty. Please choose a valid .csv file.');
+        }
         return uploading;
       },
       add: function (e, data) {
