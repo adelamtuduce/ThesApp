@@ -1,3 +1,9 @@
 <% @request.diploma_project.students.each do |student| %>
-	$(".tab-content").find("#tabbed_content_<%= student.id %>").html("<%=j render(:partial => 'tabbed_overview', :locals => { documents: @request.documents, diploma_project: @request.diploma_project, student: student, teacher: @request.teacher, request: @request }) %>");
+	<% meetings = Event.where(student: student, teacher: @request.teacher).where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T")) %>
+	<% if meetings.any? %>
+		<% student_meeting_date = meetings.first.start_at.strftime("%Y-%m-%d %T") %>
+	<% else %>
+		<% student_meeting_date = 'No new meetings yet.' %>
+	<% end %>
+	$(".tab-content").find("#tabbed_content_<%= student.id %>").html("<%=j render(:partial => 'tabbed_overview', :locals => { student_meeting_date: student_meeting_date, documents: @request.documents, diploma_project: @request.diploma_project, student: student, teacher: @request.teacher, request: @request }) %>");
 <% end %>

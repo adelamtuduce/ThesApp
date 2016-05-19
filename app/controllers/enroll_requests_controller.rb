@@ -24,7 +24,7 @@ class EnrollRequestsController < ApplicationController
 		@teacher = @request.teacher
 		@student = @request.student
 		@documents = @request.documents
-		@next_meeting = Event.where(student: @student, teacher: @teacher)
+		@next_meeting = Event.where(teacher: @teacher)
 										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
 		if @next_meeting.any?
 			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
@@ -35,17 +35,9 @@ class EnrollRequestsController < ApplicationController
 
 	def display_tabbed_content
 		@request = EnrollRequest.find(params[:id])
-		# @student = Student.find(params['student_id'])
-		# @next_meeting = Event.where(student: @student, teacher: @request.teacher)
-		# 								.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
-		# if @next_meeting.any?
-		# 	@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
-		# else
-		# 	@meeting_date = 'No new meetings yet.'
-		# end
 		respond_to do |format|
-      format.js
-    end
+	      format.js
+	    end
 	end
 
 	def destroy

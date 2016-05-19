@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" data-request-id="<%= @request.id %>">
+<ul class="nav nav-tabs" data-request-id="<%= @request.id %>" data-students-ids="<%= @request.diploma_project.students.map(&:id) %>">
   <li class="active"><a href="#mainTab" data-toggle="tab">Project Overview</a></li>
   <% @request.diploma_project.students.each do |student| %>
     <li class='projectTab' data-student-id= "<%= student.id %>" data-teacher-id= "<%= @request.teacher.id %>"><a href="#tabbed_content_<%= student.id %>" data-toggle="tab"><%= student.name %></a></li>

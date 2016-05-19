@@ -11,11 +11,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">Current status</div>
             <div class="panel-body welcome-panel">
-                    Student name: <b><%= @student.name %></b>
+                    Students enrolled in this project: 
+                    <% @request.diploma_project.students.each do |student| %>
+                        <br />
+                        <b><%= student.name %></b>
+                    <% end %>
                     <br/>
-                    Project title: <b><%= @student.diploma_project.name %></b>
+                    Project title: <b><%= @request.diploma_project.name %></b>
                     <br/>
-                    Uploaded documents until now: <%= @documents.count %>
+                    Uploaded documents until now: <%= @request.documents.count %>
                     <br/>
                     Next meeting: <%= @meeting_date %>
                     <br/>
@@ -39,7 +43,7 @@
                             <th>Name</th> 
                             <th>Size</th>
                             <th>Actions</th> 
-                            <% current_user.documents.each do |document| %>
+                            <% @request.documents.each do |document| %>
                                 <tr>
                                     <td><%= document.file_file_name %></td>
                                     <td><%= document.file_file_size.to_f / 1000 %> kB</td>
@@ -51,7 +55,7 @@
                             <% end %>
                         </table>
                     <% else %>            
-                        <p class="uploadedFiles"> You have 0 documents uploaded.</p>
+                        <p class="uploadedFiles"> You have 0 documents uploaded for this project.</p>
                     <% end %>
                     <hr class="uploadHr hidden">
                     <br class="uploadHr hidden"/>
@@ -92,5 +96,5 @@
   </div>
 </div>
 <script>
-    createScheduler("<%= @student.id %>", "<%= @request.teacher.id %>", "scheduler_here");
+    createDiplomaScheduler("<%= @request.id %>", "<%= @request.diploma_project.students.map(&:id) %>", "scheduler_here");
 </script>
