@@ -14,16 +14,10 @@ class StudentsController < ApplicationController
 	before_filter :authenticate_user!
   	load_and_authorize_resource
 	# before_action :redirect_to_select, only: [:student_dasboard]
-	before_action :set_student, only: [:student_dasboard]
+	before_action :set_student_data, only: [:student_dasboard]
 	 
-	def retrieve_all_students
-		response = Student.retrieve_students(params)
-		render json: response
-	end
-
 	def student_dasboard
-		@next_meeting = Event.where(student: @student, teacher: @enrolled_teacher)
-										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
+		@next_meeting = Event.includes(:student_events).where("student_events.student_id = #{@student.id} AND teacher_id = #{@request.teacher.id}").where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
 		if @next_meeting.any?
 			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 
 		else
@@ -37,10 +31,11 @@ class StudentsController < ApplicationController
 
 	private
 
-	def set_student
+	def set_student_data
 		@student = current_user.student
 		@personal_information = current_user.personal_information
 		@diploma_project = @student.diploma_project
 		@enrolled_teacher = @diploma_project.teacher
+		@request = @student.enroll_requests.where(accepted: true).first
 	end
 end

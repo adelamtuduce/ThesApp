@@ -24,7 +24,7 @@ class EnrollRequestsController < ApplicationController
 		@teacher = @request.teacher
 		@student = @request.student
 		@documents = @request.documents
-		@next_meeting = Event.where(teacher: @teacher)
+		@next_meeting = Event.where(teacher_id: @request.teacher.id)
 										.where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T"))
 		if @next_meeting.any?
 			@meeting_date = @next_meeting.first.start_at.strftime("%Y-%m-%d %T") 

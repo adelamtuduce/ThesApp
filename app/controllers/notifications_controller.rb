@@ -20,7 +20,7 @@ class NotificationsController < ApplicationController
   before_action :set_notification, only: [:destroy]
 
   def index
-  	@notifications = Notification.where(user_id: current_user.id, read: false)
+  	@notifications = Notification.where(user_id: current_user.id, read: false).order(created_at: :desc)
   end
 
   def destroy

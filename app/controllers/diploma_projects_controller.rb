@@ -10,6 +10,7 @@
 #  updated_at   :datetime
 #  teacher_id   :integer
 #  description  :text
+#  time_span    :string(255)
 #
 
 class DiplomaProjectsController < ApplicationController
@@ -45,7 +46,6 @@ class DiplomaProjectsController < ApplicationController
 
 	def update_priorities
 		params[:priorities].each do |key, priority_hash|
-			puts priority_hash
 			priority = priority_hash[:priority]
 			request = EnrollRequest.find(priority_hash[:request_id]).update_attributes(priority: priority)
 		end

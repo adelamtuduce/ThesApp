@@ -1,3 +1,0 @@
-<% request.diploma_project.students.each do |student| %>
-	<%= render partial: 'tabbed_overview', locals: { documents: request.documents, diploma_project: request.diploma_project, student: student, teacher: request.teacher, request: request }  %>
-<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517184645) do
+ActiveRecord::Schema.define(version: 20160520055324) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(version: 20160517184645) do
     t.datetime "start_at"
     t.datetime "end_at"
     t.string   "allDay"
-    t.integer  "student_id"
     t.integer  "teacher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -142,6 +141,13 @@ ActiveRecord::Schema.define(version: 20160517184645) do
   create_table "sections", force: true do |t|
     t.string   "name"
     t.integer  "faculty_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "student_events", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

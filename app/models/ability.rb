@@ -4,7 +4,7 @@ class Ability
   def initialize(user, controller_namespace)
     case controller_namespace
       when 'Admin'
-        can :manage, :all if user.has_role? 'admin'
+        can :manage, :all if user.admin_user?
       else
         case user.role.name 
         when 'Student'

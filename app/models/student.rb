@@ -15,6 +15,7 @@ class Student < ActiveRecord::Base
 	belongs_to :diploma_project
 	belongs_to :teacher
 	has_many :enroll_requests
+	has_many :student_events
 
 	  scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
 

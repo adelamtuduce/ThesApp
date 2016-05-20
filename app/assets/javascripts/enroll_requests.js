@@ -1,7 +1,6 @@
 $(document).ready(function() {	
 	$(document).on('click', '.cancelRequest', function(event){
 		var studentEnrolls = $('.toRequestEnroll').DataTable();
-		console.log($(this).parents('tr'));
 		var row = studentEnrolls.row( $(this).parents('tr') );
 		var teacher_id = $(this).data('teacher-id');
 		var enroll_id = $(this).data('enroll-id');
@@ -55,11 +54,10 @@ $(document).ready(function() {
 		var teacherID = $(this).parent().data('teacher-id');
 		var requestID = $(this).parent().parent().data('request-id')
 		var studentIDs = $(this).parent().parent().data('students-ids')
-		console.log(requestID)
 		if(studentID != undefined) {
-			createScheduler(studentID, teacherID, "scheduler_here_" + studentID);
+			createScheduler(requestID, [studentID], "scheduler_here_" + studentID);
 		} else {
-			createDiplomaScheduler(requestID, studentIDs,  "scheduler_here");
+			createScheduler(requestID, studentIDs,  "scheduler_here_main");
 		}
 	});
 });

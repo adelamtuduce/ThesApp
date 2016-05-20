@@ -6,7 +6,6 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.new(user_params)
     @role = Role.find(params[:role][:id])
-    puts @role
     if @user.save
       personal_information = PersonalInformation.create
       @user.personal_information = personal_information
@@ -15,8 +14,8 @@ class RegistrationsController < Devise::RegistrationsController
       @user.role_id = @role.id
       @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Thesis Manager"
-      redirect_to @user
+      
+      redirect_to @user, success: "Welcome to the Thesis Manager"
     else
       render 'new'
     end

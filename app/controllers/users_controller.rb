@@ -1,8 +1,28 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string(255)      default(""), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  role_id                :integer
+#
+
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  # load_and_authorize_resource
   before_action :correct_user,   only: [:edit, :update, :show]
-  before_action :admin_user,     only: :destroy
+  # before_action :admin_user,     only: :destroy
 
   def index
   end
@@ -21,8 +41,6 @@ class UsersController < ApplicationController
   end
     
   def update
-    ap @user.personal_information.valid?
-    ap @user.personal_information.errors
     if @user.personal_information.update(personal_information_params)
       flash[:notice] = 'Personal information successfully saved.'
     else

@@ -8,8 +8,11 @@ SampleApp::Application.routes.draw do
 #   get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
 # end
   namespace :admin do
-      get 'admin_chart_data', to: 'admin_dashboard#admin_chart_data', as: 'admin_chart_data'
-      get 'view_data', to: 'admin_dashboard#view_data', as: 'view_data'
+    get 'admin_chart_data', to: 'admin_dashboard#admin_chart_data', as: 'admin_chart_data'
+    get 'view_data', to: 'admin_dashboard#view_data', as: 'view_data'
+    get 'retrieve_teachers', to: 'admin_dashboard#retrieve_all_teachers', as: 'retrieve_teachers'
+    get 'retrieve_students', to: 'admin_dashboard#retrieve_all_students', as: 'retrieve_students'
+    get 'show_all_users', to: 'admin_dashboard#show_all_users', as: 'show_all_users'
   end
   root to: 'dashboard#root'
   # match '/signup',  to: 'users#new',            via: 'get'
@@ -49,7 +52,6 @@ SampleApp::Application.routes.draw do
   end
   resources :teachers do
     collection do
-      get 'retrieve_teachers', to: 'teachers#retrieve_all_teachers', as: 'retrieve_teachers'
       get 'start_import_parser', to: 'teachers#start_import_parser', as: 'start_import_parser'
     end
     member do
@@ -71,7 +73,6 @@ SampleApp::Application.routes.draw do
 
   resources :students do
     collection do
-      get 'retrieve_students', to: 'students#retrieve_all_students', as: 'retrieve_students'
     end
 
     member do

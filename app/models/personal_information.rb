@@ -50,7 +50,6 @@ class PersonalInformation < ActiveRecord::Base
 	end
 
 	def name
-		puts self.to_yaml
 		first = first_name.blank? ? '' : first_name
 		last = last_name.blank? ? '' : last_name
 		first + ' ' + last

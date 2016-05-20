@@ -95,9 +95,7 @@ $(document).ready(function() {
 
 	studentEnrolls.on( 'row-reorder', function ( e, diff, edit ) {
 		var ids = []
-		console.log(diff)
 		$.each(diff, function(index, value) {
-			console.log($(value))
 			ids.push({priority: value.newPosition + 1, request_id: $(value.node).children().last().find('span').data('enroll-id')});
 		})
 

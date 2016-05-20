@@ -10,6 +10,7 @@
 #  updated_at   :datetime
 #  teacher_id   :integer
 #  description  :text
+#  time_span    :string(255)
 #
 
 require 'spec_helper'

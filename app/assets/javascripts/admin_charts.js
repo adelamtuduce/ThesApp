@@ -1,6 +1,7 @@
 /*global chart $*/
-var allRequests, users, documents, projects;
+var allRequests, users, documents, projects, donutStudents;
 var adminColorPattern = ['#003d66', '#4d004d', '#00ccff', '#336600'];
+var donutPattern = ['#4d004d', '#336600']
 $(document).ready(function() {  
   var max;
   var dates = ['x'];
@@ -9,6 +10,33 @@ $(document).ready(function() {
     theDate = new Date(new Date().setDate(new Date().getDate()-i));
     dates.push( theDate.getFullYear()+'-'+(theDate.getMonth()+1)+'-'+theDate.getDate());
   }
+
+  donutStudents = c3.generate({
+    bindto: '#studentDiplomas',
+    data: {
+      columns: [
+          ['with_diplomas', 0],
+          ['without_diplomas', 0],
+      ],
+      type : 'donut',
+      names : {
+        with_diplomas: 'With diploma project',
+        without_diplomas: 'Without diploma project'
+      }
+    },
+    color: {
+      pattern: donutPattern
+    },
+    donut: {
+      title: 'Students status',
+      label: {
+        show: false
+      }
+    },
+    legend: {
+      show: false
+    },
+  });
 
   allRequests = c3.generate({
     bindto: '#requests',
@@ -170,44 +198,41 @@ $(document).ready(function() {
       show: true
     }
   });
-
-  $("#js-date-range").popover({
-    html : true,
-    template: '<div class="popover filter-popover mr20" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
-    content: function() {
-      $("#start-date").attr("value", startDate);
-      $("#end-date").attr("value", endDate);
-      return $('#date-range-content').html();
-    }
-  });
 });
 
 var updateAdminCharts = function(data) {
   allRequests.load({
-    json: data,
+    json: data.result,
     keys: {
       value: ['x', 'requests', 'approved_requests', 'declined_requests', 'pending_requests']
     }
   });
 
   users.load({
-    json: data,
+    json: data.result,
     keys: {
       value: ['x', 'users', 'students', 'teachers']
     }
   });
 
   documents.load({
-    json: data,
+    json: data.result,
     keys: {
       value: ['x', 'documents']
     }
   })
 
   projects.load({
-    json: data,
+    json: data.result,
     keys: {
       value: ['x', 'projects']
+    }
+  })
+
+  donutStudents.load({
+    json: data.diplomas, 
+    keys: {
+      value: ['with_diplomas', 'without_diplomas']
     }
   })
 };
@@ -216,7 +241,7 @@ var loadAdminChart = function(){
   var id = stuff[2];
   var startDate = $('#start-date').val();
   var endDate   = $('#end-date').val();
-  var url = '/admin_dashboard/admin_chart_data';
+  var url = '/admin/admin_chart_data';
   $.ajax({
     type: 'get',
     url: url,
@@ -228,6 +253,6 @@ var loadAdminChart = function(){
 };
 
 var placeCorrectAdminCharts = function(data) {
-  updateAdminCharts(data.result);
-  max = data.max;
+  console.log(data)
+  updateAdminCharts(data);
 }

@@ -1,5 +1,5 @@
 <% @request.diploma_project.students.each do |student| %>
-	<% meetings = Event.where(student: student, teacher: @request.teacher).where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T")) %>
+	<% meetings = Event.includes(:student_events).where("student_events.student_id = #{student.id} AND teacher_id = #{@request.teacher.id}").where("start_at >= ?", Time.now.strftime("%Y-%m-%d %T")) %>
 	<% if meetings.any? %>
 		<% student_meeting_date = meetings.first.start_at.strftime("%Y-%m-%d %T") %>
 	<% else %>

@@ -12,7 +12,6 @@ class TeachersController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   before_action :set_teacher, only: [:retrieve_charts_data, :own_dashboard, :show_students, :show_projects, :accepted_requests, :show_enrollments, :retrieve_projects, :enrollment_requests]
-  before_action :copy_to_local_import, only: [:start_import_parser]
   after_action :redirect_to_dashboard, only: [:accept_enroll]
 
   protect_from_forgery :except => [:import_projects]
@@ -25,11 +24,6 @@ class TeachersController < ApplicationController
 	end
 
 	def show_enrollments
-	end
-
-	def retrieve_all_teachers
-		response = Teacher.retrieve_all_teachers(params)
-		render json: response
 	end
 
 	def retrieve_projects
@@ -87,13 +81,20 @@ class TeachersController < ApplicationController
 
 	def retrieve_own_events
 		events = Event.all.where(teacher_id: params['id'])
-
-   render :json => events.map {|event| {
-              :id => event.id,
-              :start_date => event.start_at.strftime("%Y-%m-%d %T"),
-              :end_date => event.end_at.strftime("%Y-%m-%d %T"),
-              :text => event.title + ' - ' + 'Student: ' + event.student.name,
-          }}
+		json_events = events.map do |event| 
+			title = ''
+   		event.student_events.each do |st_ev|
+   			title = title + st_ev.student.name + "\/"
+   		end
+   		final_title = event.title + ' - ' + 'Students: ' + title
+				{
+          :id => event.id,
+          :start_date => event.start_at.strftime("%Y-%m-%d %T"),
+          :end_date => event.end_at.strftime("%Y-%m-%d %T"),
+          :text => title,
+      }
+    end
+   render :json => json_events
 	end
 
 	def own_dashboard
@@ -109,37 +110,6 @@ class TeachersController < ApplicationController
 		@enrolls = EnrollRequest.where(teacher: @teacher, accepted: true).count
 		@pending_enrolls = EnrollRequest.where(teacher: @teacher, accepted: nil).count
 		@proposed_projects = DiplomaProject.where(teacher_id: @teacher).count
-	end
-
-	def show_import_modal
-		@teacher = Teacher.find(params[:id])
-
-		respond_to do |format|
-      format.html { render partial: 'import_projects_modal', locals: { teacher: @teacher }, layout: false }
-    end
-	end
-
-	def import_projects 
-		@import_file = ImportProject.new(import_params)
-		@import_file.status = 'pending'
-		@import_file.save
-		render nothing: true
-	end
-
-	def start_import_parser
-		status = ''
-		message = ''
-		if @temporary_file
-			if CSV.readlines(@temporary_file)[0].compact.blank?
-				status = 'error'
-				message = 'Improper file'
-			end
-			status, message = Resque.enqueue(ProjectsParserWorker, @last_import)
-		else
-			status = 'error'
-			message = 'Wrong'
-		end
-
 	end
 
 	def retrieve_charts_data
@@ -174,7 +144,6 @@ class TeachersController < ApplicationController
     		requests: requests_list.where(sent: true).count,
     		total: requests_list.count
     	}
-    	ap value
     	result << value
     end
     render json: { result: result }
@@ -184,18 +153,5 @@ class TeachersController < ApplicationController
 
 	def set_teacher
 		@teacher = Teacher.find_by(user_id: current_user.id)
-	end
-
-	def import_params
-    params.require(:import_project).permit(
-      :import,
-      :teacher_id)
-	end
-
-	def copy_to_local_import
-		@last_import = ImportProject.last 
-		return unless import
-		@temporary_file = "tmp/import_project_#{last_import.id}.csv"
-		@last_import.copy_to_local_file(:original, @temporary_file)
 	end
 end

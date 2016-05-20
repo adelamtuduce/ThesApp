@@ -24,6 +24,7 @@ class DocumentsController < ApplicationController
   def new
 		@document = Document.new
 	end
+
 	def create
     if params[:document]['file'].original_filename.match(/\.(pdf|doc|txt|odt)$/i).nil?
       return redirect_to :back, alert: 'File format not supported. Please select a valid type file: word/pdf/text.'
@@ -38,6 +39,11 @@ class DocumentsController < ApplicationController
     @document.save
     if params['document']['diploma_project_id']
       @document.diploma_project_id =  params['document']['diploma_project_id']
+    end
+
+
+    if params['document']['request_id']
+      @document.enroll_request_id =  params['document']['request_id']
     end
   	@document.download_url = @document.file.url
   	@document.save

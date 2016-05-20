@@ -8,7 +8,7 @@
 			<% @students.each do |student| %>
 			  	<tr>
 					<td>
-				  		<%= student.personal_information.first_name if student.personal_information && student.personal_information.first_name %>
+				  		<%= student.name %>
 				  	</td>
 				  	<td style="text-align:center">
 				    	<%= link_to "#", class: "start-conversation",

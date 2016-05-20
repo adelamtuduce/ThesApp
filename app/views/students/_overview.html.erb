@@ -13,9 +13,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Current status</div>
                 <div class="panel-body welcome-panel">
-                    You are currently enlisted to: <b><%= @student.diploma_project.teacher.name %></b>
+                    You are currently enlisted to: <b><%= @request.diploma_project.teacher.name %></b>
                     <br/>
-                    Your Diploma title is: <b><%= @student.diploma_project.name %></b>
+                    Your Diploma title is: <b><%= @request.diploma_project.name %></b>
                     <br/>
                     Uploaded documents until now: <b><%= current_user.documents.count %></b>
                     <br/>
@@ -81,7 +81,7 @@
           Create Appointments
           </div>
           <div class="panel-body calendar-panel">
-            <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:523px;'>
+            <div id="scheduler_here_student" class="dhx_cal_container" style='width:100%; height:523px;'>
              <div class="dhx_cal_navline">
                <div class="dhx_cal_prev_button">&nbsp;</div>
                <div class="dhx_cal_next_button">&nbsp;</div>
@@ -102,5 +102,5 @@
     </div>
 </div>
 <script>
-   createScheduler("<%= @student.id %>", "<%=@enrolled_teacher.id%>", 'scheduler_here');
+   createScheduler("<%= @request.id %>", JSON.parse("<%= @diploma_project.students.map(&:id) %>"), "scheduler_here_student");
 </script>

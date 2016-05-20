@@ -4,6 +4,7 @@
 #
 #  id                  :integer          not null, primary key
 #  teacher_id          :integer
+#  status              :string(255)      default("f")
 #  created_at          :datetime
 #  updated_at          :datetime
 #  import_file_name    :string(255)

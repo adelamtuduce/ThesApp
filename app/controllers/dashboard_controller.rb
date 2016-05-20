@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
           end
         end
     else
-      root_p = users_path
+      root_p = admin_show_all_users_path
     end
     redirect_to root_p
   end

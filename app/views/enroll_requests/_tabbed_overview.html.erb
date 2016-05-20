@@ -14,7 +14,7 @@
                 <div class="panel-body welcome-panel">
                     Student name: <b><%= student.name %></b>
                     <br/>
-                    Uploaded documents until now: <%= request.documents.where(user_id: student.user.id).count %>
+                    Uploaded documents until now: <%= student.user.documents.count %>
                     <br/>
                     Next meeting: <%= student_meeting_date %>
                 </div>
@@ -22,12 +22,12 @@
             <div class='panel panel-default'>
                 <div class="panel-heading">Uploaded Documents</div>
                 <div class="panel-body welcome-panel">
-                    <% if request.documents.where(user_id: student.user.id).any? %>
+                    <% if student.user.documents.any? %>
                         <table style="width:100%">
                             <th>Name</th> 
                             <th>Size</th>
                             <th>Actions</th> 
-                            <% request.documents.where(user_id: student.user.id).each do |document| %>
+                            <% student.user.documents.each do |document| %>
                                 <tr>
                                     <td><%= document.file_file_name %></td>
                                     <td><%= document.file_file_size.to_f / 1000 %> kB</td>

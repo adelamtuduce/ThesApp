@@ -11,6 +11,21 @@ class Admin::AdminDashboardController < ApplicationController
     DiplomaSelection.where.not(id: selection.id).update_all(active: !selection.active)
   end
 
+  def show_all_users
+
+  end
+  
+  def retrieve_all_students
+    response = Student.retrieve_students(params)
+    ap response
+    render json: response
+  end
+
+  def retrieve_all_teachers
+    response = Teacher.retrieve_all_teachers(params)
+    render json: response
+  end
+
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
@@ -62,7 +77,7 @@ class Admin::AdminDashboardController < ApplicationController
       }
       result << value
     end
-    render json: { result: result }
+    render json: { result: result, diplomas: [{ with_diplomas:  Student.where.not(diploma_project_id: nil).count, without_diplomas: Student.where(diploma_project_id: nil).count }] }
   end
 
   def view_data

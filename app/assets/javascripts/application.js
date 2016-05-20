@@ -25,6 +25,7 @@
 //= require dhtmlxscheduler
 //= require dhtmlxscheduler_limit
 //= require dhtmlxscheduler_tooltip
+//= require dhtmlxscheduler_collision
 //= require c3
 //= require d3
 //= require datetimepicker.min

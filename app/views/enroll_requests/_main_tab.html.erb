@@ -1,21 +1,26 @@
-<div class="col-md-12">
+<div class="col-sm-12 col-md-12">
     <div class="col-md-5">
-        <div style="text-align:center;">
-            <% if @student.user.personal_information &&  @student.user.personal_information.avatar %>
-                <%= image_tag  @student.user.personal_information.avatar.url, size: "200x160" %>
-            <% else %>
-                <%= image_tag @personal_information.avatar.url, size: "200x160" %>
-            <% end %>
-        </div>
-        <hr>
         <div class="panel panel-default">
             <div class="panel-heading">Current status</div>
             <div class="panel-body welcome-panel">
                     Students enrolled in this project: 
-                    <% @request.diploma_project.students.each do |student| %>
-                        <br />
-                        <b><%= student.name %></b>
-                    <% end %>
+                    <table class="table students">
+                      <th style="text-align:left">Name</th>
+                      <th  style="text-align:center">Actions</th>
+                      <% @request.diploma_project.students.each do |student| %>
+                          <tr>
+                          <td>
+                              <%= student.name %>
+                            </td>
+                            <td style="text-align:center">
+                              <%= link_to "#", class: "start-conversation",
+                              "data-sid" => current_user.id, "data-rip" => student.user.id do %>
+                                <i class="fa fa-weixin"></i>
+                              <% end %>
+                            </td>
+                        </tr>
+                      <% end %>
+                    </table>
                     <br/>
                     Project title: <b><%= @request.diploma_project.name %></b>
                     <br/>
@@ -23,7 +28,7 @@
                     <br/>
                     Next meeting: <%= @meeting_date %>
                     <br/>
-                    Received emails:
+                    Unread Notifications: <b><%= Notification.where(user_id: @request.teacher.user).count %></b>
                     <br/>
                 </div>
             </div>
@@ -35,6 +40,7 @@
                             <span>Upload files...</span>
                             <input name="document[file]" multiple="" type="file">
                             <%= f.hidden_field :user_id, :value => current_user.id %>
+                            <%= f.hidden_field :enroll_request_id, :value => @request.id %>
                         </span>
                 </div>
                 <div class="panel-body welcome-panel">
@@ -67,6 +73,9 @@
                       <span>Start upload</span>
                     </button>
             <% end %>
+             <button class="btn btn-default hidden cancelButton" onclick="reset($('#fileInput'))">
+              Cancel upload
+            </button>
             </div>
         </div>
     </div>
@@ -76,7 +85,7 @@
       Create Appointments
       </div>
       <div class="panel-body calendar-panel">
-        <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:523px;'>
+        <div id="scheduler_here_main" class="dhx_cal_container" style='width:100%; height:523px;'>
          <div class="dhx_cal_navline">
            <div class="dhx_cal_prev_button">&nbsp;</div>
            <div class="dhx_cal_next_button">&nbsp;</div>
@@ -96,5 +105,5 @@
   </div>
 </div>
 <script>
-    createDiplomaScheduler("<%= @request.id %>", "<%= @request.diploma_project.students.map(&:id) %>", "scheduler_here");
+    createScheduler("<%= @request.id %>", JSON.parse("<%= @request.diploma_project.students.map(&:id) %>"), "scheduler_here_main");
 </script>
