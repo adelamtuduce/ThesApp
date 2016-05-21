@@ -129,6 +129,8 @@ GEM
     ffi (1.9.10)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
+    foreman (0.81.0)
+      thor (~> 0.19.1)
     formatador (0.2.5)
     gherkin (3.2.0)
     guard (2.13.0)
@@ -376,6 +378,7 @@ DEPENDENCIES
   factory_girl_rails (= 4.2.0)
   faker (= 1.1.2)
   font-awesome-rails
+  foreman
   guard-rails (= 0.7.2)
   guard-rspec (= 3.1.0)
   guard-rubocop (= 1.2.0)

@@ -4,15 +4,36 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">Available Diploma Projects</div>
         <div class="panel-body informationPanel">
+            <div class='col-md-12'>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">Filters</div>
+                    <div class="panel-body informationPanel">
+                        <div class='row'>
+                            <div class='col-md-6'>
+                                <%= select "diploma", "diploma_name", options_for_select(DiplomaProject.name_for_select), {prompt: 'Select Name'}, class: 'form-control filterDiplomas' %>
+                            </div>
+                            <div class='col-md-6'>
+                                <%= select "diploma", "diploma_teacher", options_for_select(DiplomaProject.teachers_for_select), {prompt: 'Select Name'}, class: 'form-control filterDiplomas' %>
+                            </div>
+                            <div class='col-md-4'>
+                                <%= select "diploma", "diploma_max_students", options_for_select(DiplomaProject.max_students_for_select), {prompt: 'Select no.'}, class: 'form-control filterDiplomas' %>
+                            </div>
+                            <div class='col-md-4'>
+                                <%= select "diploma", "diploma_duration", options_for_select(DiplomaProject.duration_for_select), {prompt: 'Select duration'}, class: 'form-control filterDiplomas' %>
+                            </div>
+                            <div class='col-md-4'>
+                                <%= select "diploma", "diploma_time_span", options_for_select(DiplomaProject.time_span_for_select), {prompt: 'Select span'}, class: 'form-control filterDiplomas' %>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <button class='btn btn-default addDocuments reloadAjaxProjects' style='margin-left: 150px;'>Apply filters</button>
+                            <button class='btn btn-default resetFilters welcome-panel'>Reset filters</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
           <table class="table allDiplomaProjects" class="display" data-source="<%= diploma_projects_path %>">
             <thead>
-             <!--  <div class="col-md-12" >
-                <div class="panel panel-default ">
-                  <div class="panel-body welcome-panel" id='filters'>
-                    <p> Filter projects </p>
-                  </div>
-                </div>
-              </div> -->
               <th style="text-align:left">Name</th>
               <th>Students</th>
               <th>Duration</th>

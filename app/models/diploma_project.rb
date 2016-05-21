@@ -23,12 +23,38 @@ class DiplomaProject < ActiveRecord::Base
 	validates :duration, presence: true
 	validates :description, presence: true
 
+	scope :diploma_name, -> (name) { where("name like ?", "#{name}%") }
+	scope :diploma_time_span, -> (time_span) { where time_span: time_span }
+	scope :diploma_teacher, -> (first_name, last_name) { includes(teacher: { user: :personal_information }).where("personal_informations.first_name like ? AND personal_informations.last_name like ?", "#{first_name}", "#{last_name}") }
+  scope :diploma_max_students, -> (max_students) { where max_students: max_students }
+  scope :diploma_duration, -> (duration) { where duration: duration }
+
 	scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
 
 
 	def get_occupied
 		return self if (max_students - students.count) == 0
 		nil
+	end
+
+	def self.teachers_for_select
+		all.map(&:teacher).map(&:name).uniq
+	end
+
+	def self.duration_for_select
+		all.map(&:duration).uniq
+	end
+
+	def self.time_span_for_select
+		all.map(&:time_span).uniq
+	end
+
+	def self.max_students_for_select
+		all.map(&:max_students).uniq
+	end
+
+	def self.name_for_select
+		all.map(&:name)
 	end
 
 	def current_time_span
@@ -97,16 +123,32 @@ class DiplomaProject < ActiveRecord::Base
 	end
 
 	def self.order_projects(params)
-		order_hash = params['order']['0']
-		field_to_order_by = order_hash[:column]
-		direction = order_hash[:dir]
+		projects = all
+		if params[:diploma]
+			params[:diploma].each do |key, value|
+				if key == 'diploma_teacher' && value.present?
+					values = value.split(' ')
+					projects = projects.send(key, values[0], values[1])
+				else
+        	projects = projects.send(key, value) if value.present?
+        end
+      end
+        ap projects
+    end
+		if params['order']
+			order_hash = params['order']['0']
+			field_to_order_by = order_hash[:column]
+			direction = order_hash[:dir]
+		else
+			field_to_order_by = ''
+		end
 		case field_to_order_by
 		when '1'
-			projects = all.order(max_students: direction.to_sym)
+			projects = projects.order(max_students: direction.to_sym)
 		when '2'
-			projects = all.order(duration: direction.to_sym)
+			projects = projects.order(duration: direction.to_sym)
 		else
-			projects = all.order(created_at: :desc)
+			projects = projects.order(created_at: :desc)
 		end
 		projects
 	end

@@ -23,6 +23,10 @@
                     <br/>
                     Unread Notifications: <b><%= @notifications.count %></b>
                     <br/>
+                    Start Conversation:<%= link_to "#", class: "start-conversation",
+                      "data-sid" => current_user.id, "data-rip" => @request.teacher.user.id do %>
+                        <i class="fa fa-weixin"></i>
+                      <% end %>
                 </div>
             </div>
             <div class="panel panel-default">

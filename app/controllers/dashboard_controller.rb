@@ -1,7 +1,11 @@
 class DashboardController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:show_all_projects]
 
   def home
+  end
+
+  def show_all_projects
+    @projects = DiplomaProject.all
   end
 
   def root

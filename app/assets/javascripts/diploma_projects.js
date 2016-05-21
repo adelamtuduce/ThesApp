@@ -38,28 +38,38 @@ $(document).ready(function() {
         { data: 'actions' }]
 	});
 
+	$(".reloadAjaxProjects").on('click', function() {
+		console.log(document.getElementsByName("diploma[diploma_name]")[0].value)
+		$(".allDiplomaProjects").DataTable().ajax.reload();
+		setTimeout(addPopover, 500);
+		setTimeout(addTooltip, 500);
+	})
+
+	$(".resetFilters").on('click', function() {
+		$('select').val('');
+		$(".allDiplomaProjects").DataTable().ajax.reload();
+		setTimeout(addPopover, 500);
+		setTimeout(addTooltip, 500);
+
+	})
+
 	var table = $(".allDiplomaProjects").DataTable({
-		// initComplete: function () {
-  //           this.api().columns().every( function () {
-  //               var column = this;
-  //               var select = $('<select><option value=""></option></select>')
-  //                   .appendTo( $(column.footer()).empty() )
-  //                   .on( 'change', function () {
-  //                       var val = $.fn.dataTable.util.escapeRegex(
-  //                           $(this).val()
-  //                       );
- 
-  //                       column
-  //                           .search( val ? '^'+val+'$' : '', true, false )
-  //                           .draw();
-  //                   } );
- 
-  //               column.data().unique().sort().each( function ( d, j ) {
-  //                   select.append( '<option value="'+d+'">'+d+'</option>' )
-  //               } );
-  //           } );
-  //       },
-	  	ajax: $('.allDiplomaProjects').data('source'),
+  		retrieve: true,
+	  	ajax: {
+	  		url: $('.allDiplomaProjects').data('source'),
+	  		type: 'GET',
+	  		data: function ( d ) {
+         		return $.extend( {}, d, {
+		  			diploma: {
+			  			'diploma_name': document.getElementsByName("diploma[diploma_name]")[0].value,
+			  			'diploma_max_students': document.getElementsByName("diploma[diploma_max_students]")[0].value,
+			  			'diploma_duration': document.getElementsByName("diploma[diploma_duration]")[0].value,
+			  			'diploma_teacher': document.getElementsByName("diploma[diploma_teacher]")[0].value,
+			  			'diploma_time_span': document.getElementsByName("diploma[diploma_time_span]")[0].value
+			  		}
+			  	});
+	  		}
+	  	},
 	  	pagingType: 'full_numbers',
 	  	processing: true,
 	  	serverSide: true,

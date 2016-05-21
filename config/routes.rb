@@ -31,6 +31,8 @@ SampleApp::Application.routes.draw do
   get '/dropbox_download' => 'dashboards#dropbox_download', as: 'dropbox_download'
   post '/dropbox_upload' => 'dashboards#upload', as: 'upload'
   post '/dropbox_search' => 'dashboards#search', as: 'search'
+
+  get 'preview_projects', to: 'dashboard#show_all_projects', as: 'preview_projects'
   
   resources :personal_informations do
     collection do
