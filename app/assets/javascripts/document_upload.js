@@ -34,6 +34,7 @@ var loadDocumentsDetails = function() {
             html_content = html_content + "<tr>" + "<td>" + type + "</td>";
             html_content = html_content + "<td class='fileName'>" + name.substr(1,6) + "..." + "</td>";  
             if (page === 'projects') {
+              delete_url = v.delete_url;
               html_content = html_content + "<td> <a href=" + url + " class='fileName'>" + label + "</a></br>" + delete_url + "</td></tr>"
             } else {
               html_content = html_content + "<td> <a href=" + url + " class='fileName'>" + label + "</a></td></tr>"

@@ -68,7 +68,7 @@ class Admin::AdminDashboardController < ApplicationController
         approved_requests: requests.where(accepted: true).count,
         declined_requests: requests.where(accepted: false).count,
         pending_requests: requests.where(accepted: nil).count,
-        users: users.count,
+        users: users.joins(:personal_information).count,
         students: students.count,
         teachers: teachers.count,
         documents: documents.count,
@@ -83,6 +83,14 @@ class Admin::AdminDashboardController < ApplicationController
   def view_data
   end
 
+  def export_to_csv
+    class_name = params[:report_type]
+    email = params[:email].blank? ? current_user.email : params[:email]
+    report = Report.find(params[:report_id])
+    report.send_to_csv(class_name, email)
+
+    render nothing: true
+  end
 
 	private
 end

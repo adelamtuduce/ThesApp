@@ -1,14 +1,11 @@
 <% if notifications.any? %>
 	<% notifications.each do |notification| %>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="panel panel-default">
-		      	<div class="panel-heading clearfix"><%= notification.title %>
-		      		<i class="fa fa-times fa-1 pull-right deleteNotification" data-toggle='tooltip' data-placement='top' title='Delete Notification' id="<%=notification.id%>" aria-hidden="true"></i>
-		      	</div>
-		      	<div class="panel-body welcome-panel">
-		      		<%= notification.message %>
-		      	</div>
-		    </div>
+				  <div class='panel panel-body welcome-panel'><b><%= notification.title %></b><i class="fa fa-times fa-1 pull-right deleteNotification" data-toggle='tooltip' data-placement='top' title='Delete Notification' id="<%=notification.id%>" aria-hidden="true"></i><i class="fa fa-check fa-1 pull-right markAsRead" data-toggle='tooltip' data-placement='top' title='Mark as read' id="<%=notification.id%>" aria-hidden="true"></i>
+				  <p><%= notification.message %></p>
+				</div>
+			</div>
 		</div>
 	<% end %>
 <% else %>
@@ -22,3 +19,4 @@
 	    </div>
 	</div>
 <% end %>
+

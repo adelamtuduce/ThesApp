@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   has_one :student
   has_one :teacher
 
-    scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+    scope :in_interval, -> (start_date, end_date) { where("date(users.created_at) >= date('#{start_date}') AND date(users.created_at) <= date('#{end_date}')") }
 
   def student?
   	Student.find_by(user_id: id)
@@ -65,4 +65,28 @@ class User < ActiveRecord::Base
     return personal_information.student_incomplete? if student?
     return personal_information.teacher_incomplete? if teacher?
   end
+
+  def self.users_report(temporary_local_file)
+    CSV.open(
+      temporary_local_file,
+      'w',
+      write_headers: true,
+      headers: ['Name', 'Faculty', 'Email', 'Role']
+    ) do |csv|
+      if any?
+        joins(:personal_information).all.each do |user|
+          name = user.personal_information.name
+          faculty = user.personal_information.faculty_name
+          email = user.email
+          role = user.role.name
+          data_out = [ name, faculty, email, role]
+          csv << data_out
+        end
+      else
+        csv << ['There are no users yet.']
+      end
+    end
+    temporary_local_file
+  end
+
 end

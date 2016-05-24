@@ -75,4 +75,28 @@ class Teacher < ActiveRecord::Base
 			actions: ''
 		}
 	end
+
+	def self.teachers_report(temporary_local_file)
+  	CSV.open(
+      temporary_local_file,
+      'w',
+      write_headers: true,
+      headers: ['Name', 'Diploma Projects', 'Email', 'Faculty', 'Students enrolled']
+    ) do |csv|
+      if any?
+         all.each do |teacher|
+		      name = teacher.name
+		      projects = teacher.diploma_projects.any? ? teacher.diploma_projects.count : '-'
+		      email = teacher.user.email
+		      faculty = teacher.user.personal_information.faculty_name.nil? ? 'Not added yet.' : teacher.user.personal_information.faculty_name
+		      students_enrolled = teacher.students.count
+		      data_out = [ name, projects, email, faculty, students_enrolled]
+		      csv << data_out
+		    end
+      else
+        csv << ['There are no teachers yet.']
+      end
+    end
+    temporary_local_file
+  end
 end

@@ -36,6 +36,7 @@ class DocumentsController < ApplicationController
       return redirect_to :back, alert: 'File is empty. Please upload a valid file.'
     end
     @document = Document.new(document_params)
+    @document.user_id = current_user.id
     @document.save
     if params['document']['diploma_project_id']
       @document.diploma_project_id =  params['document']['diploma_project_id']

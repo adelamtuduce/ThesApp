@@ -58,4 +58,26 @@ class Document < ActiveRecord::Base
       return 'text'
     end
   end
+
+  def self.documents_report(temporary_local_file)
+    CSV.open(
+      temporary_local_file,
+      'w',
+      write_headers: true,
+      headers: ['Name', 'Uploaded by', 'Size(bytes)']
+    ) do |csv|
+      if any?
+        all.each do |document|
+          name = document.file_file_name
+          uploaded_by = document.user.personal_information.name
+          size = document.file_file_size
+          data_out = [ name, uploaded_by, size]
+          csv << data_out
+        end
+      else
+        csv << ['There are no documents uploaded yet.']
+      end
+    end
+    temporary_local_file
+  end
 end

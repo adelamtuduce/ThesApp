@@ -30,6 +30,7 @@ gem 'event-calendar', :require => 'event_calendar'
 gem "awesome_print"
 gem "cancan"
 gem 'foreman'
+gem 'database_cleaner'
 
 group :development, :test do
   gem 'sqlite3'

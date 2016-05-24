@@ -45,6 +45,7 @@ class TeachersController < ApplicationController
 		student = Student.find(params[:student_id])
 		diploma_project = DiplomaProject.find(params[:project_id])
 		teacher = diploma_project.teacher
+		student.teacher = teacher
 		student.diploma_project = diploma_project
 		student.save
 		enroll_request = EnrollRequest.find_by(student: student, teacher: teacher, diploma_project: diploma_project)

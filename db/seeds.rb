@@ -5,19 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
-User.destroy_all
-Role.destroy_all
-EnrollRequest.destroy_all
-Student.destroy_all
-Teacher.destroy_all
-Faculty.destroy_all
-Section.destroy_all
-Event.destroy_all
-DiplomaProject.destroy_all
-PersonalInformation.destroy_all
-DiplomaSelection.destroy_all
-
 # create admin for application
 role = Role.new(name: 'admin')
 role.save
@@ -25,6 +12,6 @@ User.create(email: 'admin@example.com', password: 'Admin@pass', password_confirm
 Faculty.create_faculties
 Role.create_roles
 Section.create_sections
-
+Report.create_reports
 DiplomaSelection.create(name: 'unique', active: false, description: 'Allow students to choose only one diploma project at a time.')
 DiplomaSelection.create(name: 'multiple', active: true, description: 'Allow students to choose multiple diploma projects at a time.')

@@ -13,6 +13,7 @@ SampleApp::Application.routes.draw do
     get 'retrieve_teachers', to: 'admin_dashboard#retrieve_all_teachers', as: 'retrieve_teachers'
     get 'retrieve_students', to: 'admin_dashboard#retrieve_all_students', as: 'retrieve_students'
     get 'show_all_users', to: 'admin_dashboard#show_all_users', as: 'show_all_users'
+    get 'export_to_csv', to: 'admin_dashboard#export_to_csv', as: 'export_to_csv'
   end
   root to: 'dashboard#root'
   # match '/signup',  to: 'users#new',            via: 'get'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520055324) do
+ActiveRecord::Schema.define(version: 20160524175813) do
 
   create_table "conversations", force: true do |t|
     t.integer  "sender_id"
@@ -130,6 +130,17 @@ ActiveRecord::Schema.define(version: 20160520055324) do
     t.datetime "avatar_updated_at"
     t.boolean  "notifications",       default: true
     t.boolean  "emails",              default: true
+  end
+
+  create_table "reports", force: true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "csv_file_name"
+    t.string   "csv_content_type"
+    t.integer  "csv_file_size"
+    t.datetime "csv_updated_at"
   end
 
   create_table "roles", force: true do |t|

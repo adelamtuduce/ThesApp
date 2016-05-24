@@ -24,5 +24,5 @@ SampleApp::Application.configure do
   config.action_mailer.delivery_method = :letter_opener
 
   # Debug mode disables concatenation and preprocessing of assets.
-  config.assets.debug = true
+  config.assets.debug = false
 end

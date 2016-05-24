@@ -158,6 +158,30 @@ class DiplomaProject < ActiveRecord::Base
 			<i class='fa fa-plus' aria-hidden='true'></i> Upload files
 		</span>"
 	end
+
+	def self.diploma_projects_report(temporary_local_file)
+  	CSV.open(
+      temporary_local_file,
+      'w',
+      write_headers: true,
+      headers: ['Title', 'Description', 'Teacher', 'Students enrolled', 'Remaining places']
+    ) do |csv|
+      if any?
+         all.each do |project|
+		      name = project.name
+		      description = project.description
+		      teacher = project.teacher.name
+		      enrolled = project.students.count
+		      remaining = project.max_students - project.students.count
+		      data_out = [ name, description, teacher, enrolled, remaining]
+		      csv << data_out
+		    end
+      else
+        csv << ['There are no diploma projects yet.']
+      end
+    end
+    temporary_local_file
+  end
 end
 
 

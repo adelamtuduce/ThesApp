@@ -22,6 +22,7 @@
 
 class PersonalInformation < ActiveRecord::Base
 	belongs_to :user
+	belongs_to :section
 	# validates_presence_of :first_name, presence: true, length: { maximum: 50 }
 	# validates_presence_of :last_name, presence: true, length: { maximum: 50 }
 	# validates_presence_of :code, presence: true, length: { maximum: 10 }
@@ -47,6 +48,10 @@ class PersonalInformation < ActiveRecord::Base
 		return true if last_name.blank?
 		return true if section_id.blank?
 		false
+	end
+
+	def faculty_name
+		section.faculty.name
 	end
 
 	def name

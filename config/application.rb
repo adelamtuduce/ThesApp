@@ -8,6 +8,7 @@
 
     require 'omniauth'
     require "awesome_print"
+    require 'csv'
 
     # require "rails/test_unit/railtie"
 

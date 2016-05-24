@@ -1,11 +1,30 @@
 <div class='col-md-12'>
 
 	<div class='row'>
-		<div class='col-md-6'>
+		<div class="<%= Student.any? ? 'col-md-8' : 'col-md-12' %>">
+		<div class="panel panel-default">
+			<div class="panel-heading">Export Data</div>
+		  	<div class="panel-body">
+		  		<table class='table'>
+		  			<th style='border-top:none;'>Name</th>
+		  			<th style='border-top:none;'>Description</th>
+		  			<th style='border-top:none;'>Actions</th>
+				  	<% Report.all.each do |report| %>
+				  		<tr>
+				  			<td><%= report.title.humanize %></td>
+				  			<td><%= report.description %></td>
+				  			<td><span class='sendReport' data-report-id="<%= report.id %>" data-report-type="<%= report.title.gsub('s_report', '') %>"><i data-toggle='tooltip' style='cursor:pointer;' data-placement='top' title='Send report' class="fa fa-paper-plane" aria-hidden="true"></i></span></td>
+				  		</tr>
+				  	<% end %>
+			  	</table>
+		 	</div>
 		</div>
-		<div class='col-md-6'>
-			<div id="studentDiplomas"></div>
 		</div>
+		<% if Student.any? %>
+			<div class='col-md-4'>
+				<div id="studentDiplomas"></div>
+			</div>
+		<% end %>
   	</div>
 	<div class='col-md-6' style='text-align:center;'>
 		<div class="panel panel-default">
@@ -35,7 +54,7 @@
 
 	<div class='col-md-6' style='text-align:center;'>
 		<div class="panel panel-default">
-			<div class="panel-heading">Diploma Project rate</div>
+			<div class="panel-heading">Diploma Project Selection Rate</div>
 		  	<div class="panel-body addDocuments">
 		    	<div id="projects"></div>
 		 	</div>

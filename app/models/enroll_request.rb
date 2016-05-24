@@ -54,4 +54,27 @@ class EnrollRequest < ActiveRecord::Base
 			actions: html
 		}
 	end
+
+	def self.enroll_requests_report(temporary_local_file)
+  	CSV.open(
+      temporary_local_file,
+      'w',
+      write_headers: true,
+      headers: ['Project', 'Teacher', 'Student', 'Status']
+    ) do |csv|
+      if any?
+        all.each do |request|
+		      project = request.diploma_project.name
+		      teacher = request.teacher.name
+		      student = request.student.name
+		      status = request.accepted.nil? ? 'pending' : (request.accepted ? 'accepted' : 'declined')
+		      data_out = [ project, teacher, student, status.humanize]
+		      csv << data_out
+		    end
+      else
+        csv << ['There are no enroll requests yet.']
+      end
+    end
+    temporary_local_file
+  end
 end
