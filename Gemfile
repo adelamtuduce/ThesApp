@@ -34,6 +34,7 @@ gem 'database_cleaner'
 gem 'rails-erd'
 gem 'railroady'
 gem 'activerecord-reset-pk-sequence'
+gem 'faye'
 
 group :development, :test do
   gem 'sqlite3'
