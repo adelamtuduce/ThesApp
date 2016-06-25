@@ -14,6 +14,10 @@ SampleApp::Application.routes.draw do
     get 'retrieve_students', to: 'admin_dashboard#retrieve_all_students', as: 'retrieve_students'
     get 'show_all_users', to: 'admin_dashboard#show_all_users', as: 'show_all_users'
     get 'export_to_csv', to: 'admin_dashboard#export_to_csv', as: 'export_to_csv'
+    get 'settings', to: 'admin_dashboard#settings', as: 'settings'
+    delete 'destroy', to: 'admin_dashboard#destroy', as: 'destroy'
+    post 'approve_registration', to: 'admin_dashboard#approve_registration', as: 'approve_registration'
+    post 'toggle_selection', to: 'admin_dashboard#toggle_selection_mode', as: 'toggle_selection'
   end
   root to: 'dashboard#root'
   # match '/signup',  to: 'users#new',            via: 'get'
@@ -110,10 +114,6 @@ SampleApp::Application.routes.draw do
   end
 
   resources :users do
-    collection do
-      get 'selection_options', to: 'users#settings', as: 'selection_options'
-      post 'toggle_selection', to: 'users#toggle_selection_mode', as: 'toggle_selection'
-    end
     member do
       post 'update_personal_information', to: 'users#update_personal_information', as: 'update_personal_information'
     end

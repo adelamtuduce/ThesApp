@@ -27,6 +27,21 @@ var ready = function () {
         chatBox.toggleChatBoxGrowth(id);
     });
 
+    $(document).on('click', '.acceptUser', function() {
+        var userID = $(this).data('user-id');
+
+        $.ajax ({
+            url: '/admin/approve_registration',
+            type: 'post',
+            data: { user_id: userID },
+            success: function(data) {
+                $('.studentsTable').DataTable().ajax.reload();
+                $('.teachersTable').DataTable().ajax.reload();
+                setTimeout(addTooltip, 500);
+            }
+        })
+    })
+
     /**
      * Used to close the chatbox
      */

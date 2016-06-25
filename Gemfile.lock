@@ -19,6 +19,7 @@ GEM
       activesupport (= 4.0.8)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.4)
+    activerecord-reset-pk-sequence (0.2.1)
     activesupport (4.0.8)
       i18n (~> 0.6, >= 0.6.9)
       minitest (~> 4.2)
@@ -54,6 +55,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+    choice (0.2.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -253,6 +255,7 @@ GEM
     rack (1.5.5)
     rack-test (0.6.3)
       rack (>= 1.0)
+    railroady (1.4.2)
     rails (4.0.8)
       actionmailer (= 4.0.8)
       actionpack (= 4.0.8)
@@ -261,6 +264,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.8)
       sprockets-rails (~> 2.0)
+    rails-erd (1.4.7)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -301,6 +309,7 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-graphviz (1.2.2)
     ruby-progressbar (1.7.5)
     rubyzip (0.9.9)
     sass (3.4.21)
@@ -363,6 +372,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-reset-pk-sequence
   annotate
   awesome_print
   bcrypt-ruby (= 3.1.2)
@@ -400,7 +410,9 @@ DEPENDENCIES
   paperclip-dropbox
   pg (= 0.15.1)
   private_pub
+  railroady
   rails (= 4.0.8)
+  rails-erd
   rails_12factor (= 0.0.2)
   rspec-rails (= 2.13.1)
   sass-rails (= 4.0.1)

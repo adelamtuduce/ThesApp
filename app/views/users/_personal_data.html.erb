@@ -38,7 +38,7 @@
                   <%= fields.hidden_field :user_id, :value => current_user.id %>
 
                   <div class="form-group">
-                    <%= fields.label :code, class: 'control-label' %>
+                    <%= fields.label :code, 'Registration Number', class: 'control-label' %>
                     <% if current_user.personal_information.code.blank? %>
                       <%= fields.text_field :code, class: 'form-control' %>
                     <% else %>
@@ -49,7 +49,7 @@
 
                   <% if current_user.student? %>
                     <div class="form-group">
-                      <%= fields.label :year, class: 'control-label' %>
+                      <%= fields.label :year, 'Year of study', class: 'control-label' %>
                       <% if current_user.personal_information.year.blank? %>
                         <%= fields.select :year, options_for_select([['1',1],['2',2],['3',3],['4',4]]), {:prompt => 'Please Select'},  { class: 'form-control' } %>
                       <% else %>
@@ -67,18 +67,20 @@
                       <%= Faculty.find_by(id: Section.find_by(id: current_user.personal_information.section_id).faculty_id).name %>
                     <% end %>
                   </div>
-
-                  <div class="form-group">
-                    <%= fields.label :section, class: 'control-label' %>
-                    <% if current_user.personal_information.section_id.blank? %>
-                      <%= fields.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'}, class: 'form-control' %>
-                    <% else %>
-                      <br / >
-                      <%= Section.find_by(id: current_user.personal_information.section_id).name %>
-                    <% end %>
-                    
-                  </div>
-                <br />
+                  <% if current_user.student? %>
+                    <div class="form-group">
+                      <%= fields.label :section, class: 'control-label' %>
+                      <% if current_user.personal_information.section_id.blank? %>
+                        <%= fields.collection_select :section_id, Section.all, :id, :name, {:include_blank => 'Please Select'}, class: 'form-control' %>
+                      <% else %>
+                        <br / >
+                        <%= Section.find_by(id: current_user.personal_information.section_id).name %>
+                      <% end %>
+                    </div>
+                  <br />
+                <% else %>
+                  <%= fields.hidden_field :section_id, value: Section.first.id %>
+                <% end %>
               <% end %>
               <div style="text-align: center">
                 <%= f.submit 'Save data', :class => 'btn btn-default addDocuments' %>

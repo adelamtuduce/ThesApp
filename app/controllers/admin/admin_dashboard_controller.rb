@@ -17,7 +17,6 @@ class Admin::AdminDashboardController < ApplicationController
   
   def retrieve_all_students
     response = Student.retrieve_students(params)
-    ap response
     render json: response
   end
 
@@ -27,11 +26,17 @@ class Admin::AdminDashboardController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    User.find(params[:user_id]).destroy
     flash[:success] = "User destroyed."
-    redirect_to users_url
+    render nothing: true
   end
 
+  def approve_registration
+    user = User.find(params[:user_id])
+    user.update_attributes(approved: true)
+    AdminMailer.send_approval_confirmation(user).deliver
+    render nothing: true
+  end
 
   def admin_chart_data
     start_valid = true

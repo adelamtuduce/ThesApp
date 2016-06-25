@@ -16,6 +16,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  role_id                :integer
+#  approved               :boolean          default(FALSE), not null
 #
 
 class UsersController < ApplicationController

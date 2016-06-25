@@ -49,8 +49,8 @@ class TeachersController < ApplicationController
 		student.diploma_project = diploma_project
 		student.save
 		enroll_request = EnrollRequest.find_by(student: student, teacher: teacher, diploma_project: diploma_project)
+		remaining_requests = EnrollRequest.where.not(id: enroll_request.id).where(student: student)
 		if student.diploma_project
-			remaining_requests = EnrollRequest.where.not(id: enroll_request.id).where(student: student)
 			remaining_requests.each do |enroll|
 				EnrollMailer.cancel_sent_requests(enroll).deliver
 				enroll.destroy
@@ -58,7 +58,7 @@ class TeachersController < ApplicationController
 		end
 		enroll_request.update_attributes(accepted: true)
 		EnrollMailer.accept_enroll(enroll_request).deliver
-		EnrollMailer.decline_other_enrolls(student).deliver
+		EnrollMailer.decline_other_enrolls(student).deliver if remaining_requests.any?
 		render json: { success: true }
 	end
 
@@ -68,7 +68,7 @@ class TeachersController < ApplicationController
 		enroll_request = EnrollRequest.find_by(student: student, teacher: diploma_project.teacher, diploma_project: diploma_project)
 		enroll_request.accepted = false
 		enroll_request.save
-		EnrollMailer.decline_enroll(enroll_request)
+		EnrollMailer.decline_enroll(enroll_request).deliver
 	end
 
 	def retrieve_own_students

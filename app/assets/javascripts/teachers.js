@@ -6,8 +6,11 @@ $(document).ready(function() {
 		  pagingType: 'full_numbers',
 		  processing: true,
 		  serverSide: true,
-		  pageLength: 8,
-		  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+		  pageLength: 10,
+		  bFilter: false, 
+		  bInfo: false,
+		  ordering: false,
+		  lengthMenu: [[10, 20, 30, -1], [10, 20, 30, 'All']],
 		  columns: [
 	        { data: 'student' },
 	        { data: 'project' },
@@ -22,8 +25,6 @@ $(document).ready(function() {
 		var clicked = $(this);
 		var student_id = $(this).data('student-id');
 		var project_id = $(this).data('diploma-id');
-		console.log(student_id)
-		console.log(project_id)
 		$.ajax ({
 			type: 'GET',
 			url: '/teachers/' + teacher_id + '/accept_enrollment',
@@ -42,12 +43,15 @@ $(document).ready(function() {
 		  pagingType: 'full_numbers',
 		  processing: true,
 		  serverSide: true,
-		  pageLength: 8,
-		  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+		  pageLength: 10,
+		  bFilter: false, 
+		  bInfo: false,
+		  "ordering": false,
+		  lengthMenu: [[10, 20, 30, -1], [10, 20, 30, 'All']],
 		  columns: [
-	        { data: 'name' },
-	        { data: 'diploma_project' },
-	        { data: 'actions' }
+	        { data: 'name', "orderable": false },
+	        { data: 'code', "orderable": false },
+	        { data: 'actions', "orderable": false }
 	        ]
 		});
 	$('.teachersTable').DataTable({
@@ -55,12 +59,15 @@ $(document).ready(function() {
 		  pagingType: 'full_numbers',
 		  processing: true,
 		  serverSide: true,
-		  pageLength: 8,
-		  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+		  pageLength: 10,
+		  bFilter: false, 
+		  bInfo: false,
+		  "ordering": false,
+		  lengthMenu: [[10, 20, 30, -1], [10, 20, 30, 'All']],
 		  columns: [
-	        { data: 'name' },
-	        { data: 'diploma_project' },
-	        { data: 'actions' }
+	        { data: 'name', "orderable": false },
+	        { data: 'code', "orderable": false },
+	        { data: 'actions', "orderable": false }
 	        ]
 		});
 });

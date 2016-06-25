@@ -13,7 +13,5 @@ class Faculty < ActiveRecord::Base
 	has_many :sections
 	def self.create_faculties
 		create(name: "Automatica si Calculatoare")
-		create(name: "Mecanica")
-		create(name: "Electronica si telecomunicatii")
 	end
 end

@@ -11,6 +11,7 @@ class DashboardController < ApplicationController
   def root
     if current_user.regular_user?
         if current_user.incomplete_information?
+          ap "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
           root_p = user_path(current_user)
         else
           case Role.find(current_user.role_id).name

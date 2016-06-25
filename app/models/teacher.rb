@@ -69,10 +69,13 @@ class Teacher < ActiveRecord::Base
 	end
 
 	def displayed_data
+		html = "<span class='deleteUser' data-user-id=#{user.id}><i class='fa fa-minus-circle' data-toggle='tooltip' data-placement='top' title='Delete user' style='color:red;' aria-hidden='true'></i></span>"
+		html += "<span class='acceptUser' data-user-id=#{user.id}><i class='fa fa-user-plus' data-toggle='tooltip' data-placement='top' title='Accept registration' style='color:green;' aria-hidden='true'></i></span>" unless user.approved
 		{
 			name: name,
-			diploma_project: diploma_projects.count,
-			actions: ''
+			code: user.personal_information.code,
+			actions: html
+
 		}
 	end
 

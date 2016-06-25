@@ -63,19 +63,5 @@
 </div>
 
 <script>
-	 var startDate;
-  var endDate;
-  var applyDates = function(){
-    startDate = $("#start-date").val();
-    endDate   = $("#end-date").val();
-    loadChart();
-    $('#js-date-range').popover('hide')
-  }
-  var resetChart = function(){
-    startDate = "<%= (Time.zone.now.to_date - 6.days).strftime('%m/%d/%Y') %>"
-    endDate   = "<%= Time.zone.now.to_date.strftime('%m/%d/%Y') %>"
-    loadEmptyChart();
-    $('#js-date-range').popover('hide')
-  }
-	loadAdminChart();
+loadAdminChart();
 </script>

@@ -16,8 +16,9 @@ class Student < ActiveRecord::Base
 	belongs_to :teacher
 	has_many :enroll_requests
 	has_many :student_events
+	has_many :events, through: :student_events
 
-	  scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
+	scope :in_interval, -> (start_date, end_date) { where("date(created_at) >= date('#{start_date}') AND date(created_at) <= date('#{end_date}')") }
 
 	def personal_information
 		user.personal_information
@@ -54,10 +55,12 @@ class Student < ActiveRecord::Base
 	end
 
 	def displayed_data
+		html = "<span class='deleteUser' data-user-id=#{user.id}><i class='fa fa-minus-circle' data-toggle='tooltip' data-placement='top' title='Delete user' style='color:red;' aria-hidden='true'></i></span>"
+		html += "<span class='acceptUser' data-user-id=#{user.id}><i class='fa fa-user-plus' data-toggle='tooltip' data-placement='top' title='Accept registration' style='color:green;' aria-hidden='true'></i></span>" unless user.approved
 		{
-			name: name,
-			diploma_project: diploma_project.nil? ? '-' : diploma_project.name,
-			actions: ''
+			name: name.blank? ? user.email : name,
+			code: user.personal_information.code,
+			actions: html
 		}
 	end
 
@@ -73,7 +76,7 @@ class Student < ActiveRecord::Base
 		      name = student.name
 		      project = student.diploma_project.nil? ? '-' : student.diploma_project.name
 		      email = student.user.email
-		      faculty = student.user.personal_information.faculty_name.nil? ? 'Not added yet.' : student.user.personal_information.faculty_name
+		      faculty = student.user.personal_information.nil? || student.user.personal_information.faculty_name.nil? ? 'Not added yet.' : student.user.personal_information.faculty_name
 		      data_out = [ name, project, email, faculty]
 		      csv << data_out
 		    end

@@ -1,0 +1,17 @@
+<html>
+	<head>
+	</head>
+	<body>
+		Hello,
+		<br/>
+		<br/>
+		You have a new confirmation pending for <%= @user.role.name.humanize.downcase %> <%= @user.personal_information.name %> - <%= @user.email %>.
+		Please login and from the dashboard approve/decline the registration.
+		<br/>
+		<br/>
+
+		Have a great day,
+		<br/>
+		<b>Thesis Application Manager</b>
+	</body>
+</html>

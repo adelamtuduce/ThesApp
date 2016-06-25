@@ -23,9 +23,6 @@
 class PersonalInformation < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :section
-	# validates_presence_of :first_name, presence: true, length: { maximum: 50 }
-	# validates_presence_of :last_name, presence: true, length: { maximum: 50 }
-	# validates_presence_of :code, presence: true, length: { maximum: 10 }
 	has_attached_file :avatar,
     :storage => :dropbox,
     :dropbox_credentials => Rails.root.join("config/dropbox.yml"),
@@ -36,7 +33,6 @@ class PersonalInformation < ActiveRecord::Base
 	def student_incomplete?
 		return true if first_name.blank?
 		return true if last_name.blank?
-		# return true if age.blank?
 		return true if code.blank?
 		return true if section_id.blank?
 		return true if year.blank?
@@ -51,6 +47,8 @@ class PersonalInformation < ActiveRecord::Base
 	end
 
 	def faculty_name
+		return '' if section.nil?
+		return '' if section.faculty.nil?
 		section.faculty.name
 	end
 

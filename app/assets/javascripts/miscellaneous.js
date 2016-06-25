@@ -13,6 +13,20 @@ var identifyFileType = function(type) {
 	return icon;
 }
 
+$(document).on('click',".deleteUser", function(){
+	var userID = $(this).data('user-id');
+	$.ajax ({
+		type: 'DELETE',
+		url: '/admin/destroy',
+		data: {user_id: userID},
+		success: function(data) {
+			$(".studentsTable").DataTable().ajax.reload();
+			$(".teachersTable").DataTable().ajax.reload();
+			setTimeout(addTooltip, 500);
+		}
+	})
+	});
+
 
 $(document).ready(function() {
 
@@ -24,7 +38,7 @@ $(document).ready(function() {
 
 		$.ajax ({
 			type: 'POST',
-			url: '/users/toggle_selection',
+			url: '/admin/toggle_selection',
 			data: { selection_id: statusID },
 			success: function(data) {
 				

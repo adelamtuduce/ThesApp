@@ -17,7 +17,7 @@
               <% if current_user.regular_user? %>
                 <li><%= link_to "Profile", current_user %></li>
               <% else %>
-                <li><%= link_to "Settings", selection_options_users_path %></li>
+                <li><%= link_to "Settings", admin_settings_path %></li>
                 <li><%= link_to "All Users", admin_show_all_users_path %></li>
               <% end %>
               <li role="separator" class="divider"></li>
@@ -35,7 +35,7 @@
           <% if current_user.admin_user? %>
             <li><%= nav_link 'Data charts', admin_view_data_path %></li>
           <% end %>
-          <% if current_user.teacher? %>
+          <% if current_user.teacher? && !current_user.personal_information.teacher_incomplete? %>
              <li><%= nav_link "My Enrollments", show_enrollments_teacher_path(current_user.teacher) %></li>
              <li><%= nav_link "My Dashboard", own_dashboard_teacher_path(current_user.teacher) %></li>
           <% end %>
@@ -43,7 +43,6 @@
           <li><%= link_to "Sign in",  new_user_session_path  %></li>
           <li><%= link_to "Preview projects", preview_projects_path  %></li>
         <% end %>
-        <li><%= nav_link "Help", help_path %></li>
       </ul> 
     </div> 
   </div> 

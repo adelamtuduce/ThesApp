@@ -26,9 +26,6 @@ class PersonalInformationsController < ApplicationController
 	before_action :set_pi, except: [:create, :toggle_notifications, :toggle_emails]
   skip_before_filter :verify_authenticity_token
 
-# def new
-#   @personal_information = PersonalInformation.new
-# end
 
   def create
     @personal_information = PersonalInformation.new(personal_information_params)

@@ -13,7 +13,7 @@
 #
 
 class Event < ActiveRecord::Base
-
   has_many :student_events
+  has_many :students, through: :student_events
   belongs_to :teacher
 end

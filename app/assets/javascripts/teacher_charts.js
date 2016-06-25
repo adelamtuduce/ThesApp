@@ -48,16 +48,6 @@ $(document).ready(function() {
       show: true
     }
   });
-
-  $("#js-date-range").popover({
-    html : true,
-    template: '<div class="popover filter-popover mr20" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
-    content: function() {
-      $("#start-date").attr("value", startDate);
-      $("#end-date").attr("value", endDate);
-      return $('#date-range-content').html();
-    }
-  });
 });
 
 var updateCharts = function(data) {
@@ -69,8 +59,8 @@ var updateCharts = function(data) {
   });
 };
 var loadChart = function(){
-  var stuff = window.location.pathname.split('/');
-  var id = stuff[2];
+  var current_url_data = window.location.pathname.split('/');
+  var id = current_url_data[2];
   var startDate = $('#start-date').val();
   var endDate   = $('#end-date').val();
   var url = '/teachers/' + id + '/retrieve_charts_data';

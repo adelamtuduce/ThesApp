@@ -31,6 +31,9 @@ gem "awesome_print"
 gem "cancan"
 gem 'foreman'
 gem 'database_cleaner'
+gem 'rails-erd'
+gem 'railroady'
+gem 'activerecord-reset-pk-sequence'
 
 group :development, :test do
   gem 'sqlite3'

@@ -16,6 +16,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  role_id                :integer
+#  approved               :boolean          default(FALSE), not null
 #
 
 class User < ActiveRecord::Base
@@ -25,13 +26,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   has_one :role
 
-  has_one :personal_information
-  has_many :documents
-  has_many :notifications
-  has_one :student
-  has_one :teacher
+  has_one :personal_information, dependent: :destroy
+  has_many :documents, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_one :student, dependent: :destroy
+  has_one :teacher, dependent: :destroy
 
-    scope :in_interval, -> (start_date, end_date) { where("date(users.created_at) >= date('#{start_date}') AND date(users.created_at) <= date('#{end_date}')") }
+  
+  scope :in_interval, -> (start_date, end_date) { where("date(users.created_at) >= date('#{start_date}') AND date(users.created_at) <= date('#{end_date}')") }
 
   def student?
   	Student.find_by(user_id: id)
@@ -89,4 +91,15 @@ class User < ActiveRecord::Base
     temporary_local_file
   end
 
+  def active_for_authentication? 
+    super && approved? 
+  end 
+
+  def inactive_message 
+    if !approved? 
+      :not_approved 
+    else 
+      super # Use whatever other message 
+    end 
+  end
 end

@@ -27,8 +27,11 @@ $(document).ready(function() {
 	  pagingType: 'full_numbers',
 	  processing: true,
 	  serverSide: true,
-	  pageLength: 8,
-	  lengthMenu: [[8, 16, 24, -1], [8, 16, 24, 'All']],
+	  pageLength: 10,
+  	  bFilter: false, 
+	  bInfo: false,
+	  ordering: false,
+	  lengthMenu: [[10, 20, 30, -1], [10, 20, 30, 'All']],
 	  columns: [
         { data: 'name' },
         { data: 'students' },

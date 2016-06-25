@@ -16,8 +16,6 @@ class Section < ActiveRecord::Base
 	def self.create_sections
 		create(name: "CTI", faculty: Faculty.first)
 		create(name: "IS", faculty: Faculty.first)
-		create(name: "AR", faculty: Faculty.first)
-		create(name: "IA", faculty: Faculty.first)
-		create(name: "Random", faculty: Faculty.first)
+		create(name: "Informatica", faculty: Faculty.first)
 	end
 end
