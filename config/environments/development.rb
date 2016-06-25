@@ -22,6 +22,7 @@ SampleApp::Application.configure do
   # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
   config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.smtp_settings = { :address => "mobilebackend.cs.upt.ro", :port => 8081 }
 
   # Debug mode disables concatenation and preprocessing of assets.
   config.assets.debug = false
