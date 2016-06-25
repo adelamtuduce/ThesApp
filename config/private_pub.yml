@@ -1,8 +1,8 @@
 development:
-  server: "http://mobilebackend.cs.upt.ro:9292/faye"
+  server: "193.226.12.91:9292/faye"
   secret_token: "secret"
 test:
-  server: "http://mobilebackend.cs.upt.ro:9292/faye"
+  server: "193.226.12.91:9292/faye"
   secret_token: "secret"
 production:
   server: "http://example.com/faye"
